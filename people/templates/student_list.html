@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance</title>
+    <style>
+        table, tr, td, th {
+            border: 1px solid darkgray;
+            border-collapse: collapse;
+
+        }
+
+        tr:nth-child(even) {
+            background-color: lightgray;
+        }
+
+        th {
+            background-color: darkgray;
+        }
+
+        th:first-child {
+            width: 15em;
+        }
+
+        .time {
+            width: 5em;
+        }
+
+        .write-in-name {
+            height: 2em;
+        }
+
+        h1 {
+            color: maroon;
+            margin-left: 40px;
+        }
+</style>
+</head>
+<body>
+<h3>Date:</h3>
+<table width="100%">
+    <tr>
+        <th>Name</th>
+        <th class="time">Time in</th>
+        <th class="time">Time out</th>
+        <th>Current Section / Project </th>
+  </tr>
+
+{% block content %}
+{% for student in student_list %}
+    <tr>
+        <td>{{ student.first_name }} {{ student.last_name }} <br></td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+    </tr>
+
+{% endfor %}
+{% endblock %}
+
+<tr class="write-in-name"><td><br></td><td> </td><td> </td><td> </td></tr>
+<tr class="write-in-name"><td><br> </td><td> </td><td> </td><td> </td></tr>
+<tr class="write-in-name"><td><br> </td><td> </td><td> </td><td> </td></tr>
+<tr class="write-in-name"><td><br> </td><td> </td><td> </td><td> </td></tr>
+<tr class="write-in-name"><td><br> </td><td> </td><td> </td><td> </td></tr>
+
+</table>
+
+</body>
+</html>

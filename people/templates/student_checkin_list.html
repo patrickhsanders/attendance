@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance</title>
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .two-col {
+       -moz-column-count: 2;
+       -moz-column-gap: 5px;
+       -webkit-column-count: 2;
+       -webkit-column-gap: 5px;
+        }
+
+        #success {
+            position: absolute;
+            text-align: center;
+            top: 10em;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .checkin, .checkout {
+            display: block;
+            background-color: #E8E8E8;
+            padding: 5px;
+            padding-left: 11px;
+            margin: 3px;
+        }
+
+        .checkin:hover, .checkout:hover{
+            background-color: lightblue;
+        }
+
+        .checkin-link {
+            color: black;
+            font-weight: bolder;
+            text-decoration: none;
+        }
+
+        .outer_container{
+            width: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width:300px;
+            display: block;
+        }
+
+        #checked_in, #students {
+            margin-bottom: 5em;
+        }
+
+        #checked_in {
+            display:inline-block;
+            float:right;
+        }
+
+        #students {
+            float: left;
+        }
+
+</style>
+</head>
+<body>
+
+<div id="success"><img src="{% static 'static/check.png'%}"></div>
+
+<div class="outer_container">
+
+<div class="container" id="students">
+
+<h2>Check in</h2>
+{% block content %}
+{% for student in student_list %}
+{#    <a class="checkin-link" href="/register/create/{{ student.first_name }}/{{ student.last_name }}">#}
+    <a class="checkin-link" href="/register/create/{{ student.id }}">
+
+        <id class="checkin">{{ student.first_name }} {{ student.last_name }}</id></a>
+
+{% endfor %}
+{% endblock %}
+</div>
+
+<div class="container" id="checked_in">
+<h2>Check out</h2>
+{% block stuff %}
+{% for register in open_registers %}
+    <a class="checkin-link" href="/register/close/{{ register.id }}"><id class="checkout">{{ register.student.first_name }} {{ register.student.last_name }}</id></a>
+
+{% endfor %}
+{% endblock %}
+
+<script src="{% static 'static/jquery-2.2.3.min.js' %}"></script>
+<script>
+
+    $("#success").remove();
+    $("#success").delay(1000).fadeOut(500, function (){ $("#success").remove();});
+    $("#success").click( function (){ $("#success").remove() });
+
+</script>
+</div>
+</div>
+</body>
+</html>
