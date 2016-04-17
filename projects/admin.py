@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project
+from .models import Project, StudentProject
 # Register your models here.
 
 class ProjectAdmin(admin.ModelAdmin):
@@ -10,3 +10,4 @@ class ProjectAdmin(admin.ModelAdmin):
     # search_fields = ('description',)
 
 admin.site.register(Project, ProjectAdmin)
+admin.site.register(StudentProject)

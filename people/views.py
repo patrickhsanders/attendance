@@ -5,10 +5,11 @@ from .models import Student
 # from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.contrib.auth.models import User, Permission
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 # Create your views here.
 
-class StudentList(View):
+class StudentList(PermissionRequiredMixin, View):
+    permission_required = 'people.add_student'
 
     template_name = 'blog/post_list.html'
 
@@ -18,7 +19,11 @@ class StudentList(View):
             'student_list.html',
             {'student_list':Student.objects.all().filter(active="true").order_by('first_name') })
 
-class StudentCheckin(View):
+    def test_func(self):
+        return self.request.user
+
+class StudentCheckin(PermissionRequiredMixin, View):
+    permission_required = 'attendance.add_register'
 
     template_name = 'student_checkin_list.html'
 
@@ -32,7 +37,8 @@ class StudentCheckin(View):
             self.template_name,
             {'student_list': students, 'open_registers': open_registers})
 
-class StudentEmailList(View):
+class StudentEmailList(PermissionRequiredMixin, View):
+    permission_required = 'people.add_student'
 
     template_name = 'student_email_list.html'
 
@@ -47,7 +53,8 @@ class StudentEmailList(View):
             self.template_name,
             {'student_list': students, 'current_user_email':current_user_email})
 
-class StudentTestEmailList(View):
+class StudentTestEmailList(PermissionRequiredMixin, View):
+    permission_required = 'people.add_student'
 
     template_name = 'student_test_email_list.html'
 
