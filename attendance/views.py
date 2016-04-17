@@ -68,7 +68,10 @@ class CreateRegister(View):
     def post(self, request, student_id):
         student_obj = Student.objects.get(id=student_id)
         current_project_id = request.POST['current_curriculum_project']
-        current_project = Project.objects.get(id=current_project_id)
+        if current_project_id != "":
+            current_project = Project.objects.get(id=current_project_id)
+        else:
+            current_project = None
 
         if (Register.objects.filter(student=student_obj, checkout=None).count() == 0):
             Register.objects.create(student=student_obj, current_curriculum_project=current_project)
