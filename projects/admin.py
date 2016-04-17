@@ -3,8 +3,10 @@ from .models import Project
 # Register your models here.
 
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('name','course','nextProject',)
+    list_display = ('name','course','weight')
     list_filter = ('course',)
-    search_fields = ('description',)
+    list_editable = ('weight',)
+    ordering = ('weight',)
+    # search_fields = ('description',)
 
 admin.site.register(Project, ProjectAdmin)

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student email distribution</title>
+    <style>
+        table, tr, td, th {
+            border: 1px solid darkgray;
+            border-collapse: collapse;
+
+        }
+
+        tr:nth-child(even) {
+            background-color: lightgray;
+        }
+
+        th {
+            background-color: darkgray;
+        }
+
+        th:first-child {
+            width: 15em;
+        }
+
+        .time {
+            width: 5em;
+        }
+
+        .write-in-name {
+            height: 2em;
+        }
+
+        h1 {
+            color: maroon;
+            margin-left: 40px;
+        }
+
+        .notice {
+            background: rgba(193, 66, 66, 0.1);
+            border: red dashed 1px;
+            padding:1em;
+            margin: 1em;
+        }
+
+        .notice h2, .notice p {
+            margin-bottom: 0;
+            margin-top: 0;
+        }
+
+        .notice h2, .notice strong {
+            color: red;
+            font-family: "Arial Black";
+        }
+
+        .addresses {
+            margin: 1em;
+        }
+
+</style>
+</head>
+<body>
+
+<div class="notice"><h2>Notice</h2><p>If you are sending a mass email, you shouldn't paste these names into the <strong>To</strong> field, as this reveals all the addressses to all recipients. Instead, send the email to yourself and <strong>BCC</strong> the distribution list.</p></div>
+
+<div class="addresses">
+
+{% block email %}
+<p><a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ current_user_email }}&bcc=
+{% for student in student_list %}
+        {{ student.first_name|urlencode }}+{{ student.last_name|urlencode }}&lt;{{ student.email }}&gt;
+        {% if not forloop.last %},
+        {% endif %}
+{% endfor %}
+&cc={% for instructor in instructors %}
+        {{ instructor.first_name|urlencode }}+{{ instructor.last_name|urlencode }}&lt;{{ instructor.email }}&gt;
+        {% if not forloop.last %},
+        {% endif %}
+{% endfor %}
+
+{% endblock %}
+">Compose in Gmail</a></p>
+
+{% block content %}
+{% for student in student_list %}
+        {{ student.first_name }} {{ student.last_name }} &lt;{{ student.email }}&gt;
+    {% if not forloop.last %},<br>
+        {% endif %}
+{% endfor %}
+{% endblock %}
+</div>
+
+
+
+</body>
+</html>

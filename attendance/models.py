@@ -9,5 +9,6 @@ class Register(models.Model):
     checkout = models.DateTimeField(blank=True, null=True)
     current_project = models.CharField(max_length=63, blank=True)
 
+
     def __str__(self):
         return self.student.first_name + " " + self.student.last_name + "(" + str(self.checkin.month) + "/" + str(self.checkin.day) + "/" + str(self.checkin.year) + " " + str(self.checkin.hour) + ":" + str(self.checkin.minute) + ")"

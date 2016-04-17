@@ -34,8 +34,8 @@ class Computer(models.Model):
                             max_length=31,
                             unique=True,)
     computer_model = models.ForeignKey(ComputerModel, null=True, blank=True)
-    operating_system = models.ForeignKey(OperatingSystem, null=True, blank=True)
-    xcode_version = models.ForeignKey(Xcode, null=True, blank=True)
+    # operating_system = models.ForeignKey(OperatingSystem, null=True, blank=True)
+    # xcode_version = models.ForeignKey(Xcode, null=True, blank=True)
 
     def __str__(self):
         return self.name

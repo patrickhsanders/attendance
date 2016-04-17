@@ -3,6 +3,7 @@ from datetime import date
 from django.db import models
 from assets.models import Computer
 from datetime import date
+from course.models import Course
 
 
 class Student(models.Model):
@@ -25,9 +26,11 @@ class Student(models.Model):
     #BOOLEAN    has cs degree 
     
     start_date = models.DateField(default=date.today)
-    course = models.CharField(max_length=31, choices=COURSE_OPTIONS, default=COURSE_OPTIONS[0])
+    # course = models.CharField(max_length=31, choices=COURSE_OPTIONS, default=COURSE_OPTIONS[0])
+    course = models.ForeignKey(Course)
     
-    computer = models.ForeignKey(Computer, related_name='student_using', blank=True, null=True)
+    # computer = models.ForeignKey(Computer, related_name='student_using', blank=True, null=True)
+    uses_own_laptop = models.BooleanField(default=True)
     active = models.BooleanField(default = True)
 
 

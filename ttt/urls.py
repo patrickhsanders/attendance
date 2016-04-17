@@ -21,15 +21,21 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.conf.urls import include
 
 from attendance import urls as attendance_urls
-from people.views import StudentCheckin, StudentList
+from people.views import StudentCheckin, StudentList, StudentEmailList, StudentTestEmailList
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+
     url(r'^student/list$', login_required(StudentList.as_view())),
-    url(r'^accounts/login/$', admin.site.login),
+    url(r'^student/list/email/$', login_required(StudentEmailList.as_view())),
+    url(r'^student/list/email/test/$', login_required(StudentTestEmailList.as_view())),
+
     url(r'^student/checkin', login_required(StudentCheckin.as_view()),name="checkin"),
+
     url(r'^register/', include(attendance_urls)),
+
+    url(r'^accounts/login/$', admin.site.login),
 
     # url(r'^api-auth/', include('rest_framework.urls',))
 ]

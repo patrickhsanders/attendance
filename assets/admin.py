@@ -3,8 +3,8 @@ from .models import Computer, ComputerModel, OperatingSystem, Xcode
 # Register your models here.
 
 class ComputerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'computer_model','operating_system', 'xcode_version',)
-    list_filter = ('computer_model', 'operating_system', 'xcode_version')
+    list_display = ('name', 'computer_model')
+    list_filter = ('computer_model',)
 
 class ComputerModelAdmin(admin.ModelAdmin):
     list_display = ('computer_model', 'year')
@@ -19,6 +19,6 @@ class XcodeAdmin(admin.ModelAdmin):
     list_filter = ('version_number',)
 
 admin.site.register(Computer, ComputerAdmin)
-admin.site.register(ComputerModel, ComputerModelAdmin)
-admin.site.register(OperatingSystem, OperatingSystemAdmin)
-admin.site.register(Xcode, XcodeAdmin)
+# admin.site.register(ComputerModel, ComputerModelAdmin)
+# admin.site.register(OperatingSystem, OperatingSystemAdmin)
+# admin.site.register(Xcode, XcodeAdmin)
