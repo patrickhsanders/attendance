@@ -6,7 +6,7 @@ from course.models import Course
 
 # Create your models here.
 class Project(models.Model):
-    COURSE_OPTIONS = (('ios','iOS Full-time'),('android','Android Full-time'),('swift','iOS Part-time (Swift)'))
+    # COURSE_OPTIONS = (('ios','iOS Full-time'),('android','Android Full-time'),('swift','iOS Part-time (Swift)'))
     name = models.CharField(max_length=63)
     weight = models.IntegerField(help_text="This value is used to order ordering assignments. iOS are 100s, android 200s")
     course = models.ForeignKey(Course)
@@ -16,4 +16,4 @@ class Project(models.Model):
     # nextProject = models.ForeignKey('self', blank=True, null=True)
 
     def __str__(self):
-        return self.name + "(" + self.course.name + ")"
+        return self.name #+ "(" + self.course.name + ")"

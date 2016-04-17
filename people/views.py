@@ -20,7 +20,7 @@ class StudentList(View):
 
 class StudentCheckin(View):
 
-    template_name = 'people/student_checkin_list.html'
+    template_name = 'student_checkin_list.html'
 
     def get(self, request, parent_template=None):
 

@@ -1,0 +1,1 @@
+[{"model": "course.course", "pk": 1, "fields": {"name": "iOS Fulltime", "rolling_admission": true, "full_time": true}}, {"model": "course.course", "pk": 2, "fields": {"name": "Android Fulltime", "rolling_admission": true, "full_time": true}}]

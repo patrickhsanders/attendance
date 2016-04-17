@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance</title>
+    <style>
+
+        body, div {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2.0em;
+            margin-bottom: .5em;
+        }
+
+        .checkin, .checkout {
+            display: block;
+            background-color: #E8E8E8;
+            padding: 5px;
+            padding-left: 11px;
+            margin: 3px;
+        }
+
+        .checkin:hover, .checkout:hover{
+            background-color: lightblue;
+        }
+
+        .checkin-link {
+            color: black;
+            font-weight: bolder;
+            text-decoration: none;
+        }
+
+        .container {
+            width:100%;
+            text-align: center;
+        }
+
+        .inner-container {
+            margin-top: 10em;
+        }
+
+        #checked_in {
+            display:inline-block;
+            float:right;
+        }
+
+        #students {
+            float: left;
+        }
+
+        #text_input, #submit_button {
+            border: 2px solid darkgray;
+            background-color: rgba(247, 247, 247, 1);
+            color: #3a3a3b;
+            font-size: 1.2em;
+            font-weight: bold;
+            padding: .5em;
+            text-align: center;
+        }
+
+        #submit_button:hover {
+            background-color: lightblue;
+        }
+
+        #text_input {
+            width: 30em;
+            text-transform: uppercase;
+        }
+
+        .back-arrow{
+            font-size: 3em;
+            text-align: left;
+            margin-left: .5em;
+            margin-top: .5em;
+        }
+
+        .back-arrow a:visited, a:link, a:active {
+            text-decoration: none;
+            color: #3a3a3b;
+        }
+
+        .back-arrow a:hover {
+            text-decoration: none;
+            color: lightblue;
+        }
+
+        #name {
+            background-color: lightblue;
+            padding: .1em;
+        }
+
+        label {
+            display: none;
+        }
+
+        select#id_current_curriculum_project {
+            -webkit-appearance: none;
+            border-radius: 0px;
+            border: darkgray solid 2px;
+            color: #3a3a3b;
+            font-size: 1.2em;
+            font-weight: bold;
+            padding: .5em;
+            background-color: rgba(247, 247, 247, 1);
+        }
+
+        select:focus #id_current_curriculum_project{
+            box-shadow: none;
+        }
+
+
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2 class="back-arrow"><a href="/student/checkin">&larr;</a></h2>
+
+<div class="inner-container">
+    {% block content %}
+<h2>So <span id="name">{{ student.first_name }}</span>, what are you working on today?</h2>
+
+    <form action="" method="post">
+    {% csrf_token %}
+        {{ form }}
+    <input id="submit_button" type="submit" value="Submit" />
+    </form>
+    {% endblock %}
+</div>
+</div>
+
+</div>
+</div>
+</body>
+</html>
