@@ -22,9 +22,11 @@ from django.conf.urls import include
 
 from attendance import urls as attendance_urls
 from people.views import StudentCheckin, StudentList, StudentEmailList, StudentTestEmailList
+from django.views.generic.base import RedirectView
 
 
 urlpatterns = [
+    url(r'^$', RedirectView.as_view(url='/admin')),
     url(r'^admin/', admin.site.urls),
 
     url(r'^student/list$', login_required(StudentList.as_view())),

@@ -13,13 +13,10 @@ class Project(models.Model):
     name = models.CharField(max_length=63)
     weight = models.IntegerField(help_text="This value is used to order ordering assignments. iOS are 100s, android 200s")
     course = models.ForeignKey(Course)
-    # description = models.TextField(null=True, blank=True)
-    # project_file = models.FileField(upload_to='uploads/projects', null=True, blank=True)
-    # public_link_to_project = models.URLField(null=True,blank=True)
-    # nextProject = models.ForeignKey('self', blank=True, null=True)
 
     def __str__(self):
-        return self.name #+ "(" + self.course.name + ")"
+        return self.name + "(" + self.course.name + ")"
+
 
 class StudentProject(models.Model):
     GRADE_OPTIONS = (("a","A"),("b","B"),("c","C"),("d","D"),("f","F"),)
@@ -28,8 +25,8 @@ class StudentProject(models.Model):
     date_started = models.DateField(default=date.today)
     grade = models.CharField(max_length=7, choices=GRADE_OPTIONS, blank=True)
 
-    derived_days = models.IntegerField(default=1, blank=True)
-    derived_hours = models.FloatField(default=0, blank=True)
+    derived_days = models.IntegerField(default=1, blank=True, verbose_name="days")
+    derived_hours = models.FloatField(default=0, blank=True, verbose_name="hours")
 
     def __str__(self):
         return self.student.first_name + " " + self.student.last_name + " (" + self.project.name + ")"

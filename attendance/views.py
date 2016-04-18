@@ -65,6 +65,7 @@ class CreateRegister(PermissionRequiredMixin, View):
             try:
                 student_project = StudentProject.objects.get(student=student_obj, project=current_project)
                 student_project.derived_days += 1
+                student_project.save()
             except StudentProject.DoesNotExist:
                 student_project = StudentProject(student=student_obj, project=current_project)
                 student_project.save()

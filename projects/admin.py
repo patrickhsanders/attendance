@@ -9,5 +9,10 @@ class ProjectAdmin(admin.ModelAdmin):
     ordering = ('weight',)
     # search_fields = ('description',)
 
+class StudentProjectAdmin(admin.ModelAdmin):
+    list_display = ('student', 'project', 'grade', 'derived_days', 'derived_hours')
+    list_filter = ('grade', 'project', 'student')
+    list_filter = ('student', 'project', 'grade', 'derived_days', 'derived_hours')
+
 admin.site.register(Project, ProjectAdmin)
-admin.site.register(StudentProject)
+admin.site.register(StudentProject, StudentProjectAdmin)
