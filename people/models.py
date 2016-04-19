@@ -28,6 +28,7 @@ class Student(models.Model):
     start_date = models.DateField(default=date.today)
     # course = models.CharField(max_length=31, choices=COURSE_OPTIONS, default=COURSE_OPTIONS[0])
     course = models.ForeignKey(Course)
+    current_project = models.ForeignKey('projects.Project', blank=True, null=True)
     
     # computer = models.ForeignKey(Computer, related_name='student_using', blank=True, null=True)
     uses_own_laptop = models.BooleanField(default=True)

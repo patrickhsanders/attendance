@@ -24,7 +24,6 @@ from attendance import urls as attendance_urls
 from people.views import StudentCheckin, StudentList, StudentEmailList, StudentTestEmailList
 from django.views.generic.base import RedirectView
 
-
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/admin')),
     url(r'^admin/', admin.site.urls),
@@ -33,7 +32,7 @@ urlpatterns = [
     url(r'^student/list/email/$', login_required(StudentEmailList.as_view())),
     url(r'^student/list/email/test/$', login_required(StudentTestEmailList.as_view())),
 
-    url(r'^student/checkin', login_required(StudentCheckin.as_view()),name="checkin"),
+    url(r'^student/checkin/(?P<success>[\w\-]*)', login_required(StudentCheckin.as_view()), name="checkin"),
 
     url(r'^register/', include(attendance_urls)),
 

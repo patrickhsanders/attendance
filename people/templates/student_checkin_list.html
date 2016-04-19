@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +8,11 @@
     <style>
 
         body {
-            margin: 0;
-            padding: 0;
+				margin: 0;
+				padding: 0;
+				background-image: url({% static 'static/turntotech_logo.png'%});
+				background-repeat: no-repeat;
+				background-position: center 10em;
         }
 
         .two-col {
@@ -18,11 +22,23 @@
        -webkit-column-gap: 5px;
         }
 
+        #full_screen_success {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(242,242,242,.95);
+
+        {% if success == "" %}
+            display: none;
+        {% endif %}
+
+        }
+
         #success {
             position: absolute;
             text-align: center;
-            top: 10em;
+            top: 15em;
             width: 100%;
+            display: none;
         }
 
         h2 {
@@ -70,11 +86,22 @@
             float: left;
         }
 
+        .checkout p {
+            margin: 0;
+            padding: 0;
+        }
+
+        .side-text {
+            color: darkgray;
+            font-size: .75em;
+        }
+
 </style>
 </head>
 <body>
-
+<div id="full_screen_success">
 <div id="success"><img src="{% static 'static/check.png'%}"></div>
+</div>
 
 <div class="outer_container">
 
@@ -96,7 +123,8 @@
 <h2>Check out</h2>
 {% block stuff %}
 {% for register in open_registers %}
-    <a class="checkin-link" href="/register/close/{{ register.id }}"><id class="checkout">{{ register.student.first_name }} {{ register.student.last_name }}</id></a>
+
+    <a class="checkin-link" href="/register/close/{{ register.id }}"><div class="checkout"><p>{{ register.student.first_name }} {{ register.student.last_name }}</p><span class="side-text">{{ register.checkin|naturaltime }} {{ register.current_curriculum_project.name }}</span></div></a>
 
 {% endfor %}
 {% endblock %}
@@ -104,9 +132,15 @@
 <script src="{% static 'static/jquery-2.2.3.min.js' %}"></script>
 <script>
 
-    $("#success").remove();
-    $("#success").delay(1000).fadeOut(500, function (){ $("#success").remove();});
+
+
+    $("#success").fadeIn(250, function(){ $("#success").delay(2750).fadeOut(500, function (){ $("#success").remove();})});
+
     $("#success").click( function (){ $("#success").remove() });
+
+    $("#full_screen_success").delay(2500).fadeOut(500, function (){ $("#full_screen_success").remove();});
+    $("#full_screen_success").click( function (){ $("#full_screen_success").remove() });
+
 
 </script>
 </div>

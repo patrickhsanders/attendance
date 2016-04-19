@@ -27,7 +27,12 @@ class StudentCheckin(PermissionRequiredMixin, View):
 
     template_name = 'student_checkin_list.html'
 
-    def get(self, request, parent_template=None):
+    def get(self, request, success):
+
+        if success != "":
+            print("YES")
+        else:
+            print("NOOOO")
 
         open_registers = Register.objects.filter(checkout=None).order_by('student__first_name')
         students = Student.objects.all().filter(~Q(id__in=[register.student.id for register in open_registers]), active="true",course__full_time=True).order_by('first_name')
@@ -35,7 +40,7 @@ class StudentCheckin(PermissionRequiredMixin, View):
         return render(
             request,
             self.template_name,
-            {'student_list': students, 'open_registers': open_registers})
+            {'student_list': students, 'open_registers': open_registers, 'success': success})
 
 class StudentEmailList(PermissionRequiredMixin, View):
     permission_required = 'people.add_student'

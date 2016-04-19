@@ -31,7 +31,7 @@ class CloseRegister(PermissionRequiredMixin, View):
             except StudentProject.DoesNotExist:
                 pass
 
-        return redirect('checkin')
+        return redirect('checkin',"success")
 
 
 class CreateRegister(PermissionRequiredMixin, View):
@@ -61,6 +61,8 @@ class CreateRegister(PermissionRequiredMixin, View):
         current_project_id = request.POST['current_curriculum_project']
         if current_project_id != "":
             current_project = Project.objects.get(id=current_project_id)
+            student_obj.current_project = current_project
+            student_obj.save()
 
             try:
                 student_project = StudentProject.objects.get(student=student_obj, project=current_project)
@@ -75,7 +77,7 @@ class CreateRegister(PermissionRequiredMixin, View):
 
         if (Register.objects.filter(student=student_obj, checkout=None).count() == 0):
             Register.objects.create(student=student_obj, current_curriculum_project=current_project)
-            return redirect('checkin')
+            return redirect('checkin', 'success')
         else:
             # send back failure
             return redirect('checkin')
