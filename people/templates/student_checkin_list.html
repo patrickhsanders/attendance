@@ -68,9 +68,10 @@
             font-family: Arial, sans-serif;
         }
 
-        .container {
-            width:300px;
+        #checked_in {
+            width: 500px;
             display: block;
+            overflow: hidden;
         }
 
         #checked_in, #students {
@@ -80,6 +81,10 @@
         #checked_in {
             display:inline-block;
             float:right;
+        }
+
+        #students {
+            width: 300px;
         }
 
         #students {
@@ -124,7 +129,7 @@
 {% block stuff %}
 {% for register in open_registers %}
 
-    <a class="checkin-link" href="/register/close/{{ register.id }}"><div class="checkout"><p>{{ register.student.first_name }} {{ register.student.last_name }}</p><span class="side-text">{{ register.checkin|naturaltime }} {{ register.current_curriculum_project.name }}</span></div></a>
+    <a class="checkin-link" href="/register/close/{{ register.id }}"><div class="checkout"><p>{{ register.student.first_name }} {{ register.student.last_name }} <span class="side-text">{{ register.checkin|naturaltime }} {{ register.current_curriculum_project.name }}</span></p></div></a>
 
 {% endfor %}
 {% endblock %}
@@ -132,15 +137,12 @@
 <script src="{% static 'static/jquery-2.2.3.min.js' %}"></script>
 <script>
 
+    $("#success").fadeIn(500, function(){ $("#success").delay(2750).fadeOut(500, function (){ $("#success").hide();})});
+    $("#success").click( function (){ $("#success").hide() });
+    $("#full_screen_success").delay(2750).fadeOut(500, function (){ $("#full_screen_success").hide();});
+    $("#full_screen_success").click( function (){ $("#full_screen_success").hide() });
 
-
-    $("#success").fadeIn(250, function(){ $("#success").delay(2750).fadeOut(500, function (){ $("#success").remove();})});
-
-    $("#success").click( function (){ $("#success").remove() });
-
-    $("#full_screen_success").delay(2500).fadeOut(500, function (){ $("#full_screen_success").remove();});
-    $("#full_screen_success").click( function (){ $("#full_screen_success").remove() });
-
+    $(".checkout p").click(function (){ $("#full_screen_success").show() })
 
 </script>
 </div>

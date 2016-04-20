@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
 from attendance.models import Register
 from .models import Student
+from course.models import Course
 # from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.contrib.auth.models import User, Permission
@@ -65,7 +66,16 @@ class StudentTestEmailList(PermissionRequiredMixin, View):
 
     def get(self, request):
 
-        students = Student.objects.filter(active=True).order_by('first_name')
+        students = Student.objects.filter(active=True).exclude(current_project=None).order_by('first_name')
+        courses = Course.objects.filter(test_after_project__course__test_after_project_id__gte=0)
+
+        students_for_test = []
+
+        for student in students:
+            test_after_project_with_weight = student.course.test_after_project.weight
+            if student.current_project.weight > test_after_project_with_weight:
+                students_for_test.append(student)
+
         current_user = request.user
         current_user_email = current_user.email
 
@@ -74,4 +84,4 @@ class StudentTestEmailList(PermissionRequiredMixin, View):
         return render(
             request,
             self.template_name,
-            {'student_list': students, 'current_user_email':current_user_email, 'instructors':instructors})
+            {'student_list': students_for_test, 'current_user_email':current_user_email, 'instructors':instructors})
