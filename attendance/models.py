@@ -11,7 +11,6 @@ class Register(models.Model):
     checkout = models.DateTimeField(blank=True, null=True)
     forgot_to_checkout = models.BooleanField(default=False)
 
-    # current_project = models.CharField(max_length=63, blank=True)
     current_curriculum_project = models.ForeignKey(Project, blank=True, null=True)
 
     def __str__(self):
