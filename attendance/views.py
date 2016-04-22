@@ -42,15 +42,11 @@ class CreateRegister(PermissionRequiredMixin, View):
 
     def get(self,request,student_id):
 
-        student_obj = Student.objects.get(id=student_id)
-        previous_register = Register.objects.filter(student=student_obj).order_by('-checkout')
-
+        student_obj = get_object_or_404(Student, id=student_id)
         student_course = student_obj.course
 
-        if previous_register:
-            previous_register = previous_register[0]
-            current_project_c = previous_register.current_curriculum_project
-            form = RegisterForm(course=student_course, initial={'current_curriculum_project':current_project_c, 'student':student_obj})
+        if student_obj.current_project != None:
+            form = RegisterForm(course=student_course, initial={'current_curriculum_project':student_obj.current_project, 'student':student_obj})
         else:
             form = RegisterForm(course=student_course,initial={'student':student_obj})
 
@@ -59,9 +55,12 @@ class CreateRegister(PermissionRequiredMixin, View):
     def post(self, request, student_id):
         student_obj = Student.objects.get(id=student_id)
         current_project_id = request.POST['current_curriculum_project']
+
         if current_project_id != "":
             current_project = Project.objects.get(id=current_project_id)
-            student_obj.current_project = current_project
+            if "Hackathon" not in current_project.name:
+                student_obj.current_project = current_project
+                
             student_obj.save()
 
             try:

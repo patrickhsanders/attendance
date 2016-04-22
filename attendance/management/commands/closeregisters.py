@@ -12,7 +12,6 @@ class Command(BaseCommand):
         for register in open_registers:
             register.forgot_to_checkout = True
             register.checkout = timezone.now()
-            register.checkout = timezone.today()
 
             register.save()
 
