@@ -1,0 +1,11 @@
+{% load humanize %}
+<table>
+<tbody>
+    {% block students %}
+        {% for student in object_list %}
+            <tr><a href="/admin/people/student/{{ student.id }}/change/">{{ student.first_name }} {{ student.last_name }}</a><br />
+            {{ student.course.name }}<br />
+            Starting {{ student.start_date|naturalday }}<br/>&nbsp; </tr>
+        {% endfor %}</tbody>
+        </table>
+{% endblock %}

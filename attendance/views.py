@@ -60,7 +60,7 @@ class CreateRegister(PermissionRequiredMixin, View):
             current_project = Project.objects.get(id=current_project_id)
             if "Hackathon" not in current_project.name:
                 student_obj.current_project = current_project
-                
+
             student_obj.save()
 
             try:

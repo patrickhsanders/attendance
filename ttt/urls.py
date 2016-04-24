@@ -21,14 +21,18 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.conf.urls import include
 
 from attendance import urls as attendance_urls
-from people.views import StudentCheckin, StudentList, StudentEmailList, StudentTestEmailList
+from people.views import StudentCheckin, StudentList, StudentEmailList, StudentTestEmailList, StudentListPortlet, StudentListStartingSoonPortlet
 from django.views.generic.base import RedirectView
+from dashboard.views import GenericDashboard
 
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/admin')),
     url(r'^admin/', admin.site.urls),
 
     url(r'^student/list$', login_required(StudentList.as_view())),
+    url(r'^student/list/portlet$', login_required(StudentListPortlet.as_view())),
+    url(r'^student/list/starting_soon/portlet$', login_required(StudentListStartingSoonPortlet.as_view())),
+
     url(r'^student/list/email/$', login_required(StudentEmailList.as_view())),
     url(r'^student/list/email/test/$', login_required(StudentTestEmailList.as_view())),
 
@@ -37,6 +41,8 @@ urlpatterns = [
     url(r'^register/', include(attendance_urls)),
 
     url(r'^accounts/login/$', admin.site.login),
+
+    url(r'^dashboard$', login_required(GenericDashboard.as_view())),
 
     # url(r'^api-auth/', include('rest_framework.urls',))
 ]

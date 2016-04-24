@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+        <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+        <link rel="stylesheet" type="text/css" href="/static/admin/css/dashboard.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+        <script src="https://code.jquery.com/jquery-2.2.3.min.js" charset="utf-8"></script>
+</head>
+<body class=" dashboard"
+  data-admin-utc-offset="-14400">
+
+<!-- Container -->
+<div id="container">
+
+
+    <!-- Header -->
+    <div id="header">
+        <div id="branding">
+        <h1 id="site-name"><a href="/admin/">TurnToTech dashboard</a></h1>
+        </div>
+
+        <div id="user-tools">
+
+                Welcome,{% block students %}
+                <strong>{{ user.first_name }}</strong>.
+                {% endblock %}
+
+                <a href="/admin/password_change/">Change password</a> /
+                <a href="/admin/logout/">Log out</a>
+        </div>
+    </div>
+
+        <div id="content" class="colMS">
+
+
+    <div id="content-main">
+
+        <div class="app-assets module">
+        <table id="active_students">
+        <caption>
+            <a href="/admin/assets/" class="section">Current Students</a> <a href="/student/list/email" style="float:right;"><i class="fa fa-envelope" aria-hidden="true"></i>all </a>
+        </caption>
+            <tr class="model-student" style="width:100%">
+
+                <th scope="row"><a href="/student/list/"><i class="fa fa-cog fa-spin fa-3x fa-fw margin-bottom"></i>
+<span class="sr-only">Loading...</span></a></th>
+                <td><a href="/admin/assets/computer/" class="changelink"> </a></td>
+
+            </tr>
+
+        </table>
+        </div>
+    </div>
+
+    <div id="content-related">
+    <div class="module" id="recent-actions-module">
+
+        <div class="app-assets module">
+        <table id="starting_soon">
+        <caption>
+            <a href="/admin/assets/" class="section">Starting soon</a>
+        </caption>
+            <tr class="model-student" style="width:100%">
+
+                <th scope="row"><a href="/student/list/"><i class="fa fa-cog fa-spin fa-3x fa-fw margin-bottom"></i>
+<span class="sr-only">Loading...</span></a></th>
+                <td><a href="/admin/assets/computer/" class="changelink"> </a></td>
+
+            </tr>
+
+        </table>
+        </div>
+
+    </div>
+</div>
+</div>
+</div>
+
+<script>
+
+    $( document ).ready(function() {
+
+        $.get("/student/list/portlet")
+			 	.done(function (data, status, xhr) {
+					$("#active_students tbody").html(data);
+				})
+				.fail(function (data, status, xhr) {
+
+				})
+				.always(function (data, status, xhr) {
+
+				});
+
+         $.get("/student/list/starting_soon/portlet")
+			 	.done(function (data, status, xhr) {
+
+					$("#starting_soon tbody").html(data);
+
+				})
+				.fail(function (data, status, xhr) {
+
+				})
+				.always(function (data, status, xhr) {
+
+				});
+		});
+
+
+
+</script>
+
+
+</body>
+</html>

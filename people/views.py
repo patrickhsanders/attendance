@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import View
+from django.views.generic import View, ListView
 from attendance.models import Register
 from .models import Student
 from course.models import Course
@@ -7,6 +7,11 @@ from course.models import Course
 from django.db.models import Q
 from django.contrib.auth.models import User, Permission
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.utils import timezone
+
+import time
+
+
 # Create your views here.
 
 class StudentList(PermissionRequiredMixin, View):
@@ -85,3 +90,20 @@ class StudentTestEmailList(PermissionRequiredMixin, View):
             request,
             self.template_name,
             {'student_list': students_for_test, 'current_user_email':current_user_email, 'instructors':instructors})
+
+
+class StudentListPortlet(PermissionRequiredMixin, ListView):
+    template_name = "student_list_portlet.html"
+    permission_required = 'people.add_student'
+    model = Student
+
+    def get_queryset(self):
+        return Student.objects.filter(active=True).order_by('first_name')
+
+class StudentListStartingSoonPortlet(PermissionRequiredMixin, ListView):
+    template_name = "student_list_starting_soon.html"
+    permission_required = 'people.add_student'
+    model = Student
+
+    def get_queryset(self):
+        return Student.objects.filter(active=False, start_date__gte=timezone.now()).order_by('start_date')
