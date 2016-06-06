@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid content">
+    <div class="row">
+
+        <div class="col-md-4 attendance_list">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-users" aria-hidden="true"></i> Attendance List
+                    <span id="status_gear_spin"><i class="fa fa-cog fa-spin"></i></span>
+
+                    </h3>
+                </div>
+                <div class="panel-body" id="attendance_list">
+                    <i class="fa fa-cog fa-spin fa-3x fa-fw margin-bottom"></i>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-database" aria-hidden="true"></i> Django Admin</h3>
+                </div>
+                <div class="panel-body" id="attendance_list">
+                    <p><a href="/admin/attendance/register">Registers</a></p>
+                    <p><a href="/admin/attendance/dailyattendance/">Daily Attendance (raw)</a></p>
+                    <p><a href="/admin/attendance/dailystatistics/">Daily Stats (raw)</a></p>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="col-md-8 students" id="panel_for_daily_attendance">
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $( document ).ready(function() {
+
+        $.get("/register/attendance/portlet/")
+			 	.done(function (data, status, xhr) {
+					$("#attendance_list").html(data);
+				})
+				.fail(function (data, status, xhr) {
+
+				})
+				.always(function (data, status, xhr) {
+                    $("#status_gear_spin").hide();
+				});
+    });
+
+$(document).on('click','.attendance_for_day a', function(e) {
+    e.preventDefault();
+    var url = $(this).attr('href') + "portlet/";
+    $("#status_gear_spin").show();
+    $.get(url)
+			 	.done(function (data, status, xhr) {
+					$("#panel_for_daily_attendance").html(data);
+				})
+				.fail(function (data, status, xhr) {
+
+				})
+				.always(function (data, status, xhr) {
+                    $("#status_gear_spin").hide();
+				});
+
+    return false;
+});
+
+</script>
+{% endblock %}

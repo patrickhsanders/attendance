@@ -1,0 +1,7 @@
+{% block attendance %}
+    <table>
+        {% for attendance in object_list %}
+            <tr class="model-attendance"><td class="attendance_for_day"><a href="/register/attendance/{{ attendance.id }}/" >{{ attendance.date|date:"D d M Y" }}</a></td></tr>
+        {% endfor %}
+    </table>
+{% endblock %}

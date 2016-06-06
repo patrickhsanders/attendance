@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import View
+from django.views.generic import View, ListView
 from django.contrib import admin
+from django.db.models import Q
 
-from .models import Student
+from people.models import Student
+from .models import DailyAttendance, DailyStatistics
 from attendance.models import Register
 from django.utils import timezone
 from django.core import validators
@@ -54,6 +56,7 @@ class CreateRegister(PermissionRequiredMixin, View):
 
     def post(self, request, student_id):
         student_obj = Student.objects.get(id=student_id)
+
         current_project_id = request.POST['current_curriculum_project']
 
         if current_project_id != "":
@@ -80,3 +83,76 @@ class CreateRegister(PermissionRequiredMixin, View):
         else:
             # send back failure
             return redirect('checkin')
+
+class DailyAttendanceDetail(PermissionRequiredMixin, View):
+    permission_required = 'attendance.add_register'
+
+    def get(self, request, daily_attendance_id):
+
+        current_user = request.user
+
+        daily_attendance = get_object_or_404(DailyAttendance, id=daily_attendance_id)
+        # active_students = daily_attendance.active_students.order_by('first_name')
+        active_students = Student.objects.filter(Q(id__in=[student.id for student in daily_attendance.active_students.all()])).order_by("first_name")
+
+        dict = {}
+
+        for student in active_students:
+            if student in daily_attendance.present.all():
+                dict[student] = True
+            else:
+                dict[student] = False
+
+        return render(request,'daily_attendance_detail.html',{'current_user':current_user, 'active_students':active_students, 'dictionary':dict, 'title':daily_attendance.__str__()})
+
+class DailyAttendanceListPortlet(PermissionRequiredMixin, ListView):
+    permission_required = 'attendance.delete_register'
+
+    template_name = "daily_attendance_detail_portlet.html"
+    model = DailyAttendance
+
+    def get_queryset(self):
+        return DailyAttendance.objects.all().order_by('-date')[:15]
+
+class DailyAttendanceList(PermissionRequiredMixin, ListView):
+    permission_required = 'attendance.delete_register'
+
+    template_name = "daily_attendance_list.html"
+    model = DailyAttendance
+
+    def get_queryset(self):
+        return DailyAttendance.objects.all().order_by('-date')
+
+class DailyAttendanceStatisticsPortlet(PermissionRequiredMixin, View):
+    permission_required = 'attendance.add_register'
+    template_name = "daily_attendance_stats_portlet.html"
+
+    def get(self, request):
+        previous_day_stats = DailyStatistics.objects.all().order_by("-date")[:1]
+        previous_day_stats = previous_day_stats[0]
+
+        return render(request,self.template_name,{'stats': previous_day_stats })
+
+class DailyAttendanceDetailPortlet(PermissionRequiredMixin, ListView):
+    permission_required = 'attendance.add_register'
+
+    def get(self, request, daily_attendance_id):
+
+        current_user = request.user
+
+        daily_attendance = get_object_or_404(DailyAttendance, id=daily_attendance_id)
+        # active_students = daily_attendance.active_students.order_by('first_name')
+        active_students = Student.objects.filter(
+            Q(id__in=[student.id for student in daily_attendance.active_students.all()])).order_by("first_name")
+
+        dict = {}
+
+        for student in active_students:
+            if student in daily_attendance.present.all():
+                dict[student] = True
+            else:
+                dict[student] = False
+
+        return render(request, 'daily_attendance_portlet.html',
+                      {'current_user': current_user, 'active_students': active_students, 'dictionary': dict,
+                       'title': daily_attendance.__str__()})

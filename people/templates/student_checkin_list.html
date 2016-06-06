@@ -126,17 +126,14 @@
 
 <div class="container" id="checked_in">
 <h2>Check out</h2>
-{% block stuff %}
-{% for register in open_registers %}
+    <div id="student-checked-in-currently">
+        <i class="fa fa-cog fa-spin fa-3x fa-fw margin-bottom"></i>
+    </div>
+</div>
 
-    <a class="checkin-link" href="/register/close/{{ register.id }}"><div class="checkout"><p>{{ register.student.first_name }} {{ register.student.last_name }} <span class="side-text">{{ register.checkin|naturaltime }} {{ register.current_curriculum_project.name }}</span></p></div></a>
-
-{% endfor %}
-{% endblock %}
 
 <script src="{% static 'static/jquery-2.2.3.min.js' %}"></script>
 <script>
-
     $("#success").fadeIn(500, function(){ $("#success").delay(2750).fadeOut(500, function (){ $("#success").hide();})});
     $("#success").click( function (){ $("#success").hide() });
     $("#full_screen_success").delay(2750).fadeOut(500, function (){ $("#full_screen_success").hide();});
@@ -144,8 +141,50 @@
 
     $(".checkout p").click(function (){ $("#full_screen_success").show() })
 
+    function ping(){
+
+        $.get("/student/portlet/checked-in/")
+			 	.done(function (data, status, xhr) {
+
+					$("#student-checked-in-currently").html(data);
+
+				})
+				.fail(function (data, status, xhr) {
+
+				})
+				.always(function (data, status, xhr) {
+                    setTimeout(function(){ ping(); }, 5000);
+				});
+    }
+    ping();
+
+{#    $.ajax({#}
+{#        type: 'GET',#}
+{#        url: 'http://android.turntotech.io/weeklyreview/dashboard.jsp',#}
+{#        crossDomain: true,#}
+{#        processData: true,#}
+{#        data: {},#}
+{#        dataType: 'html',#}
+{#        success: function (data) {#}
+{#            $("#student-checked-in-currently").html(data);#}
+{#        }#}
+{#    });#}
+
+{##}
+{#     $.get("http://android.turntotech.io/weeklyreview/dashboard.jsp body div", crossDomain=true)#}
+{#			 	.done(function (data, status, xhr) {#}
+{##}
+{#					$("#student-checked-in-currently").html(data);#}
+{##}
+{#				})#}
+{#				.fail(function (data, status, xhr) {#}
+{##}
+{#				})#}
+{#				.always(function (data, status, xhr) {#}
+{#                    setTimeout(function(){ ping(); }, 5000);#}
+{#				});#}
+
 </script>
-</div>
 </div>
 </body>
 </html>

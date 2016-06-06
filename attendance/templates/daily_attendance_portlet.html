@@ -1,0 +1,34 @@
+{% load dictionary_extra %}
+
+{% block content %}
+
+
+<div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading"><h3 class="panel-title">{{ title }}</h3></div>
+
+                <!-- Table -->
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Present</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in active_students %}
+                        <tr>
+                            <td>{{ student.first_name }} {{ student.last_name }}</td>
+                            <td>
+                                {% if dictionary|keyvalue:student == True %}
+                                Yes
+                                {% else %}
+                                No
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+{% endblock content %}

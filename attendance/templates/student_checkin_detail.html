@@ -111,9 +111,11 @@
         <input id="text_input" type="text" name="current_project" value="{{ previous_register.current_project }} "
             onblur="if (this.value == '') {this.value = '{{ previous_register.current_project }}';}"
             onfocus="if (this.value != '') {this.value = '';}">
-    <input id="submit_button" type="submit" value="Submit" />
+    <button id="submit_button">Submit!</button>
     </form>
     {% endblock %}
+
+
 </div>
 </div>
 

@@ -9,6 +9,8 @@ class Course(models.Model):
     rolling_admission = models.BooleanField(default=True)
     full_time = models.BooleanField(default=True)
 
+    course_fee = models.FloatField(blank=True)
+
     test_after_project = models.ForeignKey('projects.Project', related_name="display_test_after", blank=True, null=True)
 
     def __str__(self):

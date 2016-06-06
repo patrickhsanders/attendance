@@ -1,13 +1,21 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View, ListView
 from attendance.models import Register
-from .models import Student
+from .models import Student, ContactInfo, EmergencyContact
 from course.models import Course
-# from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.contrib.auth.models import User, Permission
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.utils import timezone
+from .forms import TelephoneNumberForm, AddressForm
+from .forms import EmergencyContactForm
+
+from django.http import HttpResponseRedirect
+
+from rest_framework import viewsets
+from .serializers import ActiveStudentSerializer
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 import time
 
@@ -35,11 +43,6 @@ class StudentCheckin(PermissionRequiredMixin, View):
 
     def get(self, request, success):
 
-        if success != "":
-            print("YES")
-        else:
-            print("NOOOO")
-
         open_registers = Register.objects.filter(checkout=None).order_by('student__first_name')
         students = Student.objects.all().filter(~Q(id__in=[register.student.id for register in open_registers]), active="true",course__full_time=True).order_by('first_name')
 
@@ -47,6 +50,18 @@ class StudentCheckin(PermissionRequiredMixin, View):
             request,
             self.template_name,
             {'student_list': students, 'open_registers': open_registers, 'success': success})
+
+class StudentsCurrentlySignedInPortlet(PermissionRequiredMixin, View):
+    permission_required = 'attendance.add_register'
+    template_name = 'student_checkin_current_portlet.html'
+
+    def get(self, request):
+        open_registers = Register.objects.filter(checkout=None).order_by('student__first_name')
+
+        return render(
+            request,
+            self.template_name,
+            {'open_registers': open_registers})
 
 class StudentEmailList(PermissionRequiredMixin, View):
     permission_required = 'people.add_student'
@@ -107,3 +122,86 @@ class StudentListStartingSoonPortlet(PermissionRequiredMixin, ListView):
 
     def get_queryset(self):
         return Student.objects.filter(active=False, start_date__gte=timezone.now()).order_by('start_date')
+
+class ActiveStudentViewSet(viewsets.ModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    queryset = Student.objects.filter(end_date__isnull=True, active=True)
+    serializer_class = ActiveStudentSerializer
+
+class ContactInfoEditView(PermissionRequiredMixin, View):
+    permission_required = 'people.add_student'
+    template_name = "student_contact_info.html"
+
+    def get(self, request, student_id):
+        telephone_form = TelephoneNumberForm(prefix='TelephoneForm')
+        address_form = AddressForm(prefix='AddressForm')
+
+        return render(request, self.template_name, {'telephone_form': telephone_form, 'address_form': address_form})
+
+    def post(self, request, student_id):
+        bound_telephone_form = TelephoneNumberForm(request.POST, prefix='TelephoneForm')
+        bound_address_form = AddressForm(request.POST, prefix='AddressForm')
+
+        if bound_telephone_form.is_valid() and bound_address_form.is_valid():
+            student = get_object_or_404(Student, pk=student_id)
+
+            telephone_number = bound_telephone_form.save()
+            address = bound_address_form.save()
+
+            contact_info = ContactInfo()
+            contact_info.phone_number = telephone_number
+            contact_info.address = address
+            contact_info.save()
+            student.directory_information = contact_info
+            student.save()
+
+            return HttpResponseRedirect('/student/' + student_id + "/emergency-contact-info/edit")
+        else:
+            return render(request, self.template_name, {'telephone_form': bound_telephone_form, 'address_form': bound_address_form})
+
+class EmergencyContactEditView(PermissionRequiredMixin, View):
+    permission_required = 'people.add_student'
+    template_name = "student_emergency_contact_info.html"
+
+    def get(self, request, student_id):
+        emergency_contact_form = EmergencyContactForm(prefix="EmergencyContactForm")
+        telephone_form = TelephoneNumberForm(prefix='TelephoneForm1')
+        telephone_form1 = TelephoneNumberForm(prefix='TelephoneForm2')
+        address_form = AddressForm(prefix='AddressForm')
+
+        return render(request, self.template_name, {'telephone_form1': telephone_form,'telephone_form2': telephone_form1, 'address_form': address_form, 'emergency_contact_form': emergency_contact_form})
+
+    def post(self, request, student_id):
+        bound_emergency_contact_form = EmergencyContactForm(request.POST, prefix="EmergencyContactForm")
+        bound_telephone_form = TelephoneNumberForm(request.POST, prefix='TelephoneForm1')
+        bound_telephone_form1 = TelephoneNumberForm(request.POST, prefix='TelephoneForm2')
+        bound_address_form = AddressForm(request.POST, prefix='AddressForm')
+
+        if bound_telephone_form.is_valid() and bound_address_form.is_valid() and bound_telephone_form.is_valid():
+            student = get_object_or_404(Student, pk=student_id)
+
+            telephone_number = bound_telephone_form.save()
+
+            emergency_contact = bound_emergency_contact_form.save(commit=False)
+
+            address = bound_address_form.save()
+            emergency_contact.address = address
+            emergency_contact.save()
+
+            emergency_contact.telephone_numbers.add(telephone_number)
+
+            if bound_telephone_form1.is_valid() and bound_telephone_form1.cleaned_data['phone_number']:
+                telephone_number1 = bound_telephone_form1.save()
+                emergency_contact.telephone_numbers.add(telephone_number1)
+
+            emergency_contact.save()
+            student.emergency_contact = emergency_contact
+            student.save()
+
+            return HttpResponseRedirect('/admin/people/student')
+        else:
+            return render(request, self.template_name,
+                          {'telephone_form1': bound_telephone_form, 'telephone_form2': bound_telephone_form1,
+                           'address_form': bound_address_form, 'emergency_contact_form': bound_emergency_contact_form})

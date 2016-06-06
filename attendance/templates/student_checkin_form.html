@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Attendance</title>
+    <script src="https://use.fontawesome.com/60e9181e4b.js"></script>
     <style>
 
         body, div {
@@ -128,11 +129,27 @@
     <form action="" method="post">
     {% csrf_token %}
         {{ form }}
-    <input id="submit_button" type="submit" value="Submit" />
+    <button id="submit_button" type="submit">Submit!</button>
     </form>
     {% endblock %}
 </div>
 </div>
+{% load static %}
+
+<script src="{% static 'static/jquery-2.2.3.min.js' %}"></script>
+<script>
+    var numberOfClicks = 0;
+    $("#submit_button").click( function (event) {
+        if (numberOfClicks == 0) {
+            $("#submit_button").html('<i class="fa fa-refresh fa-spin" aria-hidden="true"></i>');
+        } else {
+            event.preventDefault();
+        }
+        numberOfClicks++;
+    });
+
+{#        $("#submit_button").prop("disabled",true);#}
+</script>
 
 </div>
 </div>

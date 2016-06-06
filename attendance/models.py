@@ -26,3 +26,18 @@ class DailyAttendance(models.Model):
 
     def __str__(self):
         return "Attendance for " + str(self.date.month) + "/" + str(self.date.day) + "/" + str(self.date.year)
+
+
+class DailyStatistics(models.Model):
+    date = models.DateField()
+
+    average_checkin = models.DateTimeField(blank=True, null=True)
+    average_checkin_count = models.IntegerField(blank=True, null=True)
+
+    average_hours_spent = models.FloatField(blank=True, null=True)
+    average_hours_spent_count = models.IntegerField(blank=True, null=True)
+
+    percent_students_present = models.FloatField(blank=True, null=True)
+
+    def __str__(self):
+        return "Stats for " + str(self.date.month) + "/" + str(self.date.day) + "/" + str(self.date.year)

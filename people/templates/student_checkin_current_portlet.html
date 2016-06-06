@@ -1,0 +1,9 @@
+{% load humanize %}
+
+{% block stuff %}
+{% for register in open_registers %}
+
+    <a class="checkin-link" href="/register/close/{{ register.id }}"><div class="checkout"><p>{{ register.student.first_name }} {{ register.student.last_name }} <span class="side-text">{{ register.checkin|naturaltime }} {{ register.current_curriculum_project.name }}</span></p></div></a>
+
+{% endfor %}
+{% endblock %}

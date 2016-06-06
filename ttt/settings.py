@@ -44,6 +44,10 @@ INSTALLED_APPS = [
     'attendance',
     'course',
     'projects',
+    'recruit',
+    'localflavor',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -82,6 +86,14 @@ WSGI_APPLICATION = 'ttt.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'ttt_attendance_dev',
+    #     'USER': 'patrickhsanders',
+    #     'PASSWORD': 'waterfront',
+    #     'HOST': 'db.morethan.ink',
+    #     'PORT': '3306',
+    # }
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
@@ -131,3 +143,22 @@ STATIC_ROOT = os.path.dirname(BASE_DIR) + '/static'
 STATICFILES_DIRS = (
     '/Users/patrick/desktop/django-2/static',
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES':('rest_framework.permissions.IsAdminUser',),
+    # 'PAGE_SIZE': 10
+}
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+SERVER_EMAIL = 'patrick@flag.st'
+DEFAULT_FROM_EMAIL = 'no-reply@flag.st'
+EMAIL_SUBJECT_PREFIX = '[FLAG.ST] '
+MANAGERS = (
+    ('Us','patrick@flag.st'),
+)
+
+EMAIL_HOST = "mail.attendance.flag.st"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = "django_deploy@attendance.flag.st"
+EMAIL_HOST_PASSWORD = "Pc^JDA!b"

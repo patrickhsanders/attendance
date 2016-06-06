@@ -1,0 +1,12 @@
+{% block attendance %}
+
+<div class="container-fluid">
+  <div class="row">
+        <div class="col-md-4"><h2>{{ stats.average_checkin|date:"H:i" }}</h2><p>mean arrival time</p></div>
+        <div class="col-md-4"><h2>{{ stats.average_hours_spent|floatformat:1 }}</h2><p>mean hours spent</p></div>
+        <div class="col-md-4"><h2>{{ stats.percent_students_present|floatformat:"0" }}%</h2><p> of students present</p></div>
+  </div>
+  <div class="row small"><em>Statistics for {{ stats.date|date:"D j F Y" }}</em></div>
+</div>
+
+{% endblock attendance %}
