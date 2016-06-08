@@ -12,6 +12,11 @@ from .forms import RegisterForm
 from projects.models import Project, StudentProject
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
+from rest_framework import viewsets
+from .serializers import PresentStudentSerializer
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 class CloseRegister(PermissionRequiredMixin, View):
     permission_required = 'attendance.add_register'
 
@@ -156,3 +161,11 @@ class DailyAttendanceDetailPortlet(PermissionRequiredMixin, ListView):
         return render(request, 'daily_attendance_portlet.html',
                       {'current_user': current_user, 'active_students': active_students, 'dictionary': dict,
                        'title': daily_attendance.__str__()})
+
+
+class PresentStudentViewSet(viewsets.ModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    queryset = DailyAttendance.objects.filter().order_by('-date')[:1]
+    serializer_class = PresentStudentSerializer

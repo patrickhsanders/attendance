@@ -12,12 +12,14 @@ from people.views import StudentCheckin, StudentList, StudentEmailList, StudentT
 from django.views.generic.base import RedirectView
 from dashboard.views import GenericDashboard, AttendanceDashboard
 from people.views import ContactInfoEditView
+from attendance.views import PresentStudentViewSet
 
 from people import urls as people_urls
 
 router = routers.DefaultRouter()
 router.register(r'student', ActiveStudentViewSet)
-
+router.register(r'attendance', PresentStudentViewSet)
+#
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/dashboard/')),
     url(r'^admin/', admin.site.urls),

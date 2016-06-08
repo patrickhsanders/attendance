@@ -15,6 +15,7 @@
                         <tr>
                             <th>Student</th>
                             <th>Email</th>
+                            <th>Phone</th>
                             <th>Course</th>
                             <th>Current Project</th>
                         </tr>
@@ -104,9 +105,7 @@
 
         $.get("/register/attendance/portlet/stats/")
 			 	.done(function (data, status, xhr) {
-
 					$("#yesterday-stats").html(data);
-
 				})
 				.fail(function (data, status, xhr) {
 
@@ -114,7 +113,6 @@
 				.always(function (data, status, xhr) {
 
 				});
-
 		});
 
 </script>

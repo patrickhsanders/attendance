@@ -16,6 +16,9 @@ from rest_framework import viewsets
 from .serializers import ActiveStudentSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import GenericAPIView
+
+from attendance.models import DailyAttendance
 
 import time
 
@@ -130,6 +133,7 @@ class ActiveStudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.filter(end_date__isnull=True, active=True)
     serializer_class = ActiveStudentSerializer
 
+
 class ContactInfoEditView(PermissionRequiredMixin, View):
     permission_required = 'people.add_student'
     template_name = "student_contact_info.html"
@@ -169,27 +173,27 @@ class EmergencyContactEditView(PermissionRequiredMixin, View):
         emergency_contact_form = EmergencyContactForm(prefix="EmergencyContactForm")
         telephone_form = TelephoneNumberForm(prefix='TelephoneForm1')
         telephone_form1 = TelephoneNumberForm(prefix='TelephoneForm2')
-        address_form = AddressForm(prefix='AddressForm')
 
-        return render(request, self.template_name, {'telephone_form1': telephone_form,'telephone_form2': telephone_form1, 'address_form': address_form, 'emergency_contact_form': emergency_contact_form})
+        return render(request, self.template_name, {'telephone_form1': telephone_form,'telephone_form2': telephone_form1, 'emergency_contact_form': emergency_contact_form})
 
     def post(self, request, student_id):
         bound_emergency_contact_form = EmergencyContactForm(request.POST, prefix="EmergencyContactForm")
         bound_telephone_form = TelephoneNumberForm(request.POST, prefix='TelephoneForm1')
         bound_telephone_form1 = TelephoneNumberForm(request.POST, prefix='TelephoneForm2')
-        bound_address_form = AddressForm(request.POST, prefix='AddressForm')
+        # bound_address_form = AddressForm(request.POST, prefix='AddressForm')
 
-        if bound_telephone_form.is_valid() and bound_address_form.is_valid() and bound_telephone_form.is_valid():
+        if bound_telephone_form.is_valid() and bound_emergency_contact_form.is_valid() :
             student = get_object_or_404(Student, pk=student_id)
 
             telephone_number = bound_telephone_form.save()
 
-            emergency_contact = bound_emergency_contact_form.save(commit=False)
+            emergency_contact = bound_emergency_contact_form.save()
 
-            address = bound_address_form.save()
-            emergency_contact.address = address
-            emergency_contact.save()
+            # if bound_address_form.is_valid():
+                # address = bound_address_form.save()
+                # emergency_contact.address = address
 
+            # emergency_contact.save()
             emergency_contact.telephone_numbers.add(telephone_number)
 
             if bound_telephone_form1.is_valid() and bound_telephone_form1.cleaned_data['phone_number']:
@@ -200,8 +204,8 @@ class EmergencyContactEditView(PermissionRequiredMixin, View):
             student.emergency_contact = emergency_contact
             student.save()
 
-            return HttpResponseRedirect('/admin/people/student')
+            return HttpResponseRedirect('/student/list')
         else:
             return render(request, self.template_name,
                           {'telephone_form1': bound_telephone_form, 'telephone_form2': bound_telephone_form1,
-                           'address_form': bound_address_form, 'emergency_contact_form': bound_emergency_contact_form})
+                            'emergency_contact_form': bound_emergency_contact_form})

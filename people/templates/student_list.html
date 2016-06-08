@@ -1,70 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Attendance</title>
-    <style>
-        table, tr, td, th {
-            border: 1px solid darkgray;
-            border-collapse: collapse;
+{% extends "base.html" %}
 
-        }
+<div class="row">
 
-        tr:nth-child(even) {
-            background-color: lightgray;
-        }
-
-        th {
-            background-color: darkgray;
-        }
-
-        th:first-child {
-            width: 15em;
-        }
-
-        .time {
-            width: 5em;
-        }
-
-        .write-in-name {
-            height: 2em;
-        }
-
-        h1 {
-            color: maroon;
-            margin-left: 40px;
-        }
-</style>
-</head>
-<body>
-<h3>Date:</h3>
-<table width="100%">
-    <tr>
-        <th>Name</th>
-        <th class="time">Time in</th>
-        <th class="time">Time out</th>
-        <th>Current Section / Project </th>
-  </tr>
 
 {% block content %}
+    <table class="table table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Directory Info</th>
+        <th>E911 Info</th>
+  </tr>
 {% for student in student_list %}
     <tr>
-        <td>{{ student.first_name }} {{ student.last_name }} <br></td>
-        <td> </td>
-        <td> </td>
-        <td> </td>
+        <td>{{ student.first_name }} {{ student.last_name }}</td>
+        <td>
+        {% if not student.directory_information %}
+            <a href="/student/{{ student.pk }}/contact-info/edit">Contact Info</a>
+        {% else %}
+            <i class="fa fa-check" aria-hidden="true" style="color:green;"></i>
+        {% endif %}
+        </td>
+
+        <td>
+        {% if not student.emergency_contact %}
+            <a href="/student/{{ student.pk }}/emergency-contact-info/edit">Contact Info</a>
+        {% else %}
+            <i class="fa fa-check" aria-hidden="true" style="color:green;"></i>
+        {% endif %}
+        </td>
+
     </tr>
 
 {% endfor %}
+</table>
 {% endblock %}
 
-<tr class="write-in-name"><td><br></td><td> </td><td> </td><td> </td></tr>
-<tr class="write-in-name"><td><br> </td><td> </td><td> </td><td> </td></tr>
-<tr class="write-in-name"><td><br> </td><td> </td><td> </td><td> </td></tr>
-<tr class="write-in-name"><td><br> </td><td> </td><td> </td><td> </td></tr>
-<tr class="write-in-name"><td><br> </td><td> </td><td> </td><td> </td></tr>
-
-</table>
-
-</body>
-</html>
+</div>

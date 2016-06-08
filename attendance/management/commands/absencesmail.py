@@ -17,14 +17,14 @@ class Command(BaseCommand):
         present_students = [register.student for register in today_registers]
         absent_students = [student for student in active_students if student not in present_students]
 
-        recipients = ["ps@turntotech.io",]
+        recipients = ["teddy@turntotech.io","ps@turntotech.io"]
         body_content = "Dear Teddy, the following students are absent today: \n\n"
 
         for student in absent_students:
             body_content += student.first_name + " " + student.last_name + "\n"
 
         try:
-            send_mail("Absent Students",body_content,"patrick@flat.st",recipients)
+            send_mail("[TTT] Absent Students",body_content,"ps@turntotech.io",recipients)
 
         except BadHeaderError:
             self.add_error(None, ValidationError(

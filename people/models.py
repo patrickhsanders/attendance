@@ -62,7 +62,7 @@ class EmergencyContact(models.Model):
     first_name = models.CharField(max_length=31)
     last_name = models.CharField(max_length=31)
     telephone_numbers = models.ManyToManyField(TelephoneNumber, blank=True)
-    address = models.ForeignKey(Address, blank=True)
+    # address = models.ForeignKey(Address, blank=True, null=True)
     relationship = models.CharField(max_length=31, choices=RELATIONSHIP_CHOICES)
 
     def __str__(self):
