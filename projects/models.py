@@ -1,20 +1,22 @@
 from __future__ import unicode_literals
+from datetime import date
 
 from django.db import models
-
-from datetime import date
 
 from course.models import Course
 from people.models import Student
 
 GRADE_OPTIONS = (("a", "A"), ("b", "B"), ("c", "C"), ("d", "D"), ("f", "F"),)
 
-# Create your models here.
+
 class Project(models.Model):
-    # COURSE_OPTIONS = (('ios','iOS Full-time'),('android','Android Full-time'),('swift','iOS Part-time (Swift)'))
     name = models.CharField(max_length=63)
     weight = models.IntegerField(help_text="This value is used to order ordering assignments. iOS are 100s, android 200s")
-    course = models.ForeignKey(Course)
+    course = models.ForeignKey(Course, related_name="project")
+    deprecated = models.BooleanField(default=False)
+
+    estimated_completion_days = models.IntegerField(default=0)
+    google_drive_folder_reference = models.CharField(max_length=63,blank=True,null=True)
 
     def __str__(self):
         return self.name + "(" + self.course.name + ")"
@@ -31,23 +33,3 @@ class StudentProject(models.Model):
 
     def __str__(self):
         return self.student.first_name + " " + self.student.last_name + " (" + self.project.name + ")"
-
-#
-# class Test(models.Model):
-#
-#     name = models.CharField(max_length=63)
-#     weight = models.IntegerField(help_text="This value is used to order ordering assignments. iOS are 100s, android 200s")
-#
-#     def __str__(self):
-#         return self.name
-#
-# class StudentTest(models.Model):
-#     student = models.ForeignKey(Student)
-#     test = models.ForeignKey(Test)
-#     date_handed_out = models.DateField(default=date.today)
-#     date_turned_in = models.DateTimeField(blank=True)
-#
-#     grade = models.CharField(max_length=7, choices=GRADE_OPTIONS, blank=True)
-#
-#     def __str__(self):
-#         return self.student.first_name + " " + self.student.last_name + " (" + self.test.name + ")"

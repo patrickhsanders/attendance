@@ -1,10 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from attendance.models import Register, DailyStatistics
 from people.models import Student
-from django.utils import timezone
-from datetime import datetime, timedelta
-
-from ttt.settings import TIME_ZONE
+from datetime import datetime
 
 class Command(BaseCommand):
     help = "Calculates the average arrival time of students."

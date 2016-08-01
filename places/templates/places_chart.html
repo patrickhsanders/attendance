@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid content">
+    <div class="row">
+        <div class="col-md-12 students">
+        <h1>{{ student.first_name }} {{ student.last_name }}</h1></div>
+        </div>
+    <div class="row">
+
+        <div class="col-md-12 students">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-columns" aria-hidden="true"></i> Places</h3></div>
+                <div class="panel-body">
+
+                    <table class="table table-bordered" id="west">
+                    <tbody>
+                        <tr>
+                            {% for place in west|slice:":6" %}
+                                <td class="col-md-1"><p><strong><a href="/student/{{ place.student.pk }}/">{{ place.student.first_name }}</a></strong><br>
+                                {{ place.student.last_name }}</p>
+                                {% if place.computer != None %}
+                                   <br>
+                                    <p class="bg-info text-center"><i class="fa fa-desktop" aria-hidden="true"></i> {{ place.computer.name }}<br /> {{ place.computer.computer_model }}</p>
+                                {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+
+                        <tr>
+                            {% for place in west|slice:"6:12" %}
+                                <td class="col-md-1"><p><strong><a href="/student/{{ place.student.pk }}/">{{ place.student.first_name }}</a></strong><br>
+                                {{ place.student.last_name }}</p>
+                                {% if place.computer != None %}
+                                   <br>
+                                    <p class="bg-info text-center"><i class="fa fa-desktop" aria-hidden="true"></i> {{ place.computer.name }}<br /> {{ place.computer.computer_model }}</p>
+                                {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-bordered" id="middle">
+                    <tbody>
+                        <tr>
+                            {% for place in middle|slice:":6" %}
+                                <td class="col-md-1"><p><strong><a href="/student/{{ place.student.pk }}/">{{ place.student.first_name }}</a></strong><br>
+                                {{ place.student.last_name }}</p>
+                                {% if place.computer != None %}
+                                   <br>
+                                    <p class="bg-info text-center"><i class="fa fa-desktop" aria-hidden="true"></i> {{ place.computer.name }}<br /> {{ place.computer.computer_model }}</p>
+                                {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+
+                        <tr>
+                            {% for place in middle|slice:"6:12" %}
+                                <td class="col-md-1"><p><strong><a href="/student/{{ place.student.pk }}/">{{ place.student.first_name }}</a></strong><br>
+                                {{ place.student.last_name }}</p>
+                                {% if place.computer != None %}
+                                   <br>
+                                    <p class="bg-info text-center"><i class="fa fa-desktop" aria-hidden="true"></i> {{ place.computer.name }}<br /> {{ place.computer.computer_model }}</p>
+                                {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                    <table class="table table-bordered" id="east">
+                    <tbody>
+                        <tr>
+                            {% for place in east|slice:":6" %}
+                                <td class="col-md-1"><p><strong><a href="/student/{{ place.student.pk }}/">{{ place.student.first_name }}</a></strong><br>
+                                {{ place.student.last_name }}</p>
+                                {% if place.computer != None %}
+                                   <br>
+                                    <p class="bg-info text-center"><i class="fa fa-desktop" aria-hidden="true"></i> {{ place.computer.name }}<br /> {{ place.computer.computer_model }}</p>
+                                {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+
+                        <tr>
+                            {% for place in east|slice:"6:12" %}
+                                <td class="col-md-1"><p><strong><a href="/student/{{ place.student.pk }}/">{{ place.student.first_name }}</a></strong><br>
+                                {{ place.student.last_name }}</p>
+                                {% if place.computer != None %}
+                                   <br>
+                                    <p class="bg-info text-center"><i class="fa fa-desktop" aria-hidden="true"></i> {{ place.computer.name }}<br /> {{ place.computer.computer_model }}</p>
+                                {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

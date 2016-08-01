@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid content">
+    <div class="row">
+        <div class="col-md-12 students">
+        <h1>{{ student.first_name }} {{ student.last_name }}</h1></div>
+        </div>
+    <div class="row">
+
+        <div class="col-md-8 students">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-file-code-o" aria-hidden="true"></i> Curriculum</h3></div>
+                <div class="panel-body">
+                    <p><strong>Course:</strong> {{ student.course.name }}</p>
+                    <p><strong>Start Date:</strong> {{ student.start_date }}</p>
+                    <p><strong>Current Project:</strong> {{ student.current_project.name }}</p>
+                </div>
+                    <table class="table" id="active-students">
+
+                        <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Started</th>
+                            <th>Days</th>
+                            <th>Hours</th>
+                            <th>Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for project in projects %}
+                        <tr>
+                            <td>{{ project.project.name }}</td>
+                            <td>{{ project.date_started }}</td>
+                            <td>{{ project.derived_days }}</td>
+                            <td>{{ project.derived_hours|floatformat:0 }}</td>
+                            <td>{{ project.grade }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-calendar" aria-hidden="true"></i> Attendance Record</h3></div>
+                    <table class="table" id="active-students">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Started</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for day in attendance %}
+                        <tr {% if day.status == "Present" %} class="success"{% endif %}   >
+                            <td>{{ day.day|date:"D d M Y" }}</td>
+                            <td>{{ day.status }} {{ day.note }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title">Notified Absences</h3></div>
+                <table class="table" id="active-students">
+                        <thead>
+                        <tr>
+                            <th>Start</th>
+                            <th>End</th>
+                            <th>Reason</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for day in excused_absences %}
+                        <tr {% if day.status == "Present" %} class="success"{% endif %}   >
+                            <td>{{ day.start_date|date:"D d M Y" }}</td>
+                            <td>{{ day.end_date|date:"D d M Y" }}</td>
+                            <td>{{ day.get_reason_display }} </td>
+                            <td>{% if day.note != None %}{{ day.note.text }}{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+{#    student = models.ForeignKey(Student)#}
+{#    start_date = models.DateField(default=timezone.now)#}
+{#    end_date = models.DateField(default=timezone.now, blank=True)#}
+{#    reason = models.CharField(max_length=31, choices=REASON_CHOICES, blank=True, null=True)#}
+{#    note = models.ForeignKey(Note, blank=True, null=True)#}
+
+
+        <div class="col-md-4 students">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-mobile" aria-hidden="true"></i> Contact Information</h3></div>
+                <div class="panel-body">
+                <p><strong>Email:</strong>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ student.email }}">
+                            {{ student.email }}
+                        </a>
+                    </p>
+                {% if student.directory_information != None %}
+                    <p><strong>Phone:</strong>
+                        <a href="tel://{{ student.directory_information.phone_number.phone_number }}">
+                            {{ student.directory_information.phone_number.phone_number }}
+                        </a>
+                    </p>
+
+                    <p><strong>Address:</strong>
+                        <a href="http://maps.google.com/?q={{ student.directory_information.address.street_address }}, {{ student.directory_information.address.city }}">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i></a><br>
+                    {{ student.directory_information.address.street_address }} {{ student.directory_information.address.apt }}<br>
+                    {{ student.directory_information.address.city }},
+                    {{ student.directory_information.address.state }}<br>
+                    {{ student.directory_information.address.zip }}
+                    </p>
+                {% else %}
+                    <p>No phone and address information. <a href="/student/{{ student.pk }}/contact-info/edit">Add</a></p>
+                {% endif %}
+                </div>
+            </div>
+{#        </div>#}
+{##}
+{##}
+{#        <div class="col-md-4 students">#}
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> E911 Information</h3></div>
+                <div class="panel-body">
+                {% if student.emergency_contact != None %}
+                    <p><strong>Name:</strong> {{ student.emergency_contact.first_name }} {{ student.emergency_contact.last_name }}</p>
+                    <p><strong>Relationship:</strong> {{ emergency_contact_relationship }}</p>
+                    <p><strong>Phone:</strong>
+                        <ul class="list-inline">
+                        {% for phone in student.emergency_contact.telephone_numbers.all %}
+                            <li><a href="tel://{{ phone.phone_number }}">
+                            {{ phone.phone_number }}
+                            </a></li>
+                        {% endfor %}
+                        </ul>
+                    </p>
+                {% else %}
+                    <p>No emergency contact. <a href="/student/{{ student.pk }}/emergency-contact-info/edit">Add</a></p>
+                {% endif %}
+                </div>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-money" aria-hidden="true"></i> Finance</h3></div>
+                <div class="panel-body">
+                {% if student.tuition != None %}
+                    <p><strong>Tuition:</strong> ${{ student.tuition.tuition_total|floatformat:2 }}</p>
+                    <p><strong>Paid In Full:</strong> {{ student.tuition.payed_in_full|yesno:"Yes,No" }}</p>
+                    <p><strong>Payments: </strong>
+                    <table class="table">
+                    <thead>
+                        <td>Date</td>
+                        <td>Amount</td>
+                        <td>Type</td>
+                        <td>Completed</td>
+                    </thead>
+                    {% for payment in student.tuition.payments.all %}
+                        <tr>
+                            <td>{{ payment.date }}</td>
+                            <td>${{ payment.amount|floatformat:2 }}</td>
+                            <td>{{ payment.get_type_display }}</td>
+                            <td>{{ payment.completed|yesno:"yes,no" }}</td>
+                        </tr>
+                    {% empty %}
+
+                    {% endfor %}
+                    </table>
+                    </p>
+                    <p><a href="/finance/{{ student.tuition.pk }}/payment/add/?next={{ request.path }}">Add Payment</a></p>
+
+                    <p><strong>Notes:</strong></p>
+                    <table class="table">
+                        {% for note in student.tuition.notes.all %}
+                        <tr>
+                            <td><p>{{ note.author }} <small >
+                                {% if note.date_added != note.last_modified %}
+                                    Modified: {{ note.last_modified }}
+                                {% else %}
+                                    Added: {{ note.date_added }}
+                                {% endif %}
+                                </small>
+                                <a href="/note/{{ note.pk }}/delete/?next={{ request.path }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                <a href="/note/{{ note.pk }}/edit/?next={{ request.path }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+
+                                </p><p>
+                                {{ note.text }}</td></p>
+                        </tr>
+                        {% empty %}
+                            <tr>No notes</tr>
+                        {% endfor %}
+                    </table>
+
+
+
+
+
+                {% else %}
+                    <p>No tuition information. <a href="/student/{{ student.pk }}/tuition/edit">Add</a></p>
+                {% endif %}
+                </div>
+            </div>
+
+{#        </div>#}
+{##}
+{#        <div class="col-md-4 students">#}
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-sticky-note" aria-hidden="true"></i> Notes</div>
+                <table class="table">
+                        {% for note in student.notes.all %}
+                        <tr>
+                            <td><p>{{ note.author }} <small >
+                                {% if note.date_added != note.last_modified %}
+                                    Modified: {{ note.last_modified }}
+                                {% else %}
+                                    Added: {{ note.date_added }}
+                                {% endif %}
+                                </small>
+                                <a href="/note/{{ note.pk }}/delete/?next={{ request.path }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                <a href="/note/{{ note.pk }}/edit/?next={{ request.path }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+
+                                </p><p>
+                                {{ note.text }}</td></p>
+                        </tr>
+                        {% empty %}
+                        {% endfor %}
+                </table>
+                <div class="panel-body">
+                <form action="/student/{{ student.pk }}/add-note/?next={{ request.path }}" method="post">
+                    {% csrf_token %}
+                        {{ note_form.as_p }}
+                        <button>Add note</button>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Education</h3></div>
+                <div class="panel-body">
+                {% if student.education != None %}
+                    <p><strong>Has CS Degree:</strong> {{ student.education.has_cs_degree }}<br/>
+                    <strong>Still a Student:</strong> {{ student.education.still_a_student|yesno:"Yes,No" }}</p>
+                    {% for degree in student.education.education.all %}
+                        <p><strong>Degree:</strong> {{ degree.get_degree_display }}<br/>
+                            <strong>Field of Study:</strong> {{ degree.field_of_study }}<br/>
+                            <strong>Institution:</strong> {{ degree.institution }}<br />
+                            <strong>Dates:</strong> {% if degree.start_date != None %}{{ degree.start_date }}{% endif %} - {% if degree.end_date != None %}{{ degree.end_date }}{% endif %}</p>
+                    {% endfor %}
+                {% else %}
+                    <p>No education info on file. <a href="/student/{{ student.pk }}/education-info/edit/?next=/student/{{ student.pk }}/">Add</a></p>
+                {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

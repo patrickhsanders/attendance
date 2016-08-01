@@ -1,21 +1,23 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View, ListView
-from django.contrib import admin
-from django.db.models import Q
-
-from people.models import Student
-from .models import DailyAttendance, DailyStatistics
-from attendance.models import Register
 from django.utils import timezone
-from django.core import validators
-from .forms import RegisterForm
-from projects.models import Project, StudentProject
-from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from rest_framework import viewsets
-from .serializers import PresentStudentSerializer
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+
+from attendance.models import Register
+from note.forms import NoteForm
+from people.models import Student
+from projects.models import Project, StudentProject
+
+from .forms import ExcusedAbsenceForm, RegisterForm
+from .models import DailyAttendance, DailyStatistics
+from .serializers import PresentStudentSerializer
+
 
 class CloseRegister(PermissionRequiredMixin, View):
     permission_required = 'attendance.add_register'
@@ -117,10 +119,10 @@ class DailyAttendanceListPortlet(PermissionRequiredMixin, ListView):
     model = DailyAttendance
 
     def get_queryset(self):
-        return DailyAttendance.objects.all().order_by('-date')[:15]
+        return DailyAttendance.objects.all().order_by('-date')
 
 class DailyAttendanceList(PermissionRequiredMixin, ListView):
-    permission_required = 'attendance.delete_register'
+    permission_required = 'attendance.add_register'
 
     template_name = "daily_attendance_list.html"
     model = DailyAttendance
@@ -161,6 +163,36 @@ class DailyAttendanceDetailPortlet(PermissionRequiredMixin, ListView):
         return render(request, 'daily_attendance_portlet.html',
                       {'current_user': current_user, 'active_students': active_students, 'dictionary': dict,
                        'title': daily_attendance.__str__()})
+
+class CreateExcusedAbsense(PermissionRequiredMixin, View):
+    permission_required = 'attendance.add_register'
+    template_name = 'create_excused_absence.html'
+    default_redirect = '/'
+
+    def get(self, request):
+        absence_form = ExcusedAbsenceForm(prefix='absence_form')
+        note_form = NoteForm(prefix='note_form')
+
+        return render(request, self.template_name, {'absence_form': absence_form, 'note_form': note_form })
+
+    def post(self, request):
+        absence_form = ExcusedAbsenceForm(request.POST, prefix='absence_form')
+        note_form = NoteForm(request.POST, prefix='note_form')
+
+
+        if absence_form.is_valid():
+            obj_ = absence_form.save()
+
+            if note_form.is_valid():
+                note = note_form.save(commit=False)
+                if note.text != "":
+                    note.author = request.user
+                    note.save()
+                    obj_.note = note
+                    obj_.save()
+
+        redirect = request.GET.get('next') if request.GET.get('next') != None else self.default_redirect
+        return HttpResponseRedirect(redirect)
 
 
 class PresentStudentViewSet(viewsets.ModelViewSet):

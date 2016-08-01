@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid content">
+    <div class="row">
+        <div class="col-md-8 students">
+
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading"><h3 class="panel-title">Current Students <a href="/student/list/email/"><i class="fa fa-envelope" aria-hidden="true"></i></a></h3></div>
+
+                <!-- Table -->
+                <table class="table" id="active-students">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Course</th>
+                            <th>Current Project</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="fa fa-cog fa-spin fa-3x fa-fw margin-bottom"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="col-md-4 starting_soon">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Absent Today
+                    <small><a href="/register/absence/create?next=/">Add</a></small></h3>
+                </div>
+                <div class="panel-body" id="starting-soon">
+
+                <table>
+                    {% for absence in excused_absences %}
+                        <tr><td>
+                            <p><strong>{{ absence.student.first_name }} {{ absence.student.last_name }}</strong> <br />
+                                {{ absence.get_reason_display }} until {{ absence.end_date }}</p>
+                        </td></tr>
+                    {% endfor %}
+                </table>
+
+                </div>
+            </div>
+
+
+{#            <div class="panel panel-default">#}
+{#                <div class="panel-heading">#}
+{#                    <h3 class="panel-title"><i class="fa fa-pie-chart" aria-hidden="true"> Yesterday's Stats</i></h3>#}
+{#                </div>#}
+{#                <div class="panel-body" id="yesterday-stats">#}
+{#                    <i class="fa fa-cog fa-spin fa-3x fa-fw margin-bottom"></i>#}
+{#                </div>#}
+{#            </div>#}
+
+{#            <div class="panel panel-default">#}
+{#                <div class="panel-heading">#}
+{#                    <h3 class="panel-title"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Starting Soon</h3>#}
+{#                </div>#}
+{#                <div class="panel-body" id="starting-soon">#}
+{#                    <i class="fa fa-cog fa-spin fa-3x fa-fw margin-bottom"></i>#}
+{#                </div>#}
+{#            </div>#}
+
+
+{#            <div class="panel panel-default">#}
+{#                <div class="panel-heading">#}
+{#                    <h3 class="panel-title"><i class="fa fa-users" aria-hidden="true"></i> Attendance</h3>#}
+{#                </div>#}
+{#                <div class="panel-body" id="attendance-previous-three-weeks">#}
+{#                    <i class="fa fa-cog fa-spin fa-3x fa-fw margin-bottom"></i>#}
+{#                </div>#}
+{#            </div>#}
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $( document ).ready(function() {
+
+        $.get("/student/list/portlet")
+			 	.done(function (data, status, xhr) {
+					$("#active-students tbody").html(data);
+				})
+				.fail(function (data, status, xhr) {
+
+				})
+				.always(function (data, status, xhr) {
+
+				});
+
+{#         $.get("/student/list/starting_soon/portlet")#}
+{#			 	.done(function (data, status, xhr) {#}
+{##}
+{#					$("#starting-soon").html(data);#}
+{##}
+{#				})#}
+{#				.fail(function (data, status, xhr) {#}
+{##}
+{#				})#}
+{#				.always(function (data, status, xhr) {#}
+{##}
+{#				});#}
+        $.get("/register/attendance/portlet/")
+			 	.done(function (data, status, xhr) {
+
+					$("#attendance-previous-three-weeks").html(data);
+
+				})
+				.fail(function (data, status, xhr) {
+
+				})
+				.always(function (data, status, xhr) {
+
+				});
+
+{#        $.get("/register/attendance/portlet/stats/")#}
+{#			 	.done(function (data, status, xhr) {#}
+{#					$("#yesterday-stats").html(data);#}
+{#				})#}
+{#				.fail(function (data, status, xhr) {#}
+{##}
+{#				})#}
+{#				.always(function (data, status, xhr) {#}
+{##}
+{#				});#}
+		});
+
+</script>
+{% endblock %}

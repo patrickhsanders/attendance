@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+<div class="row">
+
+{% block content %}
+
+    <div class="col-md-8 students">
+
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading"><h3 class="panel-title">Students Looking for Jobs</h3></div>
+
+                <!-- Table -->
+                <table class="table" id="active-students">
+                    <tbody>
+                    {% for student in students_with_status %}
+                        <tr>
+                        <td><strong>{{ student.first_name }} {{ student.last_name }}</strong>
+                            <a href="/student/{{ student.pk }}/job-status/edit/"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <a href="/student/{{ student.pk }}/job-status/delete/"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <br/>
+
+                        {{ student.job_search_status }}
+
+                        </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    <div class="col-md-4 students">
+
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading"><h3 class="panel-title">Students Not Looking for Jobs</h3></div>
+
+                <!-- Table -->
+                <table class="table" id="active-students">
+                    <tbody>
+                    {% for student in students_without_status %}
+                        <tr>
+                        <td>{{ student.first_name }} {{ student.last_name }}
+                        <a href="/student/{{ student.pk }}/job-status/edit/"><i class="fa fa-plus" aria-hidden="true"></i></a>
+
+                        </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+{% endblock %}
+
+</div>

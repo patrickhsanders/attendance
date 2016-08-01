@@ -1,4 +1,3 @@
-from .models import Student
 from rest_framework import serializers
 from attendance.models import DailyAttendance
 from people.serializers import ActiveStudentSerializer

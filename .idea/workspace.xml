@@ -2,20 +2,76 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54e4c85f-33ec-448c-a496-6131f66ebd27" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/attendance/serializers.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/db.sqlite3.zip" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/attendance/templates/create_excused_absence.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dashboard/templates/actions_dashboard.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/finance/forms.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/finance/templates/payment.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/finance/urls.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/note/forms.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/note/templates/create_update_note.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/note/templates/delete_note_confirmation.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/note/urls.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/people/templates/student_additional_information.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/people/templates/student_completion_calendar.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/people/templates/student_contract.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/people/templates/student_create_confirmation.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/people/templates/student_detail.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/people/templates/student_educational_info.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/people/templates/student_job_status_delete_confirmation.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/people/templates/student_job_status_edit.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/people/templates/student_job_status_list.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/people/templates/student_start.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/people/templates/student_tuition.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/places/templates/places_chart.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/projects/serializers.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/projects/templates/project_list_view.html" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dashboard/models.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/help/help/settings.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/help/help/urls.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/help/help/wsgi.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/help/manage.py" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/help/help/__init__.py" afterPath="$PROJECT_DIR$/course/serializers.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ttt.iml" afterPath="$PROJECT_DIR$/.idea/ttt.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/admin.py" afterPath="$PROJECT_DIR$/assets/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/models.py" afterPath="$PROJECT_DIR$/assets/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/attendance/admin.py" afterPath="$PROJECT_DIR$/attendance/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/attendance/forms.py" afterPath="$PROJECT_DIR$/attendance/forms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/attendance/management/commands/absencesmail.py" afterPath="$PROJECT_DIR$/attendance/management/commands/absencesmail.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/attendance/management/commands/averagearrive.py" afterPath="$PROJECT_DIR$/attendance/management/commands/averagearrive.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/attendance/models.py" afterPath="$PROJECT_DIR$/attendance/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/attendance/serializers.py" afterPath="$PROJECT_DIR$/attendance/serializers.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/attendance/urls.py" afterPath="$PROJECT_DIR$/attendance/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/attendance/views.py" afterPath="$PROJECT_DIR$/attendance/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/course/admin.py" afterPath="$PROJECT_DIR$/course/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/course/models.py" afterPath="$PROJECT_DIR$/course/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/course/views.py" afterPath="$PROJECT_DIR$/course/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dashboard/templates/base.html" afterPath="$PROJECT_DIR$/dashboard/templates/base.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dashboard/templates/student_dashboard.html" afterPath="$PROJECT_DIR$/dashboard/templates/student_dashboard.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dashboard/views.py" afterPath="$PROJECT_DIR$/dashboard/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/admin.py" afterPath="$PROJECT_DIR$/finance/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/models.py" afterPath="$PROJECT_DIR$/finance/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/views.py" afterPath="$PROJECT_DIR$/finance/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/note/admin.py" afterPath="$PROJECT_DIR$/note/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/note/apps.py" afterPath="$PROJECT_DIR$/note/apps.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/note/models.py" afterPath="$PROJECT_DIR$/note/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/note/views.py" afterPath="$PROJECT_DIR$/note/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/people/admin.py" afterPath="$PROJECT_DIR$/people/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/people/forms.py" afterPath="$PROJECT_DIR$/people/forms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/people/models.py" afterPath="$PROJECT_DIR$/people/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/people/serializers.py" afterPath="$PROJECT_DIR$/people/serializers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/people/templates/student_emergency_contact_info.html" afterPath="$PROJECT_DIR$/people/templates/student_emergency_contact_info.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/people/templates/student_list.html" afterPath="$PROJECT_DIR$/people/templates/student_list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/people/templates/student_list_portlet.html" afterPath="$PROJECT_DIR$/people/templates/student_list_portlet.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/people/urls.py" afterPath="$PROJECT_DIR$/people/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/people/views.py" afterPath="$PROJECT_DIR$/people/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/places/models.py" afterPath="$PROJECT_DIR$/places/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/places/views.py" afterPath="$PROJECT_DIR$/places/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/projects/admin.py" afterPath="$PROJECT_DIR$/projects/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/projects/models.py" afterPath="$PROJECT_DIR$/projects/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/projects/views.py" afterPath="$PROJECT_DIR$/projects/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/recruit/models.py" afterPath="$PROJECT_DIR$/recruit/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ttt/settings.py" afterPath="$PROJECT_DIR$/ttt/settings.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ttt/urls.py" afterPath="$PROJECT_DIR$/ttt/urls.py" />
     </list>
     <ignored path="ttt.iws" />
@@ -40,64 +96,12 @@
     <favorites_list name="ttt" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/people/models.py">
+    <leaf>
+      <file leaf-file-name="apps.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dashboard/apps.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="19" column="16" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/note/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="52" selection-start-line="13" selection-start-column="52" selection-end-line="13" selection-end-column="52" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="student_list_portlet.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/people/templates/student_list_portlet.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="student_dashboard.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dashboard/templates/student_dashboard.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-890">
-              <caret line="26" column="28" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/people/forms.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="17" column="32" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="student_checkin_form.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/attendance/templates/student_checkin_form.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
-              <caret line="145" column="12" selection-start-line="145" selection-start-column="12" selection-end-line="145" selection-end-column="35" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -108,8 +112,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -119,57 +123,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ttt/templates/base.html" />
-        <option value="$PROJECT_DIR$/people/templates/student_list_starting_soon.html" />
-        <option value="$PROJECT_DIR$/dashboard/templates/student_dashboard.py" />
-        <option value="$PROJECT_DIR$/attendance/templatetags/__init__.py" />
-        <option value="$PROJECT_DIR$/attendance/templatetags/dictionary_extra.py" />
-        <option value="$PROJECT_DIR$/attendance/templates/daily_attendance_stats_portlet.html" />
-        <option value="$PROJECT_DIR$/people/templates/student_checkin_current_portlet.html" />
-        <option value="$PROJECT_DIR$/attendance/templates/daily_attendance_portlet.html" />
-        <option value="$PROJECT_DIR$/attendance/templates/daily_attendance_detail.html" />
+        <option value="$PROJECT_DIR$/places/admin.py" />
+        <option value="$PROJECT_DIR$/note/admin.py" />
+        <option value="$PROJECT_DIR$/note/models.py" />
+        <option value="$PROJECT_DIR$/note/templates/create_update_note.html" />
+        <option value="$PROJECT_DIR$/note/views.py" />
+        <option value="$PROJECT_DIR$/note/urls.py" />
+        <option value="$PROJECT_DIR$/note/forms.py" />
+        <option value="$PROJECT_DIR$/projects/views.py" />
         <option value="$PROJECT_DIR$/attendance/urls.py" />
-        <option value="$PROJECT_DIR$/dashboard/views.py" />
-        <option value="$PROJECT_DIR$/attendance/templates/daily_attendance_detail_portlet.html" />
-        <option value="$PROJECT_DIR$/dashboard/templates/attendance_dashboard.html" />
+        <option value="$PROJECT_DIR$/attendance/forms.py" />
+        <option value="$PROJECT_DIR$/attendance/templates/create_excused_absence.html" />
+        <option value="$PROJECT_DIR$/attendance/management/commands/absencesmail.py" />
+        <option value="$PROJECT_DIR$/events/models.py" />
         <option value="$PROJECT_DIR$/attendance/models.py" />
-        <option value="$PROJECT_DIR$/dashboard/templates/base.html" />
         <option value="$PROJECT_DIR$/attendance/admin.py" />
         <option value="$PROJECT_DIR$/attendance/management/commands/averagearrive.py" />
-        <option value="$PROJECT_DIR$/people/migrations/0008_student_current_project.py" />
-        <option value="$PROJECT_DIR$/people/templates/student_checkin_list.html" />
-        <option value="$PROJECT_DIR$/course/models.py" />
-        <option value="$PROJECT_DIR$/finance/models.py" />
-        <option value="$PROJECT_DIR$/people/migrations/0009_migrate_directory_information.py" />
-        <option value="$PROJECT_DIR$/people/migrations/0009_auto_20160521_1823.py" />
-        <option value="$PROJECT_DIR$/people/migrations/0009_auto_20160521_1837.py" />
-        <option value="$PROJECT_DIR$/people/migrations/0009_auto_20160521_1855.py" />
-        <option value="$PROJECT_DIR$/recruit/models.py" />
-        <option value="$PROJECT_DIR$/recruit/admin.py" />
-        <option value="$PROJECT_DIR$/attendance/templates/student_checkin_detail.html" />
-        <option value="$PROJECT_DIR$/attendance/templates/student_checkin_form.html" />
-        <option value="$PROJECT_DIR$/people/migrations/0013_auto_20160526_2232.py" />
-        <option value="$PROJECT_DIR$/people/admin.py" />
-        <option value="$PROJECT_DIR$/swapfiles.py" />
-        <option value="$PROJECT_DIR$/people/templates/student_contact_info.html.py" />
-        <option value="$PROJECT_DIR$/people/templates/student_contact_info.html.html" />
-        <option value="$PROJECT_DIR$/ttt/settings.py" />
-        <option value="$PROJECT_DIR$/people/student_emergency_contact_info.html" />
-        <option value="$PROJECT_DIR$/people/urls.py" />
-        <option value="$PROJECT_DIR$/people/forms.py" />
-        <option value="$PROJECT_DIR$/people/templates/student_contact_info.html" />
-        <option value="$PROJECT_DIR$/people/templates/student_list.html" />
-        <option value="$PROJECT_DIR$/people/serializers.py" />
-        <option value="$PROJECT_DIR$/ttt/urls.py" />
-        <option value="$PROJECT_DIR$/attendance/serializers.py" />
+        <option value="$PROJECT_DIR$/dashboard/templates/actions_dashboard.html" />
+        <option value="$PROJECT_DIR$/projects/templates/project_list_view.html" />
+        <option value="$PROJECT_DIR$/dashboard/views.py" />
         <option value="$PROJECT_DIR$/attendance/views.py" />
-        <option value="$PROJECT_DIR$/attendance/management/commands/absencesmail.py" />
-        <option value="$PROJECT_DIR$/people/models.py" />
-        <option value="$PROJECT_DIR$/people/views.py" />
-        <option value="$PROJECT_DIR$/people/templates/student_emergency_contact_info.html" />
-        <option value="$PROJECT_DIR$/people/templates/student_list_portlet.html" />
+        <option value="$PROJECT_DIR$/people/templates/student_start.html" />
+        <option value="$PROJECT_DIR$/dashboard/templates/base.html" />
+        <option value="$PROJECT_DIR$/people/admin.py" />
+        <option value="$PROJECT_DIR$/people/templates/student_additional_information.html" />
+        <option value="$PROJECT_DIR$/people/templates/student_educational_info.html" />
+        <option value="$PROJECT_DIR$/people/templates/student_contract.html" />
+        <option value="$PROJECT_DIR$/people/templates/student_create_confirmation.html" />
+        <option value="$PROJECT_DIR$/people/forms.py" />
         <option value="$PROJECT_DIR$/dashboard/templates/student_dashboard.html" />
-        <option value="$PROJECT_DIR$/note/models.py" />
+        <option value="$PROJECT_DIR$/projects/models.py" />
+        <option value="$PROJECT_DIR$/projects/student_completion_calendar.html" />
+        <option value="$PROJECT_DIR$/projects/admin.py" />
+        <option value="$PROJECT_DIR$/people/templates/student_completion_calendar.html" />
+        <option value="$PROJECT_DIR$/places/templates/places_chart.html" />
+        <option value="$PROJECT_DIR$/assets/models.py" />
+        <option value="$PROJECT_DIR$/assets/admin.py" />
+        <option value="$PROJECT_DIR$/places/models.py" />
+        <option value="$PROJECT_DIR$/ttt/settings.py" />
+        <option value="$PROJECT_DIR$/people/models.py" />
+        <option value="$PROJECT_DIR$/people/templates/student_finance.html" />
+        <option value="$PROJECT_DIR$/people/urls.py" />
+        <option value="$PROJECT_DIR$/people/templates/student_tuition.html" />
+        <option value="$PROJECT_DIR$/ttt/urls.py" />
+        <option value="$PROJECT_DIR$/finance/urls.py" />
+        <option value="$PROJECT_DIR$/finance/templates/payment.html" />
+        <option value="$PROJECT_DIR$/finance/forms.py" />
+        <option value="$PROJECT_DIR$/finance/views.py" />
+        <option value="$PROJECT_DIR$/people/views.py" />
+        <option value="$PROJECT_DIR$/people/templates/student_detail.html" />
+        <option value="$PROJECT_DIR$/finance/admin.py" />
+        <option value="$PROJECT_DIR$/finance/models.py" />
       </list>
     </option>
   </component>
@@ -182,7 +186,7 @@
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1366" />
-    <option name="height" value="701" />
+    <option name="height" value="705" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -228,7 +232,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -247,13 +250,70 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="people" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="finance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../gdrive" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
@@ -261,13 +321,14 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/people/templates" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/people/templates" />
+      <recent name="$PROJECT_DIR$/places" />
       <recent name="$PROJECT_DIR$/dashboard/templates" />
       <recent name="$PROJECT_DIR$/templates" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/people/templates" />
     </key>
   </component>
   <component name="RunManager" selected="Django server.ttt">
@@ -547,12 +608,12 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1366" height="701" extended-state="0" />
-    <editor active="false" />
+    <frame x="0" y="23" width="1366" height="705" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27232796" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21961933" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35062894" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -565,7 +626,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328125" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
@@ -574,16 +635,16 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328125" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27232796" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22172949" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328125" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -603,15 +664,89 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="7" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/people/views.py</url>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="django-line">
+          <url>file://$PROJECT_DIR$/people/templates/student_completion_calendar.html</url>
+          <line>2</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="12" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/recruit/admin.py">
+    <entry file="file://$PROJECT_DIR$/dashboard/templates/actions_dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
+        <state relative-caret-position="-135">
+          <caret line="50" column="18" selection-start-line="33" selection-start-column="12" selection-end-line="50" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dashboard/templates/generic_dashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1152">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/attendance/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="130" column="62" selection-start-line="130" selection-start-column="62" selection-end-line="130" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/recruit/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/course/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dashboard/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="27" column="12" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/course/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="14" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/note/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="477">
+          <caret line="69" column="92" selection-start-line="69" selection-start-column="92" selection-end-line="69" selection-end-column="92" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/people/templates/student_job_status_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/people/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="9" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -622,338 +757,325 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/people/templates/student_list_starting_soon.html">
+    <entry file="file://$PROJECT_DIR$/people/templates/student_additional_information.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
-          <caret line="10" column="14" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
+          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/people/migrations/0013_auto_20160526_2232.py" />
-    <entry file="file://$PROJECT_DIR$/people/migrations/0012_auto_20160521_2217.py" />
-    <entry file="file://$PROJECT_DIR$/people/migrations/0009_auto_20160521_1933.py" />
-    <entry file="file://$PROJECT_DIR$/recruit/migrations/0002_auto_20160521_2217.py" />
-    <entry file="file://$PROJECT_DIR$/recruit/migrations/0001_initial.py">
+    <entry file="file://$PROJECT_DIR$/people/templates/student_create_confirmation.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="150">
+          <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/people/migrations/0009_auto_20160527_0845.py" />
-    <entry file="file://$PROJECT_DIR$/swapfiles.py" />
-    <entry file="file://$PROJECT_DIR$/people/admin.py">
+    <entry file="file://$PROJECT_DIR$/note/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="25" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
+        <state relative-caret-position="15">
+          <caret line="1" column="24" selection-start-line="1" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/people/templates/student_contract.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="90" column="52" selection-start-line="90" selection-start-column="52" selection-end-line="90" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/people/templates/student_start.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="19" selection-start-line="0" selection-start-column="0" selection-end-line="20" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dashboard/templates/student_dashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="78" column="55" selection-start-line="78" selection-start-column="55" selection-end-line="78" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/people/templates/student_educational_info.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="6" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/templates/project_list_view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="87">
+          <caret line="30" column="18" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/projects/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
+        <state relative-caret-position="465">
+          <caret line="31" column="46" selection-start-line="31" selection-start-column="46" selection-end-line="31" selection-end-column="46" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/people/migrations/0008_student_current_project.py">
+    <entry file="file://$PROJECT_DIR$/projects/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="32" selection-start-line="0" selection-start-column="32" selection-end-line="0" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#39#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/projects/migrations/0007_auto_20160418_1912.py">
+    <entry file="file://$PROJECT_DIR$/places/templates/places_chart.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="375">
+          <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/note/migrations/__init__.py">
+    <entry file="file://$PROJECT_DIR$/people/templates/student_completion_calendar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="498">
+          <caret line="75" column="14" selection-start-line="75" selection-start-column="14" selection-end-line="75" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/finance/models.py">
+    <entry file="file://$PROJECT_DIR$/places/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="8" column="47" selection-start-line="8" selection-start-column="47" selection-end-line="8" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/people/templates/student_test_email_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dashboard/templates/attendance_dashboard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1095">
-          <caret line="73" column="9" selection-start-line="0" selection-start-column="0" selection-end-line="74" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../p3/lib/python3.5/site-packages/django/db/models/query.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="783" column="0" selection-start-line="783" selection-start-column="0" selection-end-line="783" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/attendance/management/commands/averagearrive.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="15" column="37" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/attendance/management/commands/closeregisters.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/attendance/management/commands/createdailyattendance.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+        <state relative-caret-position="240">
+          <caret line="20" column="24" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#39#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ttt/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="49" column="31" selection-start-line="49" selection-start-column="31" selection-end-line="49" selection-end-column="31" />
+        <state relative-caret-position="315">
+          <caret line="51" column="6" selection-start-line="51" selection-start-column="6" selection-end-line="51" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dashboard/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="62" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dashboard/templates/generic_dashboard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="564">
-          <caret line="63" column="18" selection-start-line="63" selection-start-column="18" selection-end-line="63" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dashboard/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="32" column="14" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/people/urls.py">
+    <entry file="file://$PROJECT_DIR$/people/migrations/0019_student_tuition.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="3" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="3" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/attendance/models.py">
+    <entry file="file://$PROJECT_DIR$/assets/migrations/0005_auto_20160731_2235.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="21" column="11" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="11" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/attendance/views.py">
+    <entry file="file://$PROJECT_DIR$/people/templates/student_job_status_edit.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="160" column="31" selection-start-line="160" selection-start-column="31" selection-end-line="160" selection-end-column="31" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="19" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/people/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="10" selection-end-column="26" />
           <folding>
-            <element signature="e#0#64#0" expanded="false" />
+            <element signature="e#0#24#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/attendance/urls.py">
+    <entry file="file://$PROJECT_DIR$/note/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="7" column="41" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="41" />
+        <state relative-caret-position="105">
+          <caret line="8" column="8" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/attendance/serializers.py">
+    <entry file="file://$PROJECT_DIR$/note/admin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        <state relative-caret-position="60">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="8" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#32#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/attendance/management/commands/absencesmail.py">
+    <entry file="file://$PROJECT_DIR$/people/templates/student_tuition.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="29" column="18" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="18" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="20" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/people/serializers.py">
+    <entry file="file://$PROJECT_DIR$/finance/templates/payment.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
-          <caret line="11" column="39" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="39" />
+          <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ttt/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
+        <state relative-caret-position="330">
+          <caret line="37" column="42" selection-start-line="37" selection-start-column="42" selection-end-line="37" selection-end-column="42" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/people/templates/student_list.html">
+    <entry file="file://$PROJECT_DIR$/people/templates/student_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
+        <state relative-caret-position="350">
+          <caret line="169" column="28" selection-start-line="169" selection-start-column="28" selection-end-line="169" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/people/templates/student_email_list.html">
+    <entry file="file://$PROJECT_DIR$/finance/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1335">
-          <caret line="89" column="7" selection-start-line="89" selection-start-column="7" selection-end-line="89" selection-end-column="7" />
+        <state relative-caret-position="150">
+          <caret line="13" column="51" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finance/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-217">
+          <caret line="4" column="44" selection-start-line="4" selection-start-column="44" selection-end-line="4" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finance/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="47" selection-start-line="6" selection-start-column="47" selection-end-line="6" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/people/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="574">
-          <caret line="176" column="121" selection-start-line="176" selection-start-column="121" selection-end-line="176" selection-end-column="121" />
+        <state relative-caret-position="238">
+          <caret line="262" column="0" selection-start-line="262" selection-start-column="0" selection-end-line="262" selection-end-column="0" />
           <folding>
             <element signature="e#0#64#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/attendance/templates/student_checkin_detail.html">
+    <entry file="file://$PROJECT_DIR$/people/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="116" column="0" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="330">
+          <caret line="22" column="16" selection-start-line="22" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/attendance/templates/daily_attendance_portlet.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/people/templates/student_checkin_current_portlet.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/attendance/templates/daily_attendance_detail_portlet.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/attendance/templates/daily_attendance_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/people/templates/student_checkin_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1965">
-          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/people/templates/student_contact_info.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="27" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/people/templates/student_emergency_contact_info.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/attendance/templates/student_checkin_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="145" column="12" selection-start-line="145" selection-start-column="12" selection-end-line="145" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/people/templates/student_list_portlet.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dashboard/templates/student_dashboard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-890">
-          <caret line="26" column="28" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/people/forms.py">
+    <entry file="file://$PROJECT_DIR$/attendance/admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="17" column="32" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
+          <caret line="17" column="36" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/people/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="19" column="16" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="16" />
+        <state relative-caret-position="38">
+          <caret line="115" column="13" selection-start-line="115" selection-start-column="6" selection-end-line="115" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/note/models.py">
+    <entry file="file://$PROJECT_DIR$/attendance/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="52" selection-start-line="13" selection-start-column="52" selection-end-line="13" selection-end-column="52" />
+        <state relative-caret-position="15">
+          <caret line="1" column="12" selection-start-line="1" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finance/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dashboard/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="443">
+          <caret line="45" column="45" selection-start-line="45" selection-start-column="45" selection-end-line="45" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finance/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="33" column="48" selection-start-line="33" selection-start-column="48" selection-end-line="33" selection-end-column="48" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dashboard/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dashboard/apps.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

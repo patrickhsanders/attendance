@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid content text-center">
+<h2>Educational Information</h2>
+<div class="row text-left">
+  <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <form action="" method="post">
+        {% csrf_token %}
+         {{ education_information.as_p }}
+          <h4>Highest Level of Education</h4>
+        {{ degree_1.as_p }}
+          <br>
+          <h4>Second Degree <em>(If you have another)</em></h4>
+        {{ degree_2.as_p }}
+
+        <button type="submit">
+          Submit</button>
+      </form></div>
+    <div class="col-md-4"></div>
+</div>
+</div>
+<p> </p>
+{% endblock %}

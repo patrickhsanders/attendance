@@ -2,8 +2,8 @@ from django.db import models
 from people.models import Student
 from projects.models import Project
 from django.utils import timezone
-
-# Create your models here.
+from note.models import Note
+from django.utils import timezone
 
 class Register(models.Model):
     student = models.ForeignKey(Student)
@@ -15,6 +15,28 @@ class Register(models.Model):
 
     def __str__(self):
         return self.student.first_name + " " + self.student.last_name + "(" + str(self.checkin.month) + "/" + str(self.checkin.day) + "/" + str(self.checkin.year) + " " + str(self.checkin.hour) + ":" + str(self.checkin.minute) + ")"
+
+
+class ExcusedAbsence(models.Model):
+
+    REASON_CHOICES = (('sick','Sick'),
+                       ('vacation','Vacation / Traveling'),
+                       ('working', 'Working'),
+                       ('interviewing','Interviewing'),
+                       ('other','Other'))
+
+    student = models.ForeignKey(Student)
+    start_date = models.DateField(default=timezone.now)
+    end_date = models.DateField(default=timezone.now, blank=True)
+    reason = models.CharField(max_length=31, choices=REASON_CHOICES, blank=True, null=True)
+    note = models.ForeignKey(Note, blank=True, null=True)
+
+    def __str__(self):
+        if self.start_date == self.end_date:
+            return self.student.first_name + " " + self.student.last_name + " (" + self.start_date.strftime("%x") + "-" + self.end_date.strftime("%x") + ")"
+        else:
+            return self.student.first_name + " " + self.student.last_name + " (" + self.start_date.strftime(
+                "%x") + ")"
 
 class DailyAttendance(models.Model):
     date = models.DateField()

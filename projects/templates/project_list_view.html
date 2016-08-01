@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid content">
+    <div class="row">
+        <div class="col-md-12 students">
+        <h1>{{ student.first_name }} {{ student.last_name }}</h1></div>
+        </div>
+    <div class="row">
+
+        <div class="col-md-6 students">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-file-code-o" aria-hidden="true"></i> iOS Curriculum</h3></div>
+                    <table class="table" id="active-students">
+
+                        <thead>
+                        <tr>
+                            <th>Project</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for project in ios_projects %}
+                        <tr>
+                            <td>{{ project.name }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    <div class="col-md-6 students">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-file-code-o" aria-hidden="true"></i> Android Curriculum</h3></div>
+                    <table class="table" id="active-students">
+                        <thead>
+                        <tr>
+                            <th>Project</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for project in android_projects %}
+                        <tr>
+                            <td>{{ project.name }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock %}

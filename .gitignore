@@ -1,0 +1,7 @@
+db.sqlite
+db.sqlite3
+
+ttt/settings.py
+ttt/deploy.settings.py.txt
+
+*.pyc

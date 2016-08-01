@@ -8,6 +8,8 @@ class StudentAdmin(admin.ModelAdmin):
     list_filter = ('course', 'active','current_project',)
     search_fields = ('first_name', 'last_name', 'email',)
 
+# class EducationalInformationAdmin(admin.ModelAdmin):
+
 admin.site.register(Student, StudentAdmin)
 admin.site.register(ContactInfo)
 admin.site.register(TelephoneNumber)

@@ -1,5 +1,4 @@
 from django.db import models
-# from people.models import Student
 
 class Job(models.Model):
     title = models.CharField(max_length=63)
@@ -16,10 +15,6 @@ class WorkExperience(models.Model):
 class JobSearchSteps(models.Model):
     name = models.CharField(max_length=31)
     weight = models.IntegerField()
-
-
-# class JobSearch
-#     pass
 
 
 class JobSearch(models.Model):

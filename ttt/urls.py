@@ -13,19 +13,32 @@ from django.views.generic.base import RedirectView
 from dashboard.views import GenericDashboard, AttendanceDashboard
 from people.views import ContactInfoEditView
 from attendance.views import PresentStudentViewSet
+from course.views import CourseViewSet
+from projects.views import ProjectsListView
+from places.views import PlacesChart
 
 from people import urls as people_urls
+from note import urls as note_urls
+from finance import urls as finance_urls
 
 router = routers.DefaultRouter()
 router.register(r'student', ActiveStudentViewSet)
 router.register(r'attendance', PresentStudentViewSet)
+router.register(r'course',CourseViewSet)
 #
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/dashboard/')),
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
 
+    url(r'^note/', include(note_urls)),
+
+    url(r'^student/$', login_required(GenericDashboard.as_view())),
     url(r'^student/', include(people_urls)),
+    url(r'^finance/', include(finance_urls)),
+
+    url(r'^project/$', login_required(ProjectsListView.as_view())),
+    url(r'^place/$', login_required(PlacesChart.as_view())),
 
     # url(r'^student/list$', login_required(StudentList.as_view())),
     # url(r'^student/list/portlet$', login_required(StudentListPortlet.as_view())),

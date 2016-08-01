@@ -2,12 +2,14 @@
 
 {% block content %}
 <div class="container-fluid content">
+
+
     <div class="row">
         <div class="col-md-8 students">
 
             <div class="panel panel-default">
                 <!-- Default panel contents -->
-                <div class="panel-heading"><h3 class="panel-title">Current Students <a href="/student/list/email/"><i class="fa fa-envelope" aria-hidden="true"></i></a></h3></div>
+                <div class="panel-heading"><h3 class="panel-title"><span id="student-title">Current Students</span></h3></div>
 
                 <!-- Table -->
                 <table class="table" id="active-students">
@@ -31,33 +33,84 @@
         </div>
         <div class="col-md-4 starting_soon">
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-pie-chart" aria-hidden="true"> Yesterday's Stats</i></h3>
+            <div class="panel panel-info">
+                <div class="panel-heading" id="filters">
+                    <h3 class="panel-title"><i class="fa fa-filter" aria-hidden="true"></i> Filters</h3>
                 </div>
-                <div class="panel-body" id="yesterday-stats">
-                    <i class="fa fa-cog fa-spin fa-3x fa-fw margin-bottom"></i>
-                </div>
+{#                <div class="panel-body" id="starting-soon">#}
+{#                </div>#}
+
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-info"><a href="/student/list/portlet?filter=active"><strong>Current Students</strong></a></li>
+                    <li class="list-group-item"><a href="/student/list/portlet?filter=ios">iOS</a></li>
+                    <li class="list-group-item"><a href="/student/list/portlet?filter=android">Android</a></li>
+                    <li class="list-group-item"><a href="/student/list/portlet?filter=algos">Algorithms and Coding</a></li>
+                    <li class="list-group-item"><a href="/student/list/portlet?filter=hackathon">Hackathon</a></li>
+                    <li class="list-group-item"><a href="/student/list/portlet?filter=all"><strong>All Students</strong></a></li>
+                    <li class="list-group-item"><a href="/student/list/portlet?filter=inactive"><strong>Not Current Students</strong></a></li>
+                </ul>
             </div>
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Starting Soon</h3>
+                    <h3 class="panel-title"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Absent Today
+                    <small><a href="/register/absence/create?next=/">Add</a></small></h3>
                 </div>
                 <div class="panel-body" id="starting-soon">
-                    <i class="fa fa-cog fa-spin fa-3x fa-fw margin-bottom"></i>
+
+                <table>
+                    {% for absence in excused_absences %}
+                        <tr><td>
+                            <p><strong>{{ absence.student.first_name }} {{ absence.student.last_name }}</strong> <br />
+                                {{ absence.get_reason_display }} until {{ absence.end_date }}
+                                {% if absence.note != None %}
+                                    <br>Note: <em>{{ absence.note.text }}</em>
+                                {% endif %}
+                            </p>
+                        </td></tr>
+                    {% endfor %}
+                </table>
+
                 </div>
             </div>
-
 
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-users" aria-hidden="true"></i> Attendance</h3>
-                </div>
-                <div class="panel-body" id="attendance-previous-three-weeks">
-                    <i class="fa fa-cog fa-spin fa-3x fa-fw margin-bottom"></i>
+                <!-- Default panel contents -->
+                <div class="panel-heading"><h3 class="panel-title"><span id="student-title"><i class="fa fa-cog" aria-hidden="true"></i> Actions</span></h3></div>
+                <div class="panel-body">
+                     <a href="/student/list/email/"><i class="fa fa-envelope" aria-hidden="true"></i> Email Current Students</a><br/>
+                    <a href="/student/create/"><i class="fa fa-plus-square" aria-hidden="true"></i> Start New Student</a><br/>
+                    <a href="/student/create/?next=/"><i class="fa fa-plus-square" aria-hidden="true"></i> Add Graduate</a>
                 </div>
             </div>
+
+{#            <div class="panel panel-default">#}
+{#                <div class="panel-heading">#}
+{#                    <h3 class="panel-title"><i class="fa fa-pie-chart" aria-hidden="true"> Yesterday's Stats</i></h3>#}
+{#                </div>#}
+{#                <div class="panel-body" id="yesterday-stats">#}
+{#                    <i class="fa fa-cog fa-spin fa-3x fa-fw margin-bottom"></i>#}
+{#                </div>#}
+{#            </div>#}
+
+{#            <div class="panel panel-default">#}
+{#                <div class="panel-heading">#}
+{#                    <h3 class="panel-title"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Starting Soon</h3>#}
+{#                </div>#}
+{#                <div class="panel-body" id="starting-soon">#}
+{#                    <i class="fa fa-cog fa-spin fa-3x fa-fw margin-bottom"></i>#}
+{#                </div>#}
+{#            </div>#}
+
+
+{#            <div class="panel panel-default">#}
+{#                <div class="panel-heading">#}
+{#                    <h3 class="panel-title"><i class="fa fa-users" aria-hidden="true"></i> Attendance</h3>#}
+{#                </div>#}
+{#                <div class="panel-body" id="attendance-previous-three-weeks">#}
+{#                    <i class="fa fa-cog fa-spin fa-3x fa-fw margin-bottom"></i>#}
+{#                </div>#}
+{#            </div>#}
 
         </div>
     </div>
@@ -78,23 +131,21 @@
 
 				});
 
-         $.get("/student/list/starting_soon/portlet")
-			 	.done(function (data, status, xhr) {
-
-					$("#starting-soon").html(data);
-
-				})
-				.fail(function (data, status, xhr) {
-
-				})
-				.always(function (data, status, xhr) {
-
-				});
+{#         $.get("/student/list/starting_soon/portlet")#}
+{#			 	.done(function (data, status, xhr) {#}
+{##}
+{#					$("#starting-soon").html(data);#}
+{##}
+{#				})#}
+{#				.fail(function (data, status, xhr) {#}
+{##}
+{#				})#}
+{#				.always(function (data, status, xhr) {#}
+{##}
+{#				});#}
         $.get("/register/attendance/portlet/")
 			 	.done(function (data, status, xhr) {
-
-					$("#attendance-previous-three-weeks").html(data);
-
+                    $("#attendance-previous-three-weeks").html(data);
 				})
 				.fail(function (data, status, xhr) {
 
@@ -103,17 +154,40 @@
 
 				});
 
-        $.get("/register/attendance/portlet/stats/")
-			 	.done(function (data, status, xhr) {
-					$("#yesterday-stats").html(data);
-				})
-				.fail(function (data, status, xhr) {
-
-				})
-				.always(function (data, status, xhr) {
-
-				});
+{#        $.get("/register/attendance/portlet/stats/")#}
+{#			 	.done(function (data, status, xhr) {#}
+{#					$("#yesterday-stats").html(data);#}
+{#				})#}
+{#				.fail(function (data, status, xhr) {#}
+{##}
+{#				})#}
+{#				.always(function (data, status, xhr) {#}
+{##}
+{#				});#}
 		});
+
+        $(".list-group-item a").click(function(e) {
+{#            alert( "Handler for .click() called." + e.target + " " );#}
+            e.preventDefault();
+            $(".list-group-item").removeClass("list-group-item-info");
+            $(this).parent().addClass("list-group-item-info");
+            name = $(this).text()
+
+            $("#active-students tbody").html("<tr><td><i class=\"fa fa-cog fa-spin fa-3x fa-fw margin-bottom\"></i></td></tr>");
+
+            $.get($(this).attr('href'))
+			 	.done(function (data, status, xhr) {
+                    $("#active-students tbody").html(data);
+                    $("#student-title").text(name);
+				})
+				.fail(function (data, status, xhr) {
+
+				})
+				.always(function (data, status, xhr) {
+
+				});
+
+        });
 
 </script>
 {% endblock %}

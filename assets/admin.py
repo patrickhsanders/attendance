@@ -19,6 +19,6 @@ class XcodeAdmin(admin.ModelAdmin):
     list_filter = ('version_number',)
 
 admin.site.register(Computer, ComputerAdmin)
-# admin.site.register(ComputerModel, ComputerModelAdmin)
+admin.site.register(ComputerModel, ComputerModelAdmin)
 # admin.site.register(OperatingSystem, OperatingSystemAdmin)
 # admin.site.register(Xcode, XcodeAdmin)

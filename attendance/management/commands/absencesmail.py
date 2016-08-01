@@ -1,10 +1,11 @@
 from django.core.management.base import BaseCommand, CommandError
-from attendance.models import Register, DailyAttendance
 from people.models import Student
 from django.utils import timezone
 from datetime import datetime
 from django.core.mail import BadHeaderError, send_mail
 from django.core.exceptions import ValidationError
+
+from attendance.models import Register, ExcusedAbsence
 
 
 class Command(BaseCommand):
@@ -13,9 +14,13 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         active_students = Student.objects.filter(active=True)
         today = datetime.today()
+
+        known_absences = ExcusedAbsence.objects.filter(start_date__lte=today, end_date__gte=today)
+        excused_absences = [absence.student for absence in known_absences]
+
         today_registers = Register.objects.filter(checkin__year=today.year, checkin__month=today.month, checkin__day=today.day)
         present_students = [register.student for register in today_registers]
-        absent_students = [student for student in active_students if student not in present_students]
+        absent_students = [student for student in active_students if student not in present_students and student not in excused_absences]
 
         recipients = ["teddy@turntotech.io","ps@turntotech.io"]
         body_content = "Dear Teddy, the following students are absent today: \n\n"

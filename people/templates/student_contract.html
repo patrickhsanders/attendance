@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Contract</title>
+
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+            <script src="https://code.jquery.com/jquery-2.2.3.min.js" charset="utf-8"></script>
+
+		<style>
+			@media print {
+
+				div.footnotes {
+					page-break-after:always;
+				}
+
+				div.leading {
+					page-break-before: always;
+				}
+
+				form.something {
+					display:none;
+				}
+
+				div.divFooter {
+					position: fixed;
+					bottom: 0;
+				}
+
+			}
+			@media print, screen {
+                .subline {
+                    margin-top: 0;
+                    padding-top:0;
+                    font-size: .9em;
+                }
+
+                .signature, .overline {
+                    margin-bottom: 0;
+                    padding-bottom: 0;
+                }
+
+                body {
+                    padding-left: 3em;
+                    padding-right: 3em;
+                }
+
+                div.divHeader {
+                    padding-top: 3em;
+                }
+
+				p {
+{#					line-height: 1.5em;#}
+                    margin-top: .5em;
+                    margin-bottom: .5em;
+				}
+
+                td {
+                    padding: 1em;
+                }
+			}
+
+			@media screen {
+					div.divFooter {
+						display: none;
+					}
+
+					div.divHeader {
+						display: none;
+					}
+
+                    form {
+                        margin-top:2em;
+                    }
+
+                    .other-color {
+                        background: darkseagreen;
+                    }
+				}
+
+			</style>
+	</head>
+
+	<body>
+    {% block content %}
+	<form class="something">
+	<INPUT type="button" class="btn btn-primary btn-lg" onClick="window.print()" value="Print" >
+	</form>
+
+    <form class="something" action="" method="post">{% csrf_token %}
+    <button type="submit" class="btn btn-primary btn-lg other-color"">
+          Mark as signed and filed</button>
+	</form>
+
+	<div class="row divHeader">
+    <div class="col-md-6 students">
+        {% load static %}
+        <img src="{% static 'static/ttt_header.svg' %}">
+    </div>
+        <div class="col-md-6 text-right">
+        184 5th Avenue 4th Floor <br /> New York, NY 10010
+        </div>
+    </div>
+
+	<div class="row text-center"><h2>Application Form</h2></div>
+	<h3>Personal Information</h3>
+	<p><strong>Name: </strong>{{ student.first_name }} {{ student.last_name }}<br />
+	<strong>Email: </strong> {{ student.email }}<br />
+	<strong>Mailing Address: </strong><br />
+        {% if student.directory_information != None  %}
+            {{ student.directory_information.address.street_address }} {{ student.directory_information.address.apt }}<br />
+            {{ student.directory_information.address.city }}, {{ student.directory_information.address.state }} {{ student.directory_information.address.zip }}
+        {% endif %}
+        <br />
+	<strong>Phone: </strong>{% if student.directory_information != None  %}
+            {{ student.directory_information.phone_number.phone_number }}
+        {% endif %}</p>
+
+     {% if student.emergency_contact != None  %}
+	<h3>Emergency Contact</h3>
+	<p><strong>Name: </strong>{{ student.emergency_contact.first_name }} {{ student.emergency_contact.last_name }} <br />
+	<strong>Relationship: </strong>{{ student.emergency_contact.get_relationship_display }}<br />
+	<strong>Phone: </strong> {% for number in student.emergency_contact.telephone_numbers.all  %}
+        {{ number.phone_number }}
+    {% endfor %}</p>
+     {% endif %}
+
+	<h3>Course</h3>
+	<p><strong>Course: </strong>{{ student.course.name }}<br />
+	<strong>Start Date: </strong>{{ student.start_date }}</p>
+
+        <h3>Education</h3>
+        {% if student.education != None %}
+                    <p><strong>Has CS Degree:</strong> {{ student.education.has_cs_degree|yesno:"Yes,No" }}<br />
+                    <strong>Still a Student:</strong> {{ student.education.still_a_student|yesno:"Yes,No" }}
+                    </p>
+            <table class="table-bordered">
+            <tr>
+            {% for degree in student.education.education.all %}
+                <td><strong>Degree:</strong> {{ degree.get_degree_display }}<br/>
+                            <strong>Field of Study:</strong> {{ degree.field_of_study }}<br/>
+                            <strong>Institution:</strong> {{ degree.institution }}<br />
+                            <strong>Dates:</strong> {% if degree.start_date != None %}{{ degree.start_date }}{% endif %} - {% if degree.end_date != None %}{{ degree.end_date }}{% endif %}</td>
+                    {% endfor %}
+            </tr></table>
+        {% endif %}
+
+        <p><strong>Programming language experience:</strong> {{ student.programming_language_experience }}<br />
+        <strong>Technical work experience:</strong> {{ student.tech_work_experience }}<br />
+        <strong>Other work experience:</strong> {{ student.other_work_experience }}</p>
+
+	<div class="leading">
+	<div class="row divHeader">
+    <div class="col-md-6 students">
+        <img src="{% static 'static/ttt_header.svg' %}">
+    </div>
+        <div class="col-md-6 text-right">
+        184 5th Avenue 4th Floor <br /> New York, NY 10010
+        </div>
+    </div>
+	<div class="row text-center"><h2>Agreement</h2></div></div>
+	<p>This agreement is a legally binding instrument when signed by the student and accepted by TuringTech LLC. Your signature on this agreement acknowledges that you have been given reasonable time to read and understand it.</p>
+
+	<p>For the value received, the undersigned promises to pay to the order of TuringTech LLC all tuition and fees set forth herein.</p>
+
+	<table class="table table-bordered">
+		<thead><th>Applicant Name</th><th>Fees</th></thead>
+		<tr><td>{{ student.first_name }} {{ student.last_name }}</td><td>${{ student.course.course_fee|floatformat:"0" }}</td></tr>
+	</table>
+
+	<p>TuringTech may withdraw from this contract at any time for "good cause" by notifying the above individual in writing at address listed above.  <em>Examples of "good cause", include, but are not limited to, failure to uphold your financial commitment, unacceptable behavior inside the office, or lack of attendance. </em></p>
+
+	<p>I agree to pay the above charges pursuant to the schedule of payments listed.  I understand that failure to make these payments can jeopardize my ability to continue to attend TuringTech.</p>
+
+	<h3>Signature</h3>
+	<p>I have read and agree to the terms of the Tuition Agreement and Refund Policy as stated and depicted above.</p>
+
+        <table>
+                <tr class="signature">
+                    <td class="overline"><strong>Signature:</strong></td><td class="overline">___________________________________________________</td><td class="overline">Date: {{ today }}</td>
+                </tr>
+                <tr>
+                    <td> </td ><td class="subline">{{ student.first_name }} {{ student.last_name }}</td><td> </td>
+                </tr>
+                </table>
+
+    <div class="leading">
+	<div class="row divHeader">
+    <div class="col-md-6 students">
+        <img src="{% static 'static/ttt_header.svg' %}">
+    </div>
+        <div class="col-md-6 text-right">
+        184 5th Avenue 4th Floor <br /> New York, NY 10010
+        </div>
+    </div>
+
+        <div class="row text-center"><h2>Candidate School Disclosure Statement</h2></div>
+        <p>The New York State Education Department, Bureau of Proprietary School Supervision, has issued Candidate School Status to the following school and address.</p>
+        <table class="table">
+            <tr><th>School Name</th><th>School’s Complete Address</th></tr>
+            <tr><td>TurnToTech </td><td>184 5th Avenue, New York, NY 10010</td></tr></table>
+
+        <p>Candidate School Status is restricted to the school name and address listed above. Any change in one or more of these items invalidates Candidate School Status.</p>
+        <p>The undersigned student must fully understand each of the following:</p>
+        <ul>
+            <li>
+                The candidate school listed above is <strong>NOT</strong> licensed <u>by the New York State Education Department.</u>
+            </li>
+            <li>The facilities, instructors, and programs being provided have <strong>NOT</strong> been approved and are <strong>NOT</strong> under the
+                New York State Education Department's jurisdiction during the candidacy period.
+            </li>
+            <li>Students attending candidate schools have <strong>no recourse</strong> through the Department's student complaint
+                process nor have any restitution available from the Tuition Reimbursement Account. The Department’s
+                Tuition Reimbursement Account <strong>cannot</strong> be accessed by students of candidate schools. This applies
+                regardless of whether a refund is warranted by the candidate school <u>that it</u> refuses to issue, or
+                even if the candidate school closes without fulfilling its contractual obligations to the student.
+            </li>
+        </ul>
+        <p>In order to continue Candidate School Status, <u>a copy of this signed disclosure</u> must be given to every
+            prospective student of the Candidate School to advise him/her of the limited school oversight and student
+            protection available while a school is in candidacy status.</p>
+        <p>By my signature below, I attest that I have read, understood, and accept the limitations indicated on this
+            document. I further understand that, <u>if</u> I choose to enroll in this Candidate School, I do so without
+            access to the New York State Tuition Reimbursement Account and the Bureau of Proprietary School Supervision’s
+            Student Complaint System.
+
+                <table>
+                <tr class="signature">
+                    <td class="overline"><strong>Signature:</strong></td><td class="overline">___________________________________________________</td><td class="overline">Date: {{ today }}</td>
+                </tr>
+                <tr>
+                    <td> </td ><td class="subline">{{ student.first_name }} {{ student.last_name }}</td><td> </td>
+                </tr>
+                </table>
+{% endblock %}
+	</body>
+</html>
