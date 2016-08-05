@@ -81,7 +81,7 @@ class StudentEmailList(PermissionRequiredMixin, View):
 
     def get(self, request):
 
-        students = Student.objects.filter(active=True).order_by('first_name')
+        students = Student.objects.filter(active=True, course__full_time=True).order_by('first_name')
         current_user = request.user
         current_user_email = current_user.email
 
@@ -151,6 +151,7 @@ class StudentListPortlet(PermissionRequiredMixin, ListView):
         else:
             return Student.objects.filter().order_by('first_name')
 
+
 class StudentListStartingSoonPortlet(PermissionRequiredMixin, ListView):
     template_name = "student_list_starting_soon.html"
     permission_required = 'people.add_student'
@@ -158,6 +159,7 @@ class StudentListStartingSoonPortlet(PermissionRequiredMixin, ListView):
 
     def get_queryset(self):
         return Student.objects.filter(active=False, start_date__gte=timezone.now()).order_by('start_date')
+
 
 class ActiveStudentViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
@@ -530,7 +532,7 @@ class StudentTuition(PermissionRequiredMixin, View):
         student = get_object_or_404(Student, pk=student_id)
         tuition_form = StudentTuitionForm(prefix='TuitionForm')
         note_form = NoteForm(prefix='NoteForm')
-        return render(request, self.template_name, {'student':student, 'form':tuition_form, 'note':note_form } )
+        return render(request, self.template_name, {'student':student, 'form':tuition_form, 'note':note_form })
 
     def post(self, request, student_id):
         student = get_object_or_404(Student, pk=student_id)
@@ -588,11 +590,10 @@ class CompletionCalendar(PermissionRequiredMixin, View):
             student_project = StudentProject()
             student_project.project = project
             student_project.date_started = day
-            print(student_project.date_started)
             projects.append(student_project)
             # increment date by timedelta (additional for weekends)
 
-            for x in range(0,project.estimated_completion_days):
+            for x in range(0, project.estimated_completion_days):
                 # if day.weekday() == 5:
                 #     day+= timedelta(days=2)
                 day += timedelta(days=1)
