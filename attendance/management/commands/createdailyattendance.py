@@ -8,7 +8,7 @@ class Command(BaseCommand):
     help = "Creates daily register of all active students"
 
     def handle(self, *args, **options):
-        active_students = Student.objects.filter(active=True)
+        active_students = Student.objects.filter(active=True, course__full_time=True)
         today = datetime.today()
         today_registers = Register.objects.filter(checkin__year=today.year, checkin__month=today.month, checkin__day=today.day)
         present_students = [register.student for register in today_registers]
