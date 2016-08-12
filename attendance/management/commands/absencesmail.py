@@ -12,7 +12,7 @@ class Command(BaseCommand):
     help = "Sends an email to Teddy with all students who are absent"
 
     def handle(self, *args, **options):
-        active_students = Student.objects.filter(active=True)
+        active_students = Student.objects.filter(active=True, course__full_time=True)
         today = datetime.today()
 
         known_absences = ExcusedAbsence.objects.filter(start_date__lte=today, end_date__gte=today)
@@ -22,7 +22,8 @@ class Command(BaseCommand):
         present_students = [register.student for register in today_registers]
         absent_students = [student for student in active_students if student not in present_students and student not in excused_absences]
 
-        recipients = ["teddy@turntotech.io","ps@turntotech.io"]
+        # recipients = ["teddy@turntotech.io","ps@turntotech.io"]
+        recipients = ["ps@turntotech.io"]
         body_content = "Dear Teddy, the following students are absent today: \n\n"
 
         for student in absent_students:

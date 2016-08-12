@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+<div class="row">
+
+
+{% block content %}
+    <table class="table table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Directory Info</th>
+        <th>E911 Info</th>
+  </tr>
+{% for student in student_list %}
+    <tr>
+        <td>{{ student.first_name }} {{ student.last_name }}</td>
+        <td>
+        {% if not student.directory_information %}
+            <a href="/student/{{ student.pk }}/contact-info/edit">Contact Info</a>
+        {% else %}
+            <i class="fa fa-check" aria-hidden="true" style="color:green;"></i>
+        {% endif %}
+        </td>
+
+        <td>
+        {% if not student.emergency_contact %}
+            <a href="/student/{{ student.pk }}/emergency-contact-info/edit">Contact Info</a>
+        {% else %}
+            <i class="fa fa-check" aria-hidden="true" style="color:green;"></i>
+        {% endif %}
+        </td>
+
+    </tr>
+
+{% endfor %}
+</table>
+{% endblock %}
+
+</div>
