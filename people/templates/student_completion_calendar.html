@@ -5,42 +5,44 @@
     <div class="container-fluid content">
     <div class="row">
         <div class="col-md-12 students">
-        <h1>{{ student.first_name }} {{ student.last_name }}</h1></div>
+        <h1>{{ student.first_name }} {{ student.last_name }}</h1>
+        <h3>Completion Calendar </h3>
+        </div>
         </div>
     <div class="row">
-        <div class="col-md-6 students">
-            <div class="panel panel-default">
-                <div class="panel-heading"><h3 class="panel-title">Finished Projects</h3></div>
-                <div class="panel-body">
-                    <p><strong>Course:</strong> {{ student.course.name }}</p>
-                    <p><strong>Start Date:</strong> {{ student.start_date }}</p>
-                    <p><strong>Current Project:</strong> {{ student.current_project.name }}</p>
-                </div>
-                    <table class="table" id="active-students">
+{#        <div class="col-md-6 students">#}
+{#            <div class="panel panel-default">#}
+{#                <div class="panel-heading"><h3 class="panel-title">Finished Projects</h3></div>#}
+{#                <div class="panel-body">#}
+{#                    <p><strong>Course:</strong> {{ student.course.name }}</p>#}
+{#                    <p><strong>Start Date:</strong> {{ student.start_date }}</p>#}
+{#                    <p><strong>Current Project:</strong> {{ student.current_project.name }}</p>#}
+{#                </div>#}
+{#                    <table class="table" id="active-students">#}
+{##}
+{#                        <thead>#}
+{#                        <tr>#}
+{#                            <th>Project</th>#}
+{#                            <th>Started</th>#}
+{#                            <th>Days spent</th>#}
+{#                            <th>Estimated required time</th>#}
+{#                        </tr>#}
+{#                    </thead>#}
+{#                    <tbody>#}
+{#                    {% for project in finished_projects %}#}
+{#                        <tr>#}
+{#                            <td>{{ project.project.name }}</td>#}
+{#                            <td>{{ project.date_started }}</td>#}
+{#                            <td>{{ project.derived_days }}</td>#}
+{#                            <td>{{ project.project.estimated_completion_days }}</td>#}
+{#                        </tr>#}
+{#                    {% endfor %}#}
+{#                    </tbody>#}
+{#                </table>#}
+{#            </div>#}
+{#        </div>#}
 
-                        <thead>
-                        <tr>
-                            <th>Project</th>
-                            <th>Started</th>
-                            <th>Days spent</th>
-                            <th>Estimated required time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for project in finished_projects %}
-                        <tr>
-                            <td>{{ project.project.name }}</td>
-                            <td>{{ project.date_started }}</td>
-                            <td>{{ project.derived_days }}</td>
-                            <td>{{ project.project.estimated_completion_days }}</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-            <div class="col-md-6 students">
+            <div class="col-md-12 students">
             <div class="panel panel-default">
                 <div class="panel-heading"><h3 class="panel-title">Remaining Projects</h3></div>
 {#                <div class="panel-body">#}

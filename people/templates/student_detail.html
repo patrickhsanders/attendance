@@ -16,6 +16,7 @@
                     <p><strong>Course:</strong> {{ student.course.name }}</p>
                     <p><strong>Start Date:</strong> {{ student.start_date }}</p>
                     <p><strong>Current Project:</strong> {{ student.current_project.name }}</p>
+                    <p><strong><a href="/student/{{ student.pk }}/calendar"><i class="fa fa-calendar" aria-hidden="true"></i> Completion Calendar</a></strong></p>
                 </div>
                     <table class="table" id="active-students">
 
@@ -131,7 +132,7 @@
 {##}
 {#        <div class="col-md-4 students">#}
             <div class="panel panel-default">
-                <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> E911 Information</h3></div>
+                <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Emergency Contact</h3></div>
                 <div class="panel-body">
                 {% if student.emergency_contact != None %}
                     <p><strong>Name:</strong> {{ student.emergency_contact.first_name }} {{ student.emergency_contact.last_name }}</p>
@@ -158,6 +159,12 @@
                 {% if student.tuition != None %}
                     <p><strong>Tuition:</strong> ${{ student.tuition.tuition_total|floatformat:2 }}</p>
                     <p><strong>Paid In Full:</strong> {{ student.tuition.payed_in_full|yesno:"Yes,No" }}</p>
+
+                    {% if not student.tuition.payed_in_full %}
+                                <p><strong>Total paid:</strong> ${{ total_paid|floatformat:2 }}</p>
+                                <p><strong>Remaining to pay:</strong> ${{ remaining_to_pay|floatformat:2 }}</p>
+                    {% endif %}
+
                     <p><strong>Payments: </strong>
                     <table class="table">
                     <thead>
@@ -172,6 +179,7 @@
                             <td>${{ payment.amount|floatformat:2 }}</td>
                             <td>{{ payment.get_type_display }}</td>
                             <td>{{ payment.completed|yesno:"yes,no" }}</td>
+                            <td><a href="/finance/payment/{{ payment.pk }}/edit/?next={{ request.path }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
                         </tr>
                     {% empty %}
 
@@ -250,7 +258,7 @@
                 <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Education</h3></div>
                 <div class="panel-body">
                 {% if student.education != None %}
-                    <p><strong>Has CS Degree:</strong> {{ student.education.has_cs_degree }}<br/>
+                    <p><strong>Has CS Degree:</strong> {{ student.education.has_cs_degree|yesno:"Yes,No" }}<br/>
                     <strong>Still a Student:</strong> {{ student.education.still_a_student|yesno:"Yes,No" }}</p>
                     {% for degree in student.education.education.all %}
                         <p><strong>Degree:</strong> {{ degree.get_degree_display }}<br/>

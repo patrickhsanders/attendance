@@ -1,51 +1,49 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from datetime import timedelta
+
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import View, ListView
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.utils import timezone
 
-from itertools import chain
-
-from course.models import Course
-from note.forms import NoteForm
-
-from .models import Student, ContactInfo, EmergencyContact
-from .forms import TelephoneNumberForm, AddressForm, StudentForm, WorkLanguageExperienceForm
-from .forms import EmergencyContactForm, StudentJobStatusNoteForm, EducationalExperienceForm, EducationalInformationForm
-from attendance.models import Register, ExcusedAbsence
+from rest_framework import viewsets
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 from projects.models import StudentProject
 from projects.models import Project
 
-from finance.forms import StudentTuitionForm, PaymentForm
+from finance.forms import StudentTuitionForm
 
-from django.core.exceptions import ObjectDoesNotExist
+from course.models import Course
+from note.forms import NoteForm
+from attendance.models import Register, ExcusedAbsence
 
-from django.http import HttpResponseRedirect
-
-from rest_framework import viewsets
+from .models import Student, ContactInfo, EmergencyContact
+from .forms import TelephoneNumberForm, AddressForm, StudentForm, WorkLanguageExperienceForm
+from .forms import EmergencyContactForm, StudentJobStatusNoteForm, EducationalExperienceForm, EducationalInformationForm
 from .serializers import ActiveStudentSerializer
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
-
-from datetime import timedelta
 
 # Create your views here.
+
 
 class StudentList(PermissionRequiredMixin, View):
     permission_required = 'people.add_student'
 
     template_name = 'blog/post_list.html'
 
-    def get(self, request, parent_template=None):
+    def get(self, request):
         return render(
             request,
             'student_list.html',
-            {'student_list':Student.objects.all().filter(active="true").order_by('first_name') })
+            {'student_list': Student.people.active()})
 
     def test_func(self):
         return self.request.user
+
 
 class StudentCheckin(PermissionRequiredMixin, View):
     permission_required = 'attendance.add_register'
@@ -55,12 +53,14 @@ class StudentCheckin(PermissionRequiredMixin, View):
     def get(self, request, success):
 
         open_registers = Register.objects.filter(checkout=None).order_by('student__first_name')
-        students = Student.objects.all().filter(~Q(id__in=[register.student.id for register in open_registers]), active="true",course__full_time=True).order_by('first_name')
+        students = Student.people.active().fulltime().filter(
+            ~Q(id__in=[register.student.id for register in open_registers]))
 
         return render(
             request,
             self.template_name,
             {'student_list': students, 'open_registers': open_registers, 'success': success})
+
 
 class StudentsCurrentlySignedInPortlet(PermissionRequiredMixin, View):
     permission_required = 'attendance.add_register'
@@ -73,6 +73,7 @@ class StudentsCurrentlySignedInPortlet(PermissionRequiredMixin, View):
             request,
             self.template_name,
             {'open_registers': open_registers})
+
 
 class StudentEmailList(PermissionRequiredMixin, View):
     permission_required = 'people.add_student'
@@ -88,7 +89,8 @@ class StudentEmailList(PermissionRequiredMixin, View):
         return render(
             request,
             self.template_name,
-            {'student_list': students, 'current_user_email':current_user_email})
+            {'student_list': students, 'current_user_email': current_user_email})
+
 
 class StudentTestEmailList(PermissionRequiredMixin, View):
     permission_required = 'people.add_student'
@@ -98,7 +100,6 @@ class StudentTestEmailList(PermissionRequiredMixin, View):
     def get(self, request):
 
         students = Student.objects.filter(active=True).exclude(current_project=None).order_by('first_name')
-        courses = Course.objects.filter(test_after_project__course__test_after_project_id__gte=0)
 
         students_for_test = []
 
@@ -115,7 +116,7 @@ class StudentTestEmailList(PermissionRequiredMixin, View):
         return render(
             request,
             self.template_name,
-            {'student_list': students_for_test, 'current_user_email':current_user_email, 'instructors':instructors})
+            {'student_list': students_for_test, 'current_user_email': current_user_email, 'instructors': instructors})
 
 
 class StudentListPortlet(PermissionRequiredMixin, ListView):
@@ -126,30 +127,24 @@ class StudentListPortlet(PermissionRequiredMixin, ListView):
 
     def get_queryset(self):
 
-        filter = self.request.GET.get('filter') if self.request.GET.get('filter') != None else self.default_queryset
-        # print(filter)
+        filter = self.request.GET.get('filter') if self.request.GET.get('filter') is not None else self.default_queryset
 
         if filter == 'active':
-            return Student.objects.filter(active=True).order_by('first_name')
+            return Student.people.active()
         elif filter == 'inactive':
-            return Student.objects.filter(active=False).order_by('first_name')
+            return Student.people.inactive()
         elif filter == 'ios':
-            ios_course = Course.objects.get(name__iexact='iOS Fulltime')
-            return Student.objects.filter(active=True, course=ios_course).order_by('first_name')
+            return Student.people.active().ios()
         elif filter == 'android':
-            android_course = Course.objects.get(name__iexact='Android Fulltime')
-            return Student.objects.filter(active=True, course=android_course).order_by('first_name')
+            return Student.people.active().android()
+        elif filter == 'swift':
+            return Student.people.swift()
         elif filter == 'algos':
-            return Student.objects.filter(active=True, current_project__weight__lte=109).order_by('first_name')
+            return Student.people.algos()
         elif filter == 'hackathon':
-            ios = Student.objects.filter(current_project__weight__gt=140, current_project__weight__lte=199).order_by('first_name')
-            android = Student.objects.filter(current_project__weight__gt=230).order_by('first_name')
-
-            combined = sorted(list(chain(ios,android)),key=lambda instance: instance.first_name)
-
-            return combined
+            return Student.people.hackathon()
         else:
-            return Student.objects.filter().order_by('first_name')
+            return Student.people.all()
 
 
 class StudentListStartingSoonPortlet(PermissionRequiredMixin, ListView):
@@ -183,7 +178,7 @@ class EditStudentJobStatus(PermissionRequiredMixin, View):
         except ObjectDoesNotExist:
             pass
 
-        return render(request, self.template_name, {'form': form })
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request, student_id):
 
@@ -203,12 +198,14 @@ class StudentJobStatusList(PermissionRequiredMixin, View):
     permission_required = 'people.add_student'
     template_name = 'student_job_status_list.html'
 
-    def get(self,request):
+    def get(self, request):
 
         students_without_status = Student.objects.filter(job_search_status__isnull=True)
         students_with_status = Student.objects.filter(job_search_status__isnull=False)
 
-        return render(request, self.template_name, {'students_with_status': students_with_status, 'students_without_status': students_without_status })
+        return render(request, self.template_name, {'students_with_status': students_with_status,
+                                                    'students_without_status': students_without_status})
+
 
 class DeleteStudentJobStatus(PermissionRequiredMixin, View):
     permission_required = 'people.add_student'
@@ -216,7 +213,7 @@ class DeleteStudentJobStatus(PermissionRequiredMixin, View):
 
     def get(self, request, student_id):
         student = get_object_or_404(Student, pk=student_id)
-        return render(request, self.template_name,{'student':student})
+        return render(request, self.template_name, {'student': student})
 
     def post(self, request, student_id):
         student = get_object_or_404(Student, pk=student_id)
@@ -236,8 +233,8 @@ class StudentDetailView(PermissionRequiredMixin, View):
     permission_required = 'people.add_student'
     template_name = 'student_detail.html'
 
-
-    def datetime_range(self, start, end, delta):
+    @staticmethod
+    def datetime_range(start, end, delta):
         date_list = []
         current = start
         if not isinstance(delta, timedelta):
@@ -259,12 +256,14 @@ class StudentDetailView(PermissionRequiredMixin, View):
         registers = Register.objects.filter(student=student)
         excused_absence = ExcusedAbsence.objects.filter(student=student)
 
-        end_date = timezone.now().date() if student.end_date == None else student.end_date
+        end_date = timezone.now().date() if student.end_date is None else student.end_date
         date_list = self.datetime_range(student.start_date, end_date, {'days': 1})
         attendance = []
 
         for date in date_list:
-            register_result = registers.filter(checkin__day=date.day, checkin__month=date.month, checkin__year=date.year)
+            register_result = registers.filter(checkin__day=date.day,
+                                               checkin__month=date.month,
+                                               checkin__year=date.year)
 
             if not register_result:
                 excused_absence_result = excused_absence.filter(start_date__lte=date, end_date__gte=date)
@@ -275,8 +274,21 @@ class StudentDetailView(PermissionRequiredMixin, View):
             else:
                 status = "Present"
 
-            obj_ = AttendanceDisplay(date,status)
+            obj_ = AttendanceDisplay(date, status)
             attendance.append(obj_)
+
+        remaining_to_pay = 0.0
+        total_paid = 0.0
+
+        if student.tuition is not None:
+            for payment in student.tuition.payments.all():
+                if payment.completed == True:
+                    total_paid += payment.amount
+                elif payment.completed == False:
+                    remaining_to_pay += payment.amount
+
+            if total_paid == 0:
+                remaining_to_pay = student.tuition.tuition_total
 
         excused_absences = ExcusedAbsence.objects.filter(student=student)
 
@@ -290,8 +302,10 @@ class StudentDetailView(PermissionRequiredMixin, View):
                                                     'projects':projects,
                                                     'emergency_contact_relationship':full_emergency_contact_relationship,
                                                     'note_form' : note_form,
-                                                    'attendance':reversed(attendance),
-                                                    'excused_absences': excused_absences})
+                                                    'attendance': reversed(attendance),
+                                                    'excused_absences': excused_absences,
+                                                    'total_paid': total_paid,
+                                                    'remaining_to_pay': remaining_to_pay, })
 
 
 class AddNoteToStudent(PermissionRequiredMixin, View):
@@ -307,7 +321,7 @@ class AddNoteToStudent(PermissionRequiredMixin, View):
             note.save()
             student.notes.add(note)
 
-        redirect = request.GET.get('next') if request.GET.get('next') != None else self.default_redirect
+        redirect = request.GET.get('next') if request.GET.get('next') is not None else self.default_redirect
         return HttpResponseRedirect(redirect)
 
 
@@ -318,7 +332,7 @@ class CreateStudent(PermissionRequiredMixin, View):
     def get(self, request):
         form = StudentForm()
 
-        return render(request, self.template_name, {'form': form })
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request):
 
@@ -338,11 +352,11 @@ class CreateStudent(PermissionRequiredMixin, View):
             student.save()
 
             default_redirect = '/student/' + str(student.pk) + "/contact-info/edit"
-            redirect = request.GET.get('next') if request.GET.get('next') != None else default_redirect
+            redirect = request.GET.get('next') if request.GET.get('next') is not None else default_redirect
             return HttpResponseRedirect(redirect)
 
         else:
-            return render(request, self.template_name, {'form': bound_form })
+            return render(request, self.template_name, {'form': bound_form})
 
 
 class ContactInfoEditView(PermissionRequiredMixin, View):
@@ -372,18 +386,14 @@ class ContactInfoEditView(PermissionRequiredMixin, View):
             student.directory_information = contact_info
             student.save()
 
-            # default_redirect = '/student/' + str(student.pk) + "/emergency-contact-info/edit"
             default_redirect = '/student/' + str(student.pk) + "/education-info/edit"
 
-            redirect = request.GET.get('next') if request.GET.get('next') != None else default_redirect
+            redirect = request.GET.get('next') if request.GET.get('next') is not None else default_redirect
 
             return HttpResponseRedirect(redirect)
         else:
             return render(request, self.template_name,
                           {'telephone_form': bound_telephone_form, 'address_form': bound_address_form})
-
-
-
 
 
 class EducationInformationView(PermissionRequiredMixin, View):
@@ -419,7 +429,7 @@ class EducationInformationView(PermissionRequiredMixin, View):
             student.save()
 
             default_redirect = '/student/' + str(student.pk) + "/additional-info/edit"
-            redirect = request.GET.get('next') if request.GET.get('next') != None else default_redirect
+            redirect = request.GET.get('next') if request.GET.get('next') is not None else default_redirect
 
             return HttpResponseRedirect(redirect)
 
@@ -464,7 +474,7 @@ class EmergencyContactEditView(PermissionRequiredMixin, View):
             student.save()
 
             default_redirect = '/student/' + str(student.pk) + "/education-info/edit"
-            redirect = request.GET.get('next') if request.GET.get('next') != None else default_redirect
+            redirect = request.GET.get('next') if request.GET.get('next') is not None else default_redirect
 
             return HttpResponseRedirect(redirect)
         else:
@@ -480,7 +490,7 @@ class CreateAdditonalData(PermissionRequiredMixin, View):
     def get(self, request, student_id):
         form = WorkLanguageExperienceForm()
 
-        return render(request, self.template_name, {'form': form })
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request, student_id):
         student = get_object_or_404(Student, pk=student_id)
@@ -489,7 +499,7 @@ class CreateAdditonalData(PermissionRequiredMixin, View):
             bound_form.save()
 
             default_redirect = '/student/' + str(student.pk) + "/confirm"
-            redirect = request.GET.get('next') if request.GET.get('next') != None else default_redirect
+            redirect = request.GET.get('next') if request.GET.get('next') is not None else default_redirect
             return HttpResponseRedirect(redirect)
 
         else:
@@ -511,7 +521,7 @@ class StudentContract(PermissionRequiredMixin, View):
         student.save()
 
         default_redirect = '/student/' + str(student.pk)
-        redirect = request.GET.get('next') if request.GET.get('next') != None else default_redirect
+        redirect = request.GET.get('next') if request.GET.get('next') is not None else default_redirect
         return HttpResponseRedirect(redirect)
 
 
@@ -554,7 +564,7 @@ class StudentTuition(PermissionRequiredMixin, View):
                 obj_.save()
 
             default_redirect = '/student/' + str(student.pk)
-            redirect = request.GET.get('next') if request.GET.get('next') != None else default_redirect
+            redirect = request.GET.get('next') if request.GET.get('next') is not None else default_redirect
             return HttpResponseRedirect(redirect)
 
         else:
@@ -570,15 +580,13 @@ class CompletionCalendar(PermissionRequiredMixin, View):
         finished_projects = StudentProject.objects.filter(student=student)
 
         current_student_project = StudentProject.objects.filter(student=student, project__weight__lt=1000).order_by('-project__weight')[:1][0]
-
-        # curriculum_projects = Project.objects.filter(course=student.course, weight__lt=1000).order_by('weight')
-        remaining_projects = Project.objects.filter(course=student.course, weight__gt=current_student_project.project.weight, weight__lt=1000).order_by('weight')
-
+        remaining_projects = Project.objects.filter(course=student.course,
+                                                    weight__gt=current_student_project.project.weight,
+                                                    deprecated=False,
+                                                    weight__lt=1000).order_by('weight')
 
         if student.current_project.estimated_completion_days < current_student_project.project.estimated_completion_days:
             pass
-
-        print(current_student_project.project.estimated_completion_days)
 
         day = timezone.now().date()
 
@@ -586,19 +594,17 @@ class CompletionCalendar(PermissionRequiredMixin, View):
             day += timedelta(days=current_student_project.project.estimated_completion_days - current_student_project.derived_days)
 
         projects = []
+
         for project in remaining_projects:
             student_project = StudentProject()
             student_project.project = project
             student_project.date_started = day
             projects.append(student_project)
-            # increment date by timedelta (additional for weekends)
 
             for x in range(0, project.estimated_completion_days):
-                # if day.weekday() == 5:
-                #     day+= timedelta(days=2)
                 day += timedelta(days=1)
 
         return render(request, self.template_name, {'student': student,
-                                                    'finished_projects': finished_projects,
+                                                    # 'finished_projects': finished_projects,
                                                     'remaining_projects': projects,
                                                     'final_day': day})

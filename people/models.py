@@ -1,14 +1,55 @@
 from __future__ import unicode_literals
-from django.db import models
-from assets.models import Computer
 from datetime import date
+
+from django.db import models
+from django.db.models.query import QuerySet
+from django.db.models import Q
 from django.utils import timezone
-from course.models import Course
+
 from localflavor.us.models import PhoneNumberField
 from localflavor.us.models import USStateField, USZipCodeField
-from recruit.models import WorkExperience
-from note.models import Note
+
+from assets.models import Computer
+from course.models import Course
 from finance.models import StudentTuition
+from note.models import Note
+from recruit.models import WorkExperience
+
+
+class StudentQueryset(QuerySet):
+
+    def _order_by_first_name(self):
+        return self.order_by('first_name')
+
+    def active(self):
+        return self._order_by_first_name().filter(active=True)
+
+    def fulltime(self):
+        return self._order_by_first_name().filter(course__full_time=True)
+
+    def inactive(self):
+        return self._order_by_first_name().filter(active=False)
+
+    def ios(self):
+        ios_course = Course.objects.get(name__iexact='iOS Fulltime')
+        return self._order_by_first_name().filter(course=ios_course)
+
+    def android(self):
+        android_course = Course.objects.get(name__iexact='Android Fulltime')
+        return self._order_by_first_name().filter(course=android_course)
+
+    def swift(self):
+        swift_course = Course.objects.get(name__iexact='Swift')
+        return self._order_by_first_name().filter(course=swift_course).order_by('first_name')
+
+    def algos(self):
+        return self._order_by_first_name().filter(active=True, current_project__weight__lte=109)
+
+    def hackathon(self):
+        return self._order_by_first_name().filter(
+            Q(current_project__weight__gt=140, current_project__weight__lte=199) |
+            Q(current_project__weight__gt=230)
+        )
 
 
 class TelephoneNumber(models.Model):
@@ -23,8 +64,6 @@ class TelephoneNumber(models.Model):
     type = models.CharField(max_length=10, choices=PHONE_NUMBER_TYPES, blank=True)
 
     def __str__(self):
-        type_dict = dict(self.PHONE_NUMBER_TYPES)
-        full_type = type_dict.get(self.type)
         return str(self.phone_number)
 
 
@@ -64,7 +103,6 @@ class EmergencyContact(models.Model):
     first_name = models.CharField(max_length=31)
     last_name = models.CharField(max_length=31)
     telephone_numbers = models.ManyToManyField(TelephoneNumber, blank=True)
-    # address = models.ForeignKey(Address, blank=True, null=True)
     relationship = models.CharField(max_length=31, choices=RELATIONSHIP_CHOICES)
 
     def __str__(self):
@@ -73,13 +111,13 @@ class EmergencyContact(models.Model):
 
 class EducationalExperience(models.Model):
 
-    DEGREE_OPTIONS = (("hs","High School Diploma or Equivalent"),
-                      ("aa","Associate's Degree"),
-                      ("ba","Bachelor's Degree"),
-                      ("ma","Master's Degree"),
-                      ("mba","MBA"),
-                      ("phd","Doctor of Philosophy"),
-                      ("other","Other"))
+    DEGREE_OPTIONS = (("hs", "High School Diploma or Equivalent"),
+                      ("aa", "Associate's Degree"),
+                      ("ba", "Bachelor's Degree"),
+                      ("ma", "Master's Degree"),
+                      ("mba", "MBA"),
+                      ("phd", "Doctor of Philosophy"),
+                      ("other", "Other"))
 
     YEAR_CHOICES = [(x, x) for x in range(1980, timezone.now().year + 1)]
     YEAR_CHOICES.reverse()
@@ -93,16 +131,9 @@ class EducationalExperience(models.Model):
 
 
 class EducationalInformation(models.Model):
-    # LEVEL_OPTIONS = ((0, "Zero Beginner - no coding knowledge"),
-    #                  (1, "Beginner - has knowledge of computing concepts, "),
-    #                  (2, "Starter - some basic knowledge of programming"),
-    #                  (3, "Mover - knowledge of programming, academic or functional, frameworks"),
-    #                  (4, "Advanced - CS degree, or equivalent work experience"))
-
     education = models.ManyToManyField(EducationalExperience, blank=True)
     has_cs_degree = models.BooleanField(default=False, verbose_name="Check this if you have a CS degree.")
     still_a_student = models.BooleanField(default=False, verbose_name="Check this if you are still a student.")
-    # incoming_level = models.IntegerField(choices=LEVEL_OPTIONS, blank=True)
 
 
 class ContactInfo(models.Model):
@@ -114,6 +145,9 @@ class ContactInfo(models.Model):
 
 
 class Student(models.Model):
+
+    objects = models.Manager()
+    people = StudentQueryset.as_manager()
 
     # Directory information
     first_name = models.CharField(max_length=31)
@@ -136,11 +170,11 @@ class Student(models.Model):
     active = models.BooleanField(default=False)
 
     # Finance
-    # tuition = models.(StudentTuition, blank=True, null=True)
-    tuition = models.OneToOneField(StudentTuition, blank=True, null=True)
+    tuition = models.OneToOneField(StudentTuition, blank=True, null=True, related_name='student')
 
     # Recruit
     links = models.ManyToManyField(Link, blank=True)
+    wants_help_looking_for_a_job = models.BooleanField(default=False)
 
     # Background Information
     education = models.OneToOneField(EducationalInformation, blank=True, null=True)
@@ -162,5 +196,3 @@ class Student(models.Model):
 
     def __str__(self):
         return self.first_name + " " + self.last_name
-
-
