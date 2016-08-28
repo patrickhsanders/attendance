@@ -4,35 +4,137 @@
 
 
 {% block content %}
-    <table class="table table-hover">
-    <tr>
-        <th>Name</th>
-        <th>Directory Info</th>
-        <th>E911 Info</th>
-  </tr>
-{% for student in student_list %}
-    <tr>
-        <td>{{ student.first_name }} {{ student.last_name }}</td>
-        <td>
-        {% if not student.directory_information %}
-            <a href="/student/{{ student.pk }}/contact-info/edit">Contact Info</a>
-        {% else %}
-            <i class="fa fa-check" aria-hidden="true" style="color:green;"></i>
-        {% endif %}
-        </td>
 
-        <td>
-        {% if not student.emergency_contact %}
-            <a href="/student/{{ student.pk }}/emergency-contact-info/edit">Contact Info</a>
-        {% else %}
-            <i class="fa fa-check" aria-hidden="true" style="color:green;"></i>
-        {% endif %}
-        </td>
 
-    </tr>
+    <div class="container-fluid content">
 
-{% endfor %}
-</table>
+    <div class="row">
+        <div class="col-md-8 students">
+
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-money" aria-hidden="true"></i> <span id="payment-title"> Payments </span>
+                    <span class="pull-right">
+                    <a href="/finance/month/?offset=" id="previous-month"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    <a href="/finance/month/?offset=" id="next-month"><i class="fa fa-arrow-right" aria-hidden="true"></i></a></span>
+                </h3></div>
+                <div class="panel-body" id="payments">
+                    <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+                    <span class="sr-only">Loading...</span>
+                    <span id="output"></span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="panel panel-default">
+                <div class="panel-heading" id="filters">
+                    <h3 class="panel-title"><i class="fa fa-check-square" aria-hidden="true"></i> Total Pending</h3>
+                </div>
+                <div class="panel-body">
+                    <h2>${{ total_pending|floatformat:2 }}</h2>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" id="filters">
+                    <h3 class="panel-title"><i class="fa fa-check-square" aria-hidden="true"></i> Pending Payments</h3>
+                </div>
+
+                <table class="table" id="active-students">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Student</th>
+                            <th>Amount</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for payment in upcoming_payments %}
+                        <tr>
+                            <td> {{ payment.date }} </td>
+                            <td><a href="/student/{{ payment.tuition.first.student.pk }}">{{ payment.tuition.first.student.first_name }} {{ payment.tuition.first.student.last_name }}</a></td>
+                            <td> ${{ payment.amount|floatformat:2 }} </td>
+                            <td> {{ payment.get_type_display }} </td>
+                        </tr>
+                        {% empty %}
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+{#                <div class="panel-body" id="starting-soon">#}
+{#                </div>#}
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+
+<script>
+
+     $( document ).ready(function() {
+
+         var current = 0;
+
+         $.get("/finance/month/?offset=0")
+			 	.done(function (data, status, xhr) {
+                    html3 = $.parseHTML(data);
+                    title = html3[1];
+                    html4 = html3.splice(3,html3.length - 3);
+                    $('#payment-title').html("Payments in " + title.textContent);
+                    $('#payments').html(html4);
+				})
+				.fail(function (data, status, xhr) {
+
+				});
+
+
+
+     $(document).on('click','#previous-month', function(e) {
+        e.preventDefault();
+        var url = $(this).attr('href') + (current - 1).toString();
+            $.get(url)
+			 	.done(function (data, status, xhr) {
+                    current -= 1;
+                    html3 = $.parseHTML(data);
+                    title = html3[1];
+                    html4 = html3.splice(3,html3.length - 3);
+                    $('#payment-title').html("Payments in " + title.textContent);
+                    $('#payments').html(html4);
+				})
+				.fail(function (data, status, xhr) {
+
+				})
+        });
+
+     $(document).on('click','#next-month', function(e) {
+        e.preventDefault();
+        var url = $(this).attr('href') + (current + 1).toString();
+            $.get(url)
+			 	.done(function (data, status, xhr) {
+                    current += 1;
+                    html3 = $.parseHTML(data);
+                    title = html3[1];
+                    html4 = html3.splice(3,html3.length - 3);
+                    $('#payment-title').html("Payments in " + title.textContent);
+                    $('#payments').html(html4);
+				})
+				.fail(function (data, status, xhr) {
+
+				})
+        });
+     });
+
+
+
+</script>
+</div>
 {% endblock %}
 
-</div>
+
+

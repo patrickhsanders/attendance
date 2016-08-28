@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from .models import Project
-from course.models import Course
-
 from django.views.generic import View
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
-# Create your views here.
+from course.models import Course
+
+from .models import Project
+
 
 class ProjectsListView(PermissionRequiredMixin, View):
     permission_required = 'projects.add_project'
@@ -15,6 +15,8 @@ class ProjectsListView(PermissionRequiredMixin, View):
         android_course = Course.objects.get(name__iexact='Android Fulltime')
         ios_course = Course.objects.get(name__iexact='iOS Fulltime')
         ios_projects = Project.objects.filter(course=ios_course, weight__lt=1000, deprecated=False).order_by('weight')
-        android_projects = Project.objects.filter(course=android_course, weight__lt=1000, deprecated=False).order_by('weight')
+        android_projects = Project.objects.filter(course=android_course,
+                                                  weight__lt=1000,
+                                                  deprecated=False).order_by('weight')
 
-        return render(request, self.template_name, {'android_projects': android_projects, 'ios_projects':ios_projects})
+        return render(request, self.template_name, {'android_projects': android_projects, 'ios_projects': ios_projects})

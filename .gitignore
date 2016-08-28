@@ -5,3 +5,5 @@ ttt/settings.py
 ttt/deploy.settings.py.txt
 
 *.pyc
+
+.gitignore

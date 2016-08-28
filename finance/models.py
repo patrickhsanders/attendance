@@ -41,7 +41,7 @@ class Payment(models.Model):
 class StudentTuition(models.Model):
     tuition_total = models.FloatField()
 
-    payments = models.ManyToManyField(Payment, blank=True)
+    payments = models.ManyToManyField(Payment, blank=True, related_name="tuition")
 
     payed_in_full = models.BooleanField(default=False)
     notes = models.ManyToManyField(Note, blank=True)

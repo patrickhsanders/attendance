@@ -26,7 +26,6 @@
                             <th>Started</th>
                             <th>Days</th>
                             <th>Hours</th>
-                            <th>Grade</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,7 +35,6 @@
                             <td>{{ project.date_started }}</td>
                             <td>{{ project.derived_days }}</td>
                             <td>{{ project.derived_hours|floatformat:0 }}</td>
-                            <td>{{ project.grade }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

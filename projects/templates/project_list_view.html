@@ -17,13 +17,18 @@
                         <thead>
                         <tr>
                             <th>Project</th>
-
                         </tr>
                     </thead>
                     <tbody>
                     {% for project in ios_projects %}
                         <tr>
-                            <td>{{ project.name }}</td>
+                            <td><strong>{{ project.name }}</strong><br />
+                                {{ project.student_set.count }} Students
+                                {% for student in project.student_set.all  %}
+                                    {% if forloop.first %} - {% endif %}
+                                    <a href="/student/{{ student.pk }}">{{ student.first_name }} {{ student.last_name }}</a>{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -44,7 +49,13 @@
                     <tbody>
                     {% for project in android_projects %}
                         <tr>
-                            <td>{{ project.name }}</td>
+                            <td><strong>{{ project.name }}</strong><br />
+                                {{ project.student_set.count }} Students
+                                {% for student in project.student_set.all  %}
+                                    {% if forloop.first %} - {% endif %}
+                                    <a href="/student/{{ student.pk }}">{{ student.first_name }} {{ student.last_name }}</a>{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
