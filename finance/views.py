@@ -12,7 +12,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from note.forms import NoteForm
 
-from .forms import PaymentForm
+from .forms import PaymentForm, StudentTuitionForm
 
 from .models import StudentTuition, Payment
 from django.utils import timezone
@@ -168,4 +168,35 @@ class EditPayment(PermissionRequiredMixin, View):
 
         else:
             return render(request, self.template_name, {'payment_form': payment_form, 'note_form': note_form})
+
+class EditTuition(PermissionRequiredMixin, View):
+    permission_required = 'finance.add_payment'
+    template_name = "tuition_form.html"
+
+    def get(self, request, tuition_id):
+        try:
+            tuition = StudentTuition.objects.get(pk=tuition_id)
+            tuition_form = StudentTuitionForm(instance=tuition)
+            student = tuition.student
+        except:
+            tuition_form = StudentTuitionForm()
+
+        return render(request, self.template_name, {'tuition_form': tuition_form, 'student':student, 'tuition':tuition})
+
+    def post(self, request, tuition_id):
+
+        tuition = get_object_or_404(StudentTuition, pk=tuition_id)
+        tuition_form = StudentTuitionForm(request.POST, instance=tuition)
+        if tuition_form.is_valid():
+            obj_ = tuition_form.save()
+
+            default_redirect = '/finance/'
+            redirect = request.GET.get('next') if request.GET.get('next') != None else default_redirect
+            return HttpResponseRedirect(redirect)
+
+        else:
+            return render(request, self.template_name, {'tuition_form': tuition_form})
+
+
+
 

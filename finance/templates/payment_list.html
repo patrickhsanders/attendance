@@ -49,6 +49,7 @@
                             <th>Student</th>
                             <th>Amount</th>
                             <th>Type</th>
+                            <th>Edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,6 +60,7 @@
                             <td><a href="/student/{{ payment.tuition.first.student.pk }}">{{ payment.tuition.first.student.first_name }} {{ payment.tuition.first.student.last_name }}</a></td>
                             <td> ${{ payment.amount|floatformat:2 }} </td>
                             <td> {{ payment.get_type_display }} </td>
+                            <td><a href="/finance/payment/{{ payment.pk }}/edit/?next=/finance"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
                         </tr>
                         {% empty %}
 
