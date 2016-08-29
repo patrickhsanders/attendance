@@ -8,12 +8,3 @@ class Job(models.Model):
     start_date = models.DateField(blank=True)
     end_date = models.DateField(blank=True)
     city = models.CharField(max_length=31, blank=True)
-
-
-class WorkExperience(models.Model):
-    jobs = models.ManyToManyField(Job)
-
-
-class JobSearchSteps(models.Model):
-    name = models.CharField(max_length=31)
-    weight = models.IntegerField()
