@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 
 from .views import StudentCheckin, StudentList, StudentEmailList, StudentTestEmailList, StudentListPortlet, StudentListStartingSoonPortlet, StudentsCurrentlySignedInPortlet
 from .views import ContactInfoEditView, EmergencyContactEditView
-# from .views import ContactInfoViewPortlet
 from .views import EditStudentJobStatus, StudentJobStatusList, DeleteStudentJobStatus, StudentDetailView, AddNoteToStudent, CreateStudent, StudentContract
 from .views import EducationInformationView, CreateAdditonalData, StudentAddConfirmation, CompletionCalendar, StudentTuition
 urlpatterns = [

@@ -82,7 +82,7 @@ class StudentEmailList(PermissionRequiredMixin, View):
 
     def get(self, request):
 
-        students = Student.objects.filter(active=True, course__full_time=True).order_by('first_name')
+        students = Student.people.active().fulltime()
         current_user = request.user
         current_user_email = current_user.email
 
@@ -99,7 +99,7 @@ class StudentTestEmailList(PermissionRequiredMixin, View):
 
     def get(self, request):
 
-        students = Student.objects.filter(active=True).exclude(current_project=None).order_by('first_name')
+        students = Student.people.active().exclude(current_project=None)
 
         students_for_test = []
 
@@ -155,12 +155,11 @@ class StudentListStartingSoonPortlet(PermissionRequiredMixin, ListView):
     def get_queryset(self):
         return Student.objects.filter(active=False, start_date__gte=timezone.now()).order_by('start_date')
 
-
 class ActiveStudentViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
-    queryset = Student.objects.filter(end_date__isnull=True, active=True)
+    queryset = Student.people.active().filter(end_date__isnull=True)
     serializer_class = ActiveStudentSerializer
 
 
