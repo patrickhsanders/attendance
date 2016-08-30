@@ -155,6 +155,7 @@ class StudentListStartingSoonPortlet(PermissionRequiredMixin, ListView):
     def get_queryset(self):
         return Student.objects.filter(active=False, start_date__gte=timezone.now()).order_by('start_date')
 
+
 class ActiveStudentViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
@@ -363,6 +364,7 @@ class ContactInfoEditView(PermissionRequiredMixin, View):
     template_name = "student_contact_info.html"
 
     def get(self, request, student_id):
+
         try:
             contact = ContactInfo.objects.get(student__pk=student_id)
             print(contact)
@@ -449,9 +451,21 @@ class EmergencyContactEditView(PermissionRequiredMixin, View):
     template_name = "student_emergency_contact_info.html"
 
     def get(self, request, student_id):
-        emergency_contact_form = EmergencyContactForm(prefix="EmergencyContactForm")
-        telephone_form = TelephoneNumberForm(prefix='TelephoneForm1')
-        telephone_form1 = TelephoneNumberForm(prefix='TelephoneForm2')
+
+        try:
+            emergency_contact = EmergencyContact.objects.get(student__pk=student_id)
+            print(emergency_contact)
+            emergency_contact_form = EmergencyContactForm(prefix="EmergencyContactForm", instance=emergency_contact)
+            telephone_form = TelephoneNumberForm(prefix='TelephoneForm1', instance=emergency_contact.telephone_numbers.first())
+            if emergency_contact.telephone_numbers.all().count() >= 2:
+                telephone_form1 = TelephoneNumberForm(prefix='TelephoneForm2', instance=emergency_contact.telephone_numbers.all()[1])
+            else:
+                telephone_form1 = TelephoneNumberForm(prefix='TelephoneForm2')
+
+        except:
+            emergency_contact_form = EmergencyContactForm(prefix="EmergencyContactForm")
+            telephone_form = TelephoneNumberForm(prefix='TelephoneForm1')
+            telephone_form1 = TelephoneNumberForm(prefix='TelephoneForm2')
 
         return render(request, self.template_name,
                       {'telephone_form1': telephone_form, 'telephone_form2': telephone_form1,

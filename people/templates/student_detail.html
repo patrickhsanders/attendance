@@ -136,7 +136,12 @@
 {##}
 {#        <div class="col-md-4 students">#}
             <div class="panel panel-default">
-                <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Emergency Contact</h3></div>
+                <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Emergency Contact
+                    <span class="pull-right">
+                        <a href="/student/{{ student.pk }}/emergency-contact-info/edit/?next={{ request.path }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    </span>
+                    </h3>
+                </div>
                 <div class="panel-body">
                 {% if student.emergency_contact != None %}
                     <p><strong>Name:</strong> {{ student.emergency_contact.first_name }} {{ student.emergency_contact.last_name }}</p>
