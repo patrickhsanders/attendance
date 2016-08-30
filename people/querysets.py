@@ -33,7 +33,7 @@ class StudentQueryset(QuerySet):
         return self._order_by_first_name().filter(course=swift_course).order_by('first_name')
 
     def algos(self):
-        return self._order_by_first_name().filter(active=True, current_project__weight__lte=109)
+        return self.active()._order_by_first_name().filter(current_project__weight__lte=109)
 
     def hackathon(self):
         return self._order_by_first_name().filter(

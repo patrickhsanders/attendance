@@ -363,8 +363,14 @@ class ContactInfoEditView(PermissionRequiredMixin, View):
     template_name = "student_contact_info.html"
 
     def get(self, request, student_id):
-        telephone_form = TelephoneNumberForm(prefix='TelephoneForm')
-        address_form = AddressForm(prefix='AddressForm')
+        try:
+            contact = ContactInfo.objects.get(student__pk=student_id)
+            print(contact)
+            telephone_form = TelephoneNumberForm(prefix='TelephoneForm', instance=contact.phone_number)
+            address_form = AddressForm(prefix='AddressForm',instance=contact.address)
+        except:
+            telephone_form = TelephoneNumberForm(prefix='TelephoneForm')
+            address_form = AddressForm(prefix='AddressForm')
 
         return render(request, self.template_name, {'telephone_form': telephone_form, 'address_form': address_form})
 

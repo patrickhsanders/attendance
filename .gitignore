@@ -7,3 +7,5 @@ ttt/deploy.settings.py.txt
 *.pyc
 
 .gitignore
+
+.DS_Store

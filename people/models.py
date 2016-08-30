@@ -140,7 +140,6 @@ class Student(models.Model):
 
     # Background Information
     education = models.OneToOneField(EducationalInformation, blank=True, null=True)
-    work_experience = models.OneToOneField(WorkExperience, blank=True, null=True)
 
     # Notes
     notes = models.ManyToManyField(Note, blank=True)
