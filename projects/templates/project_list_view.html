@@ -22,8 +22,8 @@
                     <tbody>
                     {% for project in ios_projects %}
                         <tr>
-                            <td><strong>{{ project.name }}</strong><br />
-                                {{ project.student_set.count }} Students
+                            <td><strong>{{ project.name }}</strong> ({{ project.estimated_completion_days }} day{{ project.estimated_completion_days|pluralize }})  <br />
+                                {{ project.student_set.count }} Student{{ project.student_set.count|pluralize }}
                                 {% for student in project.student_set.all  %}
                                     {% if forloop.first %} - {% endif %}
                                     {% if student.active == True %}
@@ -51,8 +51,8 @@
                     <tbody>
                     {% for project in android_projects %}
                         <tr>
-                            <td><strong>{{ project.name }}</strong><br />
-                                {{ project.student_set.count }} Students
+                            <td><strong>{{ project.name }}</strong> ({{ project.estimated_completion_days }} day{{ project.estimated_completion_days|pluralize }})  <br />
+                                {{ project.student_set.count }} Student{{ project.student_set.count|pluralize }}
                                 {% for student in project.student_set.all  %}
                                     {% if forloop.first %} - {% endif %}
                                     {% if student.active == True %}
