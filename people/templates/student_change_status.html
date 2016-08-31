@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid content text-center">
+<h2>Change Student Status</h2>
+<div class="row text-left">
+  <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <form action="" method="post">
+        {% csrf_token %}
+        <p>{{ student.first_name }} {{ student.last_name }}'s status will be changed to
+          {% if student.active == True %}
+            <strong>Inactive</strong>.</p> <p>This means he/she will no longer appear checkin/checkout screen, or receive automated emails.</p>
+          {% else %}
+            <strong>Active</strong>.</p> This means he/she will appear checkin/checkout screen and receive automated emails.</p>
+          {% endif %}
+
+        <button type="submit">
+          Submit</button>
+      </form></div>
+    <div class="col-md-4"></div>
+</div>
+</div>
+<p> </p>
+{% endblock %}

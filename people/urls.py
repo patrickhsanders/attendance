@@ -5,6 +5,7 @@ from .views import StudentCheckin, StudentList, StudentEmailList, StudentTestEma
 from .views import ContactInfoEditView, EmergencyContactEditView
 from .views import EditStudentJobStatus, StudentJobStatusList, DeleteStudentJobStatus, StudentDetailView, AddNoteToStudent, CreateStudent, StudentContract
 from .views import EducationInformationView, CreateAdditonalData, StudentAddConfirmation, CompletionCalendar, StudentTuition
+from .views import ChangeStudentStatus
 urlpatterns = [
 
     url(r'^create/$', login_required(CreateStudent.as_view())),
@@ -40,5 +41,7 @@ urlpatterns = [
     url(r'^(?P<student_id>[\w\-]+)/calendar/$', login_required(CompletionCalendar.as_view())),
 
     url(r'^(?P<student_id>[\w\-]+)/tuition/edit/$', login_required(StudentTuition.as_view())),
+
+    url(r'^(?P<student_id>[\w\-]+)/status/edit/$', login_required(ChangeStudentStatus.as_view())),
 
 ]

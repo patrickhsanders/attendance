@@ -627,3 +627,20 @@ class CompletionCalendar(PermissionRequiredMixin, View):
                                                     # 'finished_projects': finished_projects,
                                                     'remaining_projects': projects,
                                                     'final_day': day})
+
+class ChangeStudentStatus(PermissionRequiredMixin, View):
+    permission_required = 'people.add_student'
+    template_name = "student_change_status.html"
+
+    def get(self, request, student_id):
+        student = get_object_or_404(Student, pk=student_id)
+        return render(request, self.template_name, {'student': student})
+
+    def post(self, request, student_id):
+        student = get_object_or_404(Student, pk=student_id)
+        student.active = not student.active
+        student.save()
+
+        default_redirect = '/student/' + str(student.pk)
+        redirect = request.GET.get('next') if request.GET.get('next') is not None else default_redirect
+        return HttpResponseRedirect(redirect)
