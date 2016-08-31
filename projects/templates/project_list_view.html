@@ -26,7 +26,9 @@
                                 {{ project.student_set.count }} Students
                                 {% for student in project.student_set.all  %}
                                     {% if forloop.first %} - {% endif %}
+                                    {% if student.active == True %}
                                     <a href="/student/{{ student.pk }}">{{ student.first_name }} {{ student.last_name }}</a>{% if not forloop.last %}, {% endif %}
+                                    {% endif %}
                                 {% endfor %}
                             </td>
                         </tr>
@@ -53,7 +55,9 @@
                                 {{ project.student_set.count }} Students
                                 {% for student in project.student_set.all  %}
                                     {% if forloop.first %} - {% endif %}
+                                    {% if student.active == True %}
                                     <a href="/student/{{ student.pk }}">{{ student.first_name }} {{ student.last_name }}</a>{% if not forloop.last %}, {% endif %}
+                                    {% endif %}
                                 {% endfor %}
                             </td>
                         </tr>
