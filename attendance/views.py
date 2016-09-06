@@ -84,12 +84,13 @@ class CreateRegister(PermissionRequiredMixin, View):
         else:
             current_project = None
 
-        if (Register.objects.filter(student=student_obj, checkout=None).count() == 0):
+        if (Register.objects.open().for_student(student_obj).count() == 0):
             Register.objects.create(student=student_obj, current_curriculum_project=current_project)
             return redirect('checkin', 'success')
         else:
             # send back failure
             return redirect('checkin')
+
 
 class DailyAttendanceDetail(PermissionRequiredMixin, View):
     permission_required = 'attendance.add_register'

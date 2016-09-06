@@ -1,5 +1,6 @@
 from django.db import models
 
+from note.models import Note
 
 class Company(models.Model):
     name = models.CharField(max_length=63)
@@ -13,3 +14,31 @@ class Job(models.Model):
     start_date = models.DateField(blank=True)
     end_date = models.DateField(blank=True)
     company = models.OneToOneField(Company, blank=True)
+
+
+class Resume(models.Model):
+    date = models.DateField(auto_now_add=True)
+    file = models.FileField(upload_to='resumes')
+
+
+class Task(models.Model):
+    TASK_CHOICES = (("resume", "Create resume"),
+                    ("github", "Setup GitHub account and post important projects"),
+                    ("website", "Setup personal portfolio website"),
+                    ("linkedin", "Setup LinkedIn website"),
+                    ("side project", "Finish side project and get in app store."),
+                    ("personal app", "Create portfolio app"),
+                    ("blog", "Create blog with posts about passion for app development, what you're learning, etc"),
+                    ("hackathon", "Participate in Hackathon"),
+                    ("other", "Other Task"))
+
+    task = models.CharField(max_length=31)
+    other = models.CharField(max_length=63, blank=True)
+    date_to_finish_by = models.DateField()
+
+
+class Recruit(models.Model):
+    wants_help_looking_for_work = models.BooleanField(default=False)
+    notes = models.ManyToManyField(Note, blank=True)
+    jobs = models.ManyToManyField(Job, blank=True)
+

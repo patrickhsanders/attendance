@@ -1,9 +1,10 @@
 from django.db import models
 from people.models import Student
 from projects.models import Project
-from django.utils import timezone
 from note.models import Note
 from django.utils import timezone
+from .querysets import RegisterQueryset
+
 
 class Register(models.Model):
     student = models.ForeignKey(Student)
@@ -12,6 +13,8 @@ class Register(models.Model):
     forgot_to_checkout = models.BooleanField(default=False)
 
     current_curriculum_project = models.ForeignKey(Project, blank=True, null=True)
+
+    objects = RegisterQueryset.as_manager()
 
     def __str__(self):
         return self.student.first_name + " " + self.student.last_name + "(" + str(self.checkin.month) + "/" + str(self.checkin.day) + "/" + str(self.checkin.year) + " " + str(self.checkin.hour) + ":" + str(self.checkin.minute) + ")"
@@ -37,6 +40,7 @@ class ExcusedAbsence(models.Model):
         else:
             return self.student.first_name + " " + self.student.last_name + " (" + self.start_date.strftime(
                 "%x") + ")"
+
 
 class DailyAttendance(models.Model):
     date = models.DateField()
