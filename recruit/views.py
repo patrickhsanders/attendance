@@ -59,10 +59,7 @@ class CreateJob(PermissionRequiredMixin, View):
 
         if job_form.is_valid():
             job = job_form.save(commit=False)
-
-            try:
-                (job.company is not None)
-            except:
+            if job.company is None:
                 if company_form.is_valid():
                     job.company = company_form.save()
 

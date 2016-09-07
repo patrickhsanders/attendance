@@ -7,13 +7,16 @@ class Company(models.Model):
     website = models.URLField(blank=True)
     city = models.CharField(max_length=31, blank=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Job(models.Model):
     title = models.CharField(max_length=63)
     salary = models.FloatField(blank=True)
     start_date = models.DateField(blank=True)
     end_date = models.DateField(blank=True, null=True)
-    company = models.ForeignKey(Company, blank=True)
+    company = models.ForeignKey(Company, blank=True, null=True)
 
 
 class Resume(models.Model):

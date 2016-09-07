@@ -126,7 +126,7 @@ class Student(models.Model):
     tuition = models.OneToOneField(StudentTuition, blank=True, null=True, related_name='student')
 
     # Recruit
-    recruit = models.OneToOneField(Recruit, blank=True, null=True)
+    recruit = models.OneToOneField(Recruit, blank=True, null=True, related_name='student')
     wants_help_looking_for_a_job = models.BooleanField(default=False)
 
     # Background Information
