@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^checkin/(?P<success>[\w\-]*)', login_required(StudentCheckin.as_view()), name="checkin"),
 
     # Student detail view
-    url(r'^(?P<student_id>[\w\-]+)/$', login_required(StudentDetailView.as_view())),
+    url(r'^(?P<student_id>[\w\-]+)/$', login_required(StudentDetailView.as_view()), name="student_detail_view"),
 
     # Student attribute edit
     url(r'^(?P<student_id>[\w\-]+)/contact-info/edit/', login_required(ContactInfoEditView.as_view()), name="edit-contact-info"),

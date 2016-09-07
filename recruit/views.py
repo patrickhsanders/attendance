@@ -21,7 +21,7 @@ class CreateEditRecruit(PermissionRequiredMixin, View):
                       self.template_name,
                       {'form': recruit_form})
 
-    def put(self, request, student_id):
+    def post(self, request, student_id):
         student = get_object_or_404(Student, pk=student_id)
 
         recruit_form = RecruitForm(request.POST, instance=student) \
@@ -30,12 +30,13 @@ class CreateEditRecruit(PermissionRequiredMixin, View):
 
         if recruit_form.is_valid():
             recruit_form.save()
+            print("YESSSSS")
             return HttpResponseRedirect(student.get_absolute_url())
 
-
-        return render(request,
-                      self.template_name,
-                      {'form': recruit_form})
+        else:
+            return render(request,
+                self.template_name,
+                {'form': recruit_form})
 
 
 class CreateJob(PermissionRequiredMixin, View):
