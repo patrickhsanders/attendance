@@ -21,6 +21,18 @@ class Resume(models.Model):
     file = models.FileField(upload_to='resumes')
 
 
+class Link(models.Model):
+
+    LINK_TYPES = (('github', "GitHub"),
+                  ('linkedin', "LinkedIn"),
+                  ('website', "Personal Website"),
+                  ('twitter', "Twitter"),
+                  ('other', "Other"))
+
+    type = models.CharField(max_length=15, choices=LINK_TYPES)
+    url = models.URLField(max_length=200)
+
+
 class Task(models.Model):
     TASK_CHOICES = (("resume", "Create resume"),
                     ("github", "Setup GitHub account and post important projects"),
@@ -41,4 +53,6 @@ class Recruit(models.Model):
     wants_help_looking_for_work = models.BooleanField(default=False)
     notes = models.ManyToManyField(Note, blank=True)
     jobs = models.ManyToManyField(Job, blank=True)
-
+    links = models.ManyToManyField(Link, blank=True)
+    resume = models.ManyToManyField(Resume, blank=True)
+    tasks = models.ManyToManyField(Task, blank=True)

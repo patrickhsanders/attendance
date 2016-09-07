@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Student, ContactInfo, TelephoneNumber, Address, EmergencyContact
-from .models import EducationalInformation, EducationalExperience, Link
+from .models import EducationalInformation, EducationalExperience
 # Register your models here.
 
 class StudentAdmin(admin.ModelAdmin):
@@ -18,5 +18,3 @@ admin.site.register(EmergencyContact)
 
 admin.site.register(EducationalInformation)
 admin.site.register(EducationalExperience)
-
-admin.site.register(Link)

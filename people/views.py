@@ -52,7 +52,7 @@ class StudentCheckin(PermissionRequiredMixin, View):
 
     def get(self, request, success):
 
-        open_registers = Register.objects.filter(checkout=None).order_by('student__first_name')
+        open_registers = Register.objects.open().order_by_student_first_name()
         students = Student.people.active().fulltime().filter(
             ~Q(id__in=[register.student.id for register in open_registers]))
 
@@ -67,7 +67,7 @@ class StudentsCurrentlySignedInPortlet(PermissionRequiredMixin, View):
     template_name = 'student_checkin_current_portlet.html'
 
     def get(self, request):
-        open_registers = Register.objects.filter(checkout=None).order_by('student__first_name')
+        open_registers = Register.objects.open().order_by_student_first_name()
 
         return render(
             request,
@@ -253,7 +253,7 @@ class StudentDetailView(PermissionRequiredMixin, View):
         projects = StudentProject.objects.filter(student=student).order_by('-date_started')
         note_form = NoteForm()
 
-        registers = Register.objects.filter(student=student)
+        registers = Register.objects.for_student(student)
         excused_absence = ExcusedAbsence.objects.filter(student=student)
 
         end_date = timezone.now().date() if student.end_date is None else student.end_date

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import View
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
+
 from course.models import Course
 
 from .models import Project

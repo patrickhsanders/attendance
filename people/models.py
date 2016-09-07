@@ -11,8 +11,10 @@ from assets.models import Computer
 from course.models import Course
 from finance.models import StudentTuition
 from note.models import Note
+from recruit.models import Recruit
 
 from .querysets import StudentQueryset
+
 
 class TelephoneNumber(models.Model):
 
@@ -38,19 +40,7 @@ class Address(models.Model):
     zip = USZipCodeField()
 
     def __str__(self):
-        return self.street_address + ", " + self.cit
-
-
-class Link(models.Model):
-
-    LINK_TYPES = (('github', "GitHub"),
-                  ('linkedin', "LinkedIn"),
-                  ('website', "Personal Website"),
-                  ('twitter', "Twitter"),
-                  ('other', "Other"))
-
-    type = models.CharField(max_length=15, choices=LINK_TYPES)
-    url = models.URLField(max_length=200)
+        return self.street_address + ", " + self.city
 
 
 class EmergencyContact(models.Model):
@@ -135,7 +125,7 @@ class Student(models.Model):
     tuition = models.OneToOneField(StudentTuition, blank=True, null=True, related_name='student')
 
     # Recruit
-    links = models.ManyToManyField(Link, blank=True)
+    recruit = models.OneToOneField(Recruit, blank=True, null=True)
     wants_help_looking_for_a_job = models.BooleanField(default=False)
 
     # Background Information
@@ -157,3 +147,6 @@ class Student(models.Model):
 
     def __str__(self):
         return self.first_name + " " + self.last_name
+
+    # def get_absolute_url(self):
+        # return reverse()
