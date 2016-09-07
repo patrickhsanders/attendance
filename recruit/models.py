@@ -12,8 +12,8 @@ class Job(models.Model):
     title = models.CharField(max_length=63)
     salary = models.FloatField(blank=True)
     start_date = models.DateField(blank=True)
-    end_date = models.DateField(blank=True)
-    company = models.OneToOneField(Company, blank=True)
+    end_date = models.DateField(blank=True, null=True)
+    company = models.ForeignKey(Company, blank=True)
 
 
 class Resume(models.Model):

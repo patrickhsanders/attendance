@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid content text-center">
+<h2></h2>
+<div class="row text-left">
+  <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <form action="" method="post">
+        {% csrf_token %}
+         {{ job_form.as_p }}
+          <p>Or add a company:</p>
+          <div class="well well-sm">
+         {{ company_form.as_p }}
+              </div>
+        <button type="submit">
+          Submit</button>
+      </form></div>
+    <div class="col-md-4"></div>
+</div>
+</div>
+<p> </p>
+{% endblock %}

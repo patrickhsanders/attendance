@@ -17,6 +17,7 @@ from places.views import PlacesChart
 from people import urls as people_urls
 from note import urls as note_urls
 from finance import urls as finance_urls
+from recruit import urls as recruit_urls
 
 # REST Framework router setup.
 router = routers.DefaultRouter()
@@ -34,6 +35,7 @@ urlpatterns = [
     url(r'^student/$', login_required(GenericDashboard.as_view())),
     url(r'^student/', include(people_urls)),
     url(r'^finance/', include(finance_urls)),
+    url(r'^recruit/', include(recruit_urls)),
 
     url(r'^project/$', login_required(ProjectsListView.as_view())),
     url(r'^place/$', login_required(PlacesChart.as_view())),
