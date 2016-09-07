@@ -19,7 +19,7 @@ class CreateEditRecruit(PermissionRequiredMixin, View):
 
         return render(request,
                       self.template_name,
-                      {'recruit_form': recruit_form})
+                      {'form': recruit_form})
 
     def put(self, request, student_id):
         student = get_object_or_404(Student, pk=student_id)
@@ -35,7 +35,7 @@ class CreateEditRecruit(PermissionRequiredMixin, View):
 
         return render(request,
                       self.template_name,
-                      {'recruit_form': recruit_form})
+                      {'form': recruit_form})
 
 
 class CreateJob(PermissionRequiredMixin, View):

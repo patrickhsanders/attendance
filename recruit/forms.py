@@ -10,7 +10,7 @@ class RecruitForm(forms.ModelForm):
 class CompanyForm(forms.ModelForm):
     class Meta:
         model = Company
-        fields = ['name', 'website', 'url']
+        fields = ['name', 'website', 'city']
 
 class JobForm(forms.ModelForm):
     class Meta:
