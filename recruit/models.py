@@ -1,6 +1,8 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 from note.models import Note
+
 
 class Company(models.Model):
     name = models.CharField(max_length=63)
@@ -17,6 +19,11 @@ class Job(models.Model):
     start_date = models.DateField(blank=True)
     end_date = models.DateField(blank=True, null=True)
     company = models.ForeignKey(Company, blank=True, null=True)
+
+    def get_absolute_url(self):
+        return reverse(
+            'edit_job',
+            kwargs={'job_id': self.pk})
 
 
 class Resume(models.Model):

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid content">
+
+    <div class="row">
+        <div class="col-md-8 students">
+
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title">
+                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                    Jobs
+                </h3></div>
+
+                <table class="table">
+                    <thead>
+                        <th>Name</th>
+                        <th>Title</th>
+                        <th>Salary</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Company</th>
+                        <th>Edit</th>
+                    </thead>
+                    {% for job in jobs %}
+                    <tr>
+                        <td><a href="{{ job.recruit_set.all.first.student.get_absolute_url }}">
+                            {{ job.recruit_set.all.first.student.first_name }}
+                            {{ job.recruit_set.all.first.student.last_name }}</a>
+                        </td>
+                        <td>{{ job.title }}</td>
+                        <td>${{ job.salary }}</td>
+                        <td>{{ job.start_date }}</td>
+                        <td>{{ job.end_date }}</td>
+                        <td>{{ job.company.name }}</td>
+                        <td><a href="{{ job.get_absolute_url }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                    </tr>
+                    {% empty %}
+                        <tr><td>No jobs</td></tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="panel panel-default">
+                <div class="panel-heading" id="filters">
+{#                    <h3 class="panel-title"><i class="fa fa-check-square" aria-hidden="true"></i> Total Pending</h3>#}
+                </div>
+                <div class="panel-body">
+{#                    <h2>${{ total_pending|floatformat:2 }}</h2>#}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

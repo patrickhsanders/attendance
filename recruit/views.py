@@ -11,6 +11,7 @@ from .models import Job, Recruit
 class CreateEditRecruit(PermissionRequiredMixin, View):
     permission_required = 'recruit.add_recruit'
     template_name = "recruit_generic_form.html"
+    title = 'Edit Recruit Information'
 
     def get(self, request, student_id):
         student = get_object_or_404(Student, pk=student_id)
@@ -19,7 +20,8 @@ class CreateEditRecruit(PermissionRequiredMixin, View):
 
         return render(request,
                       self.template_name,
-                      {'form': recruit_form})
+                      {'form': recruit_form,
+                       'title': self.title})
 
     def post(self, request, student_id):
         student = get_object_or_404(Student, pk=student_id)
@@ -37,12 +39,14 @@ class CreateEditRecruit(PermissionRequiredMixin, View):
         else:
             return render(request,
                 self.template_name,
-                {'form': recruit_form})
+                {'form': recruit_form,
+                 'title': self.title})
 
 
 class CreateJob(PermissionRequiredMixin, View):
     permission_required = 'recruit.add_recruit'
     template_name = "create_job_form.html"
+    title = 'Create Job'
 
     def get(self, request, recruit_id):
         job_form = JobForm()
@@ -51,7 +55,8 @@ class CreateJob(PermissionRequiredMixin, View):
         return render(request,
                       self.template_name,
                       {'job_form': job_form,
-                       'company_form': company_form})
+                       'company_form': company_form,
+                       'title': self.title})
 
     def post(self, request, recruit_id):
         job_form = JobForm(request.POST)
@@ -74,28 +79,70 @@ class CreateJob(PermissionRequiredMixin, View):
             return render(request,
                           self.template_name,
                           {'job_form': job_form,
-                           'company_form': company_form})
+                           'company_form': company_form,
+                           'title': self.title})
 
 
 class EditJob(PermissionRequiredMixin, View):
     permission_required = 'recruit.add_recruit'
+    template_name = "create_job_form.html"
 
-    def get(self, request):
-        pass
+    def get(self, request, job_id):
+        job = get_object_or_404(Job, pk=job_id)
+        job_form = JobForm(instance=job)
+        company_form = CompanyForm()
 
-    def post(self, request):
-        pass
+        return render(request,
+                      self.template_name,
+                      {'job_form': job_form,
+                       'company_form': company_form})
+
+    def post(self, request, job_id):
+        job = get_object_or_404(Job, pk=job_id)
+        job_form = JobForm(request.POST, instance=job)
+        company_form = CompanyForm(request.POST)
+
+        if job_form.is_valid():
+            job = job_form.save(commit=False)
+            if job.company is None:
+                if company_form.is_valid():
+                    job.company = company_form.save()
+
+            # TODO change this redirect
+            return HttpResponseRedirect("/")
+
+        else:
+            return render(request,
+                      self.template_name,
+                      {'job_form': job_form,
+                       'company_form': company_form})
 
 
 class CreateCompany(PermissionRequiredMixin, View):
     permission_required = 'recruit.add_recruit'
+    template_name = "recruit_generic_form.html"
+    title = "Add Company"
 
     def get(self, request):
-        pass
+        company_form = CompanyForm()
+
+        return render(request,
+                      self.template_name,
+                      {'company_form': company_form,
+                       'title': self.title})
 
     def post(self, request):
-        pass
+        company_form = CompanyForm(request.POST)
 
+        if company_form.is_valid():
+            company_form.save()
+            # TODO change this redirect
+            return HttpResponseRedirect("/")
+        else:
+            return render(request,
+                          self.template_name,
+                          {'company_form': company_form,
+                           'title': self.title})
 
 class CreateResume(PermissionRequiredMixin, View):
     permission_required = 'recruit.add_recruit'
@@ -115,3 +162,13 @@ class CreateTask(PermissionRequiredMixin, View):
 
     def post(self, request):
         pass
+
+
+class JobsList(View):
+    template_name = "job_list.html"
+
+    def get(self, request):
+        jobs = Job.objects.all()
+        return render(request,
+                      self.template_name,
+                      {'jobs': jobs})

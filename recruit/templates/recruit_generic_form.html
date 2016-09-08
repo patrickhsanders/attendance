@@ -6,6 +6,10 @@
 <div class="row text-left">
   <div class="col-md-4"></div>
     <div class="col-md-4">
+        {% if title != None %}
+            <h3>{{ title }}</h3>
+        {% endif %}
+
       <form action="" method="post">
         {% csrf_token %}
          {{ form.as_p }}
