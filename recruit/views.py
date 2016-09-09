@@ -3,7 +3,7 @@ from django.views.generic import View
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponseRedirect
 from people.models import Student
-from .forms import RecruitForm, JobForm, CompanyForm
+from .forms import RecruitForm, JobForm, CompanyForm, TaskForm, ResumeForm
 from .models import Job, Recruit
 # Create your views here.
 
@@ -95,7 +95,8 @@ class EditJob(PermissionRequiredMixin, View):
         return render(request,
                       self.template_name,
                       {'job_form': job_form,
-                       'company_form': company_form})
+                       'company_form': company_form,
+                       'job': job})
 
     def post(self, request, job_id):
         job = get_object_or_404(Job, pk=job_id)
@@ -109,13 +110,15 @@ class EditJob(PermissionRequiredMixin, View):
                     job.company = company_form.save()
 
             # TODO change this redirect
-            return HttpResponseRedirect("/")
+            job.save()
+            return HttpResponseRedirect("/recruit/job")
 
         else:
             return render(request,
                       self.template_name,
                       {'job_form': job_form,
-                       'company_form': company_form})
+                       'company_form': company_form,
+                       'job': job})
 
 
 class CreateCompany(PermissionRequiredMixin, View):
@@ -155,12 +158,19 @@ class CreateResume(PermissionRequiredMixin, View):
 
 
 class CreateTask(PermissionRequiredMixin, View):
-    permission_required = 'recruit.add_recruit'
+    permission_required = 'recruit.add_task'
+    template_name = "recruit_generic_form.html"
+    title = "Create Task"
 
-    def get(self, request):
-        pass
+    def get(self, request, recruit_id):
+        form = TaskForm()
 
-    def post(self, request):
+        return render(request,
+                      self.template_name,
+                      {'form': form,
+                       'title': self.title})
+
+    def post(self, request, recruit_id):
         pass
 
 
@@ -172,3 +182,20 @@ class JobsList(View):
         return render(request,
                       self.template_name,
                       {'jobs': jobs})
+
+
+class DeleteJob(PermissionRequiredMixin, View):
+    permission_required = 'recruit.delete_recruit'
+    template_name = "delete_job.html"
+
+    def get(self, request, job_id):
+        job = get_object_or_404(Job, pk=job_id)
+        return render(request,
+                      self.template_name,
+                      {'job': job})
+
+    def post(self, request, job_id):
+        job = get_object_or_404(Job, pk=job_id)
+        job.delete()
+
+        return HttpResponseRedirect("/recruit/job")

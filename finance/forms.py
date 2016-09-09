@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import Textarea
+from ttt.forms import DateInput
 
 from .models import Payment, StudentTuition
 
@@ -12,3 +12,6 @@ class PaymentForm(forms.ModelForm):
     class Meta:
         model = Payment
         fields = ['date','amount','type','completed']
+        widgets = {
+            'start_date': DateInput()
+        }

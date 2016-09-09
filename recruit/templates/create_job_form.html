@@ -15,6 +15,10 @@
               </div>
         <button type="submit">
           Submit</button>
+
+          {% if job != None %}
+              <span class="pull-right"><a href="{{ job.get_delete_url }}">Delete</a></span>
+          {% endif %}
       </form></div>
     <div class="col-md-4"></div>
 </div>

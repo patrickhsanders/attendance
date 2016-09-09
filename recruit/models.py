@@ -25,6 +25,11 @@ class Job(models.Model):
             'edit_job',
             kwargs={'job_id': self.pk})
 
+    def get_delete_url(self):
+        return reverse(
+            'delete_job',
+            kwargs={'job_id': self.pk})
+
 
 class Resume(models.Model):
     date = models.DateField(auto_now_add=True)
@@ -54,7 +59,7 @@ class Task(models.Model):
                     ("hackathon", "Participate in Hackathon"),
                     ("other", "Other Task"))
 
-    task = models.CharField(max_length=31)
+    task = models.CharField(max_length=31, choices=TASK_CHOICES)
     other = models.CharField(max_length=63, blank=True)
     date_to_finish_by = models.DateField()
 

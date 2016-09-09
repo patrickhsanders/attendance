@@ -34,7 +34,10 @@
                         <td>{{ job.start_date }}</td>
                         <td>{{ job.end_date }}</td>
                         <td>{{ job.company.name }}</td>
-                        <td><a href="{{ job.get_absolute_url }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                        <td>
+                            <a href="{{ job.get_absolute_url }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <a href="{{ job.get_delete_url }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </td>
                     </tr>
                     {% empty %}
                         <tr><td>No jobs</td></tr>

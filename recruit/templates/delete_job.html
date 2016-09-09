@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid content text-center">
+<h2></h2>
+<div class="row text-left">
+  <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h3>Delete job for
+            <u>
+                {{ job.recruit_set.all.first.student.first_name }} {{ job.recruit_set.all.first.student.last_name }}
+            </u>
+        </h3>
+      <form action="" method="post">
+        {% csrf_token %}
+        <p>This action cannot be undone.</p>
+          <table class="table">
+                <thead>
+                    <th>Title</th>
+                    <th>Salary</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Company</th>
+                </thead>
+              <tbody>
+                <tr>
+                    <td>{{ job.title }}</td>
+                    <td>${{ job.salary }}</td>
+                    <td>{{ job.start_date }}</td>
+                    <td>{{ job.end_date }}</td>
+                    <td>{{ job.company.name }}</td>
+                </tr>
+              </tbody>
+
+          </table>
+        <button type="submit" class="alert alert-danger">
+          Submit</button>
+      </form></div>
+    <div class="col-md-4"></div>
+</div>
+</div>
+<p> </p>
+{% endblock %}

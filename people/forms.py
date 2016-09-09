@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import Textarea
+from ttt.forms import DateInput
 
 from .models import TelephoneNumber, Address, EmergencyContact
 from .models import Student, EducationalInformation, EducationalExperience
@@ -27,6 +28,9 @@ class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = ['first_name', 'last_name', 'email', 'course', 'start_date','uses_own_laptop']
+        widgets = {
+            'start_date': DateInput()
+        }
 
 
 class StudentJobStatusNoteForm(forms.ModelForm):
@@ -45,6 +49,10 @@ class EducationalExperienceForm(forms.ModelForm):
     class Meta:
         model = EducationalExperience
         fields = ['degree', 'field_of_study', 'institution', 'start_date', 'end_date']
+        widgets = {
+            'start_date': DateInput(),
+            'end_date': DateInput()
+        }
 
 
 class WorkLanguageExperienceForm(forms.ModelForm):
