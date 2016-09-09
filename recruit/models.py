@@ -66,10 +66,11 @@ class Task(models.Model):
     completed_date = models.DateField(default=None, null=True)
     note = models.OneToOneField(Note, null=True)
 
+
 class Recruit(models.Model):
     wants_help_looking_for_work = models.BooleanField(default=False)
     notes = models.ManyToManyField(Note, blank=True)
-    jobs = models.ManyToManyField(Job, blank=True)
+    jobs = models.ManyToManyField(Job, blank=True) # list, create
     links = models.ManyToManyField(Link, blank=True)
     resume = models.ManyToManyField(Resume, blank=True)
     tasks = models.ManyToManyField(Task, blank=True)

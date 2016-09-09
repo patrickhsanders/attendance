@@ -191,7 +191,18 @@ class CreateTask(PermissionRequiredMixin, View):
                        'title': self.title})
 
     def post(self, request, recruit_id):
-        pass
+        recruit = get_object_or_404(Recruit, pk=recruit_id)
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task = form.save()
+            recruit.tasks.add(task)
+            recruit.save()
+            return HttpResponseRedirect('/recruit/job')
+
+        return render(request,
+                      self.template_name,
+                      {'form': form,
+                       'title': self.title})
 
 
 class JobsList(View):
