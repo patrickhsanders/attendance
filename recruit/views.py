@@ -163,8 +163,18 @@ class CreateResume(PermissionRequiredMixin, View):
                       {'form': form,
                        'title': self.title})
 
-    def post(self, request):
-        pass
+    def post(self, request, recruit_id):
+        recruit = get_object_or_404(Recruit, pk=recruit_id)
+        form = ResumeForm(request.POST, request.FILES)
+        if form.is_valid():
+            resume = form.save()
+            recruit.resume.add(resume)
+            return HttpResponseRedirect(recruit.student.get_absolute_url())
+
+        return render(request,
+                      self.template_name,
+                      {'form': form,
+                       'title': self.title})
 
 
 class CreateTask(PermissionRequiredMixin, View):
