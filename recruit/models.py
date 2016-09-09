@@ -62,7 +62,9 @@ class Task(models.Model):
     task = models.CharField(max_length=31, choices=TASK_CHOICES)
     other = models.CharField(max_length=63, blank=True)
     date_to_finish_by = models.DateField()
-
+    completed = models.BooleanField(default=False)
+    completed_date = models.DateField(default=None, null=True)
+    note = models.OneToOneField(Note, null=True)
 
 class Recruit(models.Model):
     wants_help_looking_for_work = models.BooleanField(default=False)
