@@ -27,7 +27,7 @@ class JobForm(forms.ModelForm):
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['task', 'other', 'date_to_finish_by']
+        fields = ['task', 'other', 'date_to_finish_by', 'completed']
         widgets = {
             'date_to_finish_by':DateInput()
         }

@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponseRedirect
 from people.models import Student
 from .forms import RecruitForm, JobForm, CompanyForm, TaskForm, ResumeForm
-from .models import Job, Recruit
+from .models import Job, Recruit, Task
 # Create your views here.
 
 
@@ -199,10 +199,40 @@ class CreateTask(PermissionRequiredMixin, View):
             recruit.save()
             return HttpResponseRedirect('/recruit/job')
 
+        else:
+            return render(request,
+                      self.template_name,
+                      {'form': form,
+                       'title': self.title})
+
+
+class EditTask(PermissionRequiredMixin, View):
+    permission_required = 'recruit.add_task'
+    template_name = "recruit_generic_form.html"
+    title = "Edit Task"
+
+    def get(self, request, task_id):
+        task = get_object_or_404(Task, pk=task_id)
+        form = TaskForm(instance=task)
+
         return render(request,
                       self.template_name,
                       {'form': form,
                        'title': self.title})
+
+    def post(self, request, task_id):
+        task = get_object_or_404(Task, pk=task_id)
+        form = TaskForm(request.POST, instance=task)
+
+        if form.is_valid():
+            task = form.save()
+            return HttpResponseRedirect('/recruit/job')
+
+        else:
+            return render(request,
+                          self.template_name,
+                          {'form': form,
+                           'title': self.title})
 
 
 class JobsList(View):
