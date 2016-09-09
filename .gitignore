@@ -9,3 +9,5 @@ ttt/deploy.settings.py.txt
 *.DS_Store
 .DS_Store
 .idea/*
+resumes
+resumes/*
