@@ -6,29 +6,30 @@
 <div class="row text-left">
   <div class="col-md-2"></div>
     <div class="col-md-8">
-        <h3>Delete job for
+        <h3>Delete task for
             <u>
-                {{ job.recruit_set.all.first.student.first_name }} {{ job.recruit_set.all.first.student.last_name }}
+                {{ task.recruit_set.all.first.student.first_name }} {{ task.recruit_set.all.first.student.last_name }}
             </u>
         </h3>
       <form action="" method="post">
         {% csrf_token %}
+          <h4>Tasks should only be deleted if they are made by <u>mistake</u>!</h4>
         <p>This action cannot be undone.</p>
           <table class="table">
                 <thead>
-                    <th>Title</th>
-                    <th>Salary</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Company</th>
+                    <th>Student</th>
+                    <th>Task</th>
                 </thead>
               <tbody>
                 <tr>
-                    <td>{{ job.title }}</td>
-                    <td>${{ job.salary }}</td>
-                    <td>{{ job.start_date }}</td>
-                    <td>{{ job.end_date }}</td>
-                    <td>{{ job.company.name }}</td>
+                    <td>{{ task.recruit_set.all.first.student.first_name }}
+                        {{ task.recruit_set.all.first.student.last_name }}
+                    </td>
+                    <td>{{ task.get_task_display }}
+                        {% if task.task == "other" %}
+                            - {{ task.other }}
+                        {% endif %}
+                    </td>
                 </tr>
               </tbody>
 

@@ -66,6 +66,24 @@ class Task(models.Model):
     completed_date = models.DateField(default=None, null=True)
     note = models.OneToOneField(Note, null=True)
 
+    def get_absolute_url(self):
+        return reverse(
+            'edit_task',
+            kwargs={'task_id': self.pk})
+
+    def get_edit_url(self):
+        return self.get_absolute_url()
+
+    def get_complete_url(self):
+        return reverse(
+            'complete_task',
+            kwargs={'task_id': self.pk})
+
+    def get_delete_url(self):
+        return reverse(
+            'delete_task',
+            kwargs={'task_id': self.pk})
+
 
 class Recruit(models.Model):
     wants_help_looking_for_work = models.BooleanField(default=False)

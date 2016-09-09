@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponseRedirect
+from django.utils import timezone
+
 from people.models import Student
 from .forms import RecruitForm, JobForm, CompanyForm, TaskForm, ResumeForm
 from .models import Job, Recruit, Task
@@ -121,6 +123,33 @@ class EditJob(PermissionRequiredMixin, View):
                        'job': job})
 
 
+class JobsList(View):
+    template_name = "job_list.html"
+
+    def get(self, request):
+        jobs = Job.objects.all()
+        return render(request,
+                      self.template_name,
+                      {'jobs': jobs})
+
+
+class DeleteJob(PermissionRequiredMixin, View):
+    permission_required = 'recruit.delete_recruit'
+    template_name = "delete_job.html"
+
+    def get(self, request, job_id):
+        job = get_object_or_404(Job, pk=job_id)
+        return render(request,
+                      self.template_name,
+                      {'job': job})
+
+    def post(self, request, job_id):
+        job = get_object_or_404(Job, pk=job_id)
+        job.delete()
+
+        return HttpResponseRedirect("/recruit/job")
+
+
 class CreateCompany(PermissionRequiredMixin, View):
     permission_required = 'recruit.add_recruit'
     template_name = "recruit_generic_form.html"
@@ -218,7 +247,7 @@ class CreateTask(PermissionRequiredMixin, View):
 
 class EditTask(PermissionRequiredMixin, View):
     permission_required = 'recruit.add_task'
-    template_name = "recruit_generic_form.html"
+    template_name = "edit_task.html"
     title = "Edit Task"
 
     def get(self, request, task_id):
@@ -228,7 +257,8 @@ class EditTask(PermissionRequiredMixin, View):
         return render(request,
                       self.template_name,
                       {'form': form,
-                       'title': self.title})
+                       'title': self.title,
+                       'task': task})
 
     def post(self, request, task_id):
         task = get_object_or_404(Task, pk=task_id)
@@ -236,37 +266,42 @@ class EditTask(PermissionRequiredMixin, View):
 
         if form.is_valid():
             task = form.save()
-            return HttpResponseRedirect('/recruit/job')
+            return HttpResponseRedirect('/recruit/task')
 
         else:
             return render(request,
                           self.template_name,
                           {'form': form,
-                           'title': self.title})
+                           'title': self.title,
+                           'task': task})
+
+class CompleteTask(PermissionRequiredMixin, View):
+    permission_required = 'recruit.add_task'
+
+    def get(self, request, task_id):
+        task = get_object_or_404(Task, pk=task_id)
+        task.completed = True
+        task.completed_date = timezone.now()
+        task.save()
+        return HttpResponseRedirect('/recruit/task')
 
 
-class JobsList(View):
-    template_name = "job_list.html"
-
-    def get(self, request):
-        jobs = Job.objects.all()
-        return render(request,
-                      self.template_name,
-                      {'jobs': jobs})
-
-
-class DeleteJob(PermissionRequiredMixin, View):
+class DeleteTask(PermissionRequiredMixin, View):
     permission_required = 'recruit.delete_recruit'
-    template_name = "delete_job.html"
+    template_name = "delete_task.html"
 
-    def get(self, request, job_id):
-        job = get_object_or_404(Job, pk=job_id)
+    def get(self, request, task_id):
+        task = get_object_or_404(Task, pk=task_id)
         return render(request,
                       self.template_name,
-                      {'job': job})
+                      {'task': task})
 
-    def post(self, request, job_id):
-        job = get_object_or_404(Job, pk=job_id)
-        job.delete()
+    def post(self, request, task_id):
+        task = get_object_or_404(Task, pk=task_id)
+        student = task.recruit_set.all().first().student
+        task.delete()
 
-        return HttpResponseRedirect("/recruit/job")
+        return HttpResponseRedirect(student.get_absolute_url())
+
+
+

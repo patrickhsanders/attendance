@@ -39,10 +39,12 @@
 
                         <td>{{ task.date_to_finish_by }}</td>
                         <td>{{ task.completed|yesno:"Yes,No" }}</td>
-                        <td>{%  if task.completed_date != None %}{{ task.completed_date }}{% endif %}</td>
+                        <td>{% if task.completed == True %}{{ task.completed_date }}{% endif %}</td>
                         <td>
-                            <a href="{{ job.get_absolute_url }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                            <a href="{{ job.get_delete_url }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a href="{{ task.get_absolute_url }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            {%  if task.completed == False %}
+                                <a href="{{ task.get_complete_url }}"><i class="fa fa-check" aria-hidden="true"></i></a>
+                            {% endif %}
                         </td>
                     </tr>
                     {% empty %}
