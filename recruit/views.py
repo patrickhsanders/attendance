@@ -177,6 +177,16 @@ class CreateResume(PermissionRequiredMixin, View):
                        'title': self.title})
 
 
+class TaskList(View):
+    template_name = "task_list.html"
+
+    def get(self, request):
+        tasks = Task.objects.all().order_by('date_to_finish_by')
+        return render(request,
+                      self.template_name,
+                      {'tasks': tasks})
+
+
 class CreateTask(PermissionRequiredMixin, View):
     permission_required = 'recruit.add_task'
     template_name = "recruit_generic_form.html"
