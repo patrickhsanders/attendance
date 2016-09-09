@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 
 from .views import CreateJob, EditJob, JobsList, DeleteJob
 from .views import CreateTask
+from .views import CreateResume
+
 
 urlpatterns = [
   url(r'^(?P<recruit_id>[\w\-]+)/job/create', login_required(CreateJob.as_view()), name="add_job"),
@@ -11,5 +13,7 @@ urlpatterns = [
   url(r'^job/$', login_required(JobsList.as_view()), name="list_job"),
 
   url(r'^(?P<recruit_id>[\w\-]+)/task/create', login_required(CreateTask.as_view()), name="add_task"),
+
+  url(r'^(?P<recruit_id>[\w\-]+)/resume/create', login_required(CreateResume.as_view()), name="add_resume"),
 
 ]

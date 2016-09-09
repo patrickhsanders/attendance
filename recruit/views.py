@@ -147,11 +147,21 @@ class CreateCompany(PermissionRequiredMixin, View):
                           {'company_form': company_form,
                            'title': self.title})
 
+
 class CreateResume(PermissionRequiredMixin, View):
     permission_required = 'recruit.add_recruit'
+    template_name = "recruit_generic_form.html"
+    title = "Upload Resume"
 
-    def get(self, request):
-        pass
+    def get(self, request, recruit_id):
+        recruit = get_object_or_404(Recruit, pk=recruit_id)
+        self.title += " for " + recruit.student.first_name + " " + recruit.student.last_name
+        form = ResumeForm()
+
+        return render(request,
+                      self.template_name,
+                      {'form': form,
+                       'title': self.title})
 
     def post(self, request):
         pass
