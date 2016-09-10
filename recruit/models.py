@@ -45,6 +45,7 @@ class Link(models.Model):
                   ('other', "Other"))
 
     type = models.CharField(max_length=15, choices=LINK_TYPES)
+    other = models.CharField(max_length=31, blank=True)
     url = models.URLField(max_length=200)
 
 
@@ -106,4 +107,9 @@ class Recruit(models.Model):
     def get_add_job_url(self):
         return reverse(
             'add_job',
+            kwargs={'recruit_id': self.pk})
+
+    def get_add_resume_url(self):
+        return reverse(
+            'add_resume',
             kwargs={'recruit_id': self.pk})
