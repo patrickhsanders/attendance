@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 
 from .views import StudentCheckin, StudentList, StudentEmailList, StudentTestEmailList, StudentListPortlet, StudentListStartingSoonPortlet, StudentsCurrentlySignedInPortlet
 from .views import ContactInfoEditView, EmergencyContactEditView
-from .views import EditStudentJobStatus, StudentJobStatusList, DeleteStudentJobStatus, StudentDetailView, AddNoteToStudent, CreateStudent, StudentContract
+from .views import EditStudentJobStatus, StudentJobStatusList, DeleteStudentJobStatus, AddNoteToStudent, CreateStudent, StudentContract
+from .views import StudentDetailViewGeneral, StudentDetailViewAttendance, StudentDetailViewCurriculum, StudentDetailViewFinance, StudentDetailViewRecruit
 from .views import EducationInformationView, CreateAdditonalData, StudentAddConfirmation, CompletionCalendar, StudentTuition
 from .views import ChangeStudentStatus
 from recruit.views import CreateEditRecruit
@@ -28,7 +29,16 @@ urlpatterns = [
     url(r'^checkin/(?P<success>[\w\-]*)', login_required(StudentCheckin.as_view()), name="checkin"),
 
     # Student detail view
-    url(r'^(?P<student_id>[\w\-]+)/$', login_required(StudentDetailView.as_view()), name="student_detail_view"),
+
+    url(r'^(?P<student_id>[\w\-]+)/attendance/$', login_required(StudentDetailViewAttendance.as_view()),
+        name="student_detail_view_attendance"),
+    url(r'^(?P<student_id>[\w\-]+)/curriculum/$', login_required(StudentDetailViewCurriculum.as_view()),
+        name="student_detail_view_curriculum"),
+    url(r'^(?P<student_id>[\w\-]+)/finance/$', login_required(StudentDetailViewFinance.as_view()),
+        name="student_detail_view_finance"),
+    url(r'^(?P<student_id>[\w\-]+)/recruit/$', login_required(StudentDetailViewRecruit.as_view()),
+        name="student_detail_view_recruit"),
+    url(r'^(?P<student_id>[\w\-]+)/$', login_required(StudentDetailViewGeneral.as_view()), name="student_detail_view"),
 
     # Student attribute edit
     url(r'^(?P<student_id>[\w\-]+)/contact-info/edit/', login_required(ContactInfoEditView.as_view()), name="edit-contact-info"),

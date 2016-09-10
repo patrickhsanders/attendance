@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid content">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="heading-marginless">{{ student.first_name }} {{ student.last_name }}</h1>
+            <span class="pull-right">
+                <ul class="nav nav-pills">
+                    <li role="presentation"{% if navigation == 'general' %} class="active"{% endif %}><a href="{{ student.get_absolute_url }}">General</a></li>
+                    <li role="presentation"{% if navigation == 'attendance' %} class="active"{% endif %}><a href="{{ student.get_attendance_url }}">Attendance</a></li>
+                    <li role="presentation"{% if navigation == 'curriculum' %} class="active"{% endif %}><a href="{{ student.get_curriculum_url }}">Curriculum</a></li>
+                    <li role="presentation"{% if navigation == 'finance' %} class="active"{% endif %}><a href="{{ student.get_finance_url }}">Finance</a></li>
+                    <li role="presentation"{% if navigation == 'recruit' %} class="active"{% endif %}><a href="{{ student.get_recruit_url }}">Recruit</a></li>
+                </ul>
+            </span>
+        </div>
+    </div>
+
+    {% block internal_content %}{% endblock %}
+
+{% endblock %}

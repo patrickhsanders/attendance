@@ -149,7 +149,32 @@ class Student(models.Model):
     def __str__(self):
         return self.first_name + " " + self.last_name
 
+    def get_recruit_edit_url(self):
+        return reverse(
+            "recruit_edit",
+            kwargs={'student_id': self.pk})
+
     def get_absolute_url(self):
         return reverse(
             "student_detail_view",
+            kwargs={'student_id': self.pk})
+
+    def get_attendance_url(self):
+        return reverse(
+            "student_detail_view_attendance",
+            kwargs={'student_id': self.pk})
+
+    def get_curriculum_url(self):
+        return reverse(
+            "student_detail_view_curriculum",
+            kwargs={'student_id': self.pk})
+
+    def get_finance_url(self):
+        return reverse(
+            "student_detail_view_finance",
+            kwargs={'student_id': self.pk})
+
+    def get_recruit_url(self):
+        return reverse(
+            "student_detail_view_recruit",
             kwargs={'student_id': self.pk})

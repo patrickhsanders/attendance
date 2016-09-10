@@ -229,23 +229,24 @@ class AttendanceDisplay():
         self.status = status
 
 
-class StudentDetailView(PermissionRequiredMixin, View):
+def datetime_range(start, end, delta):
+    date_list = []
+    current = start
+    if not isinstance(delta, timedelta):
+        delta = timedelta(**delta)
+
+    while current <= end:
+        if current.weekday() != 5 and current.weekday() != 6:
+            date_list.append(current)
+        current += delta
+
+    return date_list
+
+
+class StudentDetailViewGeneral(PermissionRequiredMixin, View):
     permission_required = 'people.add_student'
-    template_name = 'student_detail.html'
+    template_name = 'student_detail_general.html'
 
-    @staticmethod
-    def datetime_range(start, end, delta):
-        date_list = []
-        current = start
-        if not isinstance(delta, timedelta):
-            delta = timedelta(**delta)
-
-        while current <= end:
-            if current.weekday() != 5 and current.weekday() != 6:
-                date_list.append(current)
-            current += delta
-
-        return date_list
 
     def get(self, request, student_id):
 
@@ -257,7 +258,7 @@ class StudentDetailView(PermissionRequiredMixin, View):
         excused_absence = ExcusedAbsence.objects.filter(student=student)
 
         end_date = timezone.now().date() if student.end_date is None else student.end_date
-        date_list = self.datetime_range(student.start_date, end_date, {'days': 1})
+        date_list = datetime_range(student.start_date, end_date, {'days': 1})
         attendance = []
 
         for date in date_list:
@@ -305,7 +306,103 @@ class StudentDetailView(PermissionRequiredMixin, View):
                                                     'attendance': reversed(attendance),
                                                     'excused_absences': excused_absences,
                                                     'total_paid': total_paid,
-                                                    'remaining_to_pay': remaining_to_pay, })
+                                                    'remaining_to_pay': remaining_to_pay,
+                                                    'navigation': 'general'})
+
+class StudentDetailViewAttendance(PermissionRequiredMixin, View):
+    permission_required = 'people.add_student'
+    template_name = 'student_detail_attendance.html'
+
+    def get(self, request, student_id):
+
+        student = get_object_or_404(Student, pk=student_id)
+
+        registers = Register.objects.for_student(student)
+        excused_absence = ExcusedAbsence.objects.filter(student=student)
+
+        end_date = timezone.now().date() if student.end_date is None else student.end_date
+        date_list = datetime_range(student.start_date, end_date, {'days': 1})
+        attendance = []
+
+        for date in date_list:
+            register_result = registers.filter(checkin__day=date.day,
+                                               checkin__month=date.month,
+                                               checkin__year=date.year)
+
+            if not register_result:
+                excused_absence_result = excused_absence.filter(start_date__lte=date, end_date__gte=date)
+                if not excused_absence_result:
+                    status = "Absent"
+                else:
+                    status = "Absent - Excused"
+            else:
+                status = "Present"
+
+            obj_ = AttendanceDisplay(date, status)
+            attendance.append(obj_)
+
+        excused_absences = ExcusedAbsence.objects.filter(student=student)
+
+        return render(request, self.template_name, {'student': student,
+                                                    'attendance': reversed(attendance),
+                                                    'excused_absences': excused_absences,
+                                                    'navigation':'attendance'})
+
+
+class StudentDetailViewCurriculum(PermissionRequiredMixin, View):
+    permission_required = 'people.add_student'
+    template_name = 'student_detail_curriculum.html'
+
+    def get(self, request, student_id):
+
+        student = get_object_or_404(Student, pk=student_id)
+        projects = StudentProject.objects.filter(student=student).order_by('-date_started')
+
+        projects_with_dates, day = get_completion_calendar(student)
+
+        return render(request, self.template_name, {'student': student,
+                                                    'projects':projects,
+                                                    'remaining_projects': projects_with_dates,
+                                                    'final_day': day,
+                                                    'navigation':'curriculum'})
+
+
+class StudentDetailViewFinance(PermissionRequiredMixin, View):
+    permission_required = 'people.add_student'
+    template_name = 'student_detail_finance.html'
+
+    def get(self, request, student_id):
+
+        student = get_object_or_404(Student, pk=student_id)
+        remaining_to_pay = 0.0
+        total_paid = 0.0
+        if student.tuition is not None:
+            for payment in student.tuition.payments.all():
+                if payment.completed == True:
+                    total_paid += payment.amount
+                elif payment.completed == False:
+                    remaining_to_pay += payment.amount
+
+            if total_paid == 0:
+                remaining_to_pay = student.tuition.tuition_total
+
+        return render(request, self.template_name, {'student': student,
+                                                    'total_paid': total_paid,
+                                                    'remaining_to_pay': remaining_to_pay,
+                                                    'navigation':'finance'})
+
+
+class StudentDetailViewRecruit(PermissionRequiredMixin, View):
+    permission_required = 'people.add_student'
+    template_name = 'student_detail_recruit.html'
+
+    def get(self, request, student_id):
+
+        student = get_object_or_404(Student, pk=student_id)
+
+        return render(request, self.template_name, {'student': student,
+                                                    'navigation':'recruit'})
+
 
 
 class AddNoteToStudent(PermissionRequiredMixin, View):
@@ -589,6 +686,37 @@ class StudentTuition(PermissionRequiredMixin, View):
         else:
             return render(request, self.template_name, {'student': student, 'form': bound_tuition_form, 'note': bound_note_form})
 
+def get_completion_calendar(student):
+    finished_projects = StudentProject.objects.filter(student=student)
+
+    current_student_project = StudentProject.objects.filter(student=student, project__weight__lt=1000).order_by('-project__weight')[:1][0]
+    remaining_projects = Project.objects.filter(course=student.course,
+                                                weight__gt=current_student_project.project.weight,
+                                                deprecated=False,
+                                                weight__lt=1000).order_by('weight')
+
+    if student.current_project.estimated_completion_days < current_student_project.project.estimated_completion_days:
+        pass
+
+    day = timezone.now().date()
+
+    if current_student_project.derived_days < current_student_project.project.estimated_completion_days:
+        day += timedelta(days=current_student_project.project.estimated_completion_days - current_student_project.derived_days)
+
+    projects = []
+
+    ''' IMPORTANT! do not call save method on these objects, they are ephemeral!'''
+    for project in remaining_projects:
+        student_project = StudentProject()
+        student_project.project = project
+        student_project.date_started = day
+        projects.append(student_project)
+
+        for x in range(0, project.estimated_completion_days):
+            day += timedelta(days=1)
+
+    return (projects, day)
+
 
 class CompletionCalendar(PermissionRequiredMixin, View):
     permission_required = 'people.add_student'
@@ -596,35 +724,8 @@ class CompletionCalendar(PermissionRequiredMixin, View):
 
     def get(self, request, student_id):
         student = get_object_or_404(Student, pk=student_id)
-        finished_projects = StudentProject.objects.filter(student=student)
-
-        current_student_project = StudentProject.objects.filter(student=student, project__weight__lt=1000).order_by('-project__weight')[:1][0]
-        remaining_projects = Project.objects.filter(course=student.course,
-                                                    weight__gt=current_student_project.project.weight,
-                                                    deprecated=False,
-                                                    weight__lt=1000).order_by('weight')
-
-        if student.current_project.estimated_completion_days < current_student_project.project.estimated_completion_days:
-            pass
-
-        day = timezone.now().date()
-
-        if current_student_project.derived_days < current_student_project.project.estimated_completion_days:
-            day += timedelta(days=current_student_project.project.estimated_completion_days - current_student_project.derived_days)
-
-        projects = []
-
-        for project in remaining_projects:
-            student_project = StudentProject()
-            student_project.project = project
-            student_project.date_started = day
-            projects.append(student_project)
-
-            for x in range(0, project.estimated_completion_days):
-                day += timedelta(days=1)
-
+        projects, day = get_completion_calendar(student)
         return render(request, self.template_name, {'student': student,
-                                                    # 'finished_projects': finished_projects,
                                                     'remaining_projects': projects,
                                                     'final_day': day})
 

@@ -1,12 +1,24 @@
-{% extends "base.html" %}
+{#{% extends "base.html" %}#}
 
-{% block content %}
+{% extends "student_base_detail.html" %}
 
-<div class="container-fluid content">
-    <div class="row">
-        <div class="col-md-12 students">
-        <h1>{{ student.first_name }} {{ student.last_name }}</h1></div>
-        </div>
+{% block internal_content %}
+
+{#<div class="container-fluid content">#}
+{#    <div class="row">#}
+{#        <div class="col-md-12">#}
+{#            <h1 class="heading-marginless">{{ student.first_name }} {{ student.last_name }}</h1>#}
+{#            <span class="pull-right">#}
+{#                <ul class="nav nav-pills">#}
+{#                    <li role="presentation" class="active"><a href="#">General</a></li>#}
+{#                    <li role="presentation"><a href="#">Attendance</a></li>#}
+{#                    <li role="presentation"><a href="#">Curriculum</a></li>#}
+{#                    <li role="presentation"><a href="#">Finance</a></li>#}
+{#                    <li role="presentation"><a href="#">Recruit</a></li>#}
+{#                </ul>#}
+{#            </span>#}
+{#        </div>#}
+{#        </div>#}
     <div class="row">
 
         <div class="col-md-8 students">

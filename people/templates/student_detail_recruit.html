@@ -1,0 +1,75 @@
+{#{% extends "base.html" %}#}
+
+{% extends "student_base_detail.html" %}
+
+{% block internal_content %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-briefcase" aria-hidden="true"></i> Recruit
+
+                {% if student.tuition != None %}
+                    <span class="pull-right">
+                    <a href="{{ student.get_recruit_edit_url }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    </span>
+                {% endif %}
+                </h3></div>
+
+                <div class="panel-body">
+                {% if student.recruit %}
+                    <p><strong>Wants help looking for a job:</strong> {{ student.recruit.wants_help_looking_for_work|yesno:"Yes,No" }}</p>
+                {% else %}
+                    <p>No recruit information. <a href="{{ student.get_recruit_edit_url }}">Add</a>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Tasks
+                        <span class="pull-right">
+                            <a href="{{ student.recruit.get_add_task_url }}">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </a>
+                        </span>
+                    </h3>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <th>Task</th>
+                        <th>Due Date</th>
+                        <th>Completed</th>
+                        <th>Edit</th>
+                    </thead>
+                    {% for task in student.recruit.tasks.all %}
+                    <tr>
+                        <td>
+                        {% if task.task == "other" %}
+                            {{ task.other }}
+                        {% else %}
+                            {{ task.get_task_display }}
+                        {% endif %}
+                        </td>
+
+                        <td>{{ task.date_to_finish_by }}</td>
+                        <td>{% if task.completed == True %}{{ task.completed_date }}{% else %}{{ task.completed|yesno:"Yes,No" }}{% endif %}</td>
+                        <td>
+                            <a href="{{ task.get_absolute_url }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            {%  if task.completed == False %}
+                                <a href="{{ task.get_complete_url }}"><i class="fa fa-check" aria-hidden="true"></i></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                        <tr><td>No tasks</td></tr>
+                    {% endfor %}
+                </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

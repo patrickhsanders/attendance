@@ -1,0 +1,60 @@
+{#{% extends "base.html" %}#}
+
+{% extends "student_base_detail.html" %}
+
+{% block internal_content %}
+
+    <div class="row">
+
+        <div class="col-md-6 students">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-calendar" aria-hidden="true"></i> Attendance Record</h3></div>
+                    <table class="table" id="active-students">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Started</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for day in attendance %}
+                        <tr {% if day.status == "Present" %} class="success"{% endif %}   >
+                            <td>{{ day.day|date:"D d M Y" }}</td>
+                            <td>{{ day.status }} {{ day.note }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-6 students">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title">Notified Absences</h3></div>
+                <table class="table" id="active-students">
+                        <thead>
+                        <tr>
+                            <th>Start</th>
+                            <th>End</th>
+                            <th>Reason</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for day in excused_absences %}
+                        <tr {% if day.status == "Present" %} class="success"{% endif %}   >
+                            <td>{{ day.start_date|date:"D d M Y" }}</td>
+                            <td>{{ day.end_date|date:"D d M Y" }}</td>
+                            <td>{{ day.get_reason_display }} </td>
+                            <td>{% if day.note != None %}{{ day.note.text }}{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

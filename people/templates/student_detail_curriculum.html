@@ -1,0 +1,78 @@
+{#{% extends "base.html" %}#}
+
+{% extends "student_base_detail.html" %}
+
+{% block internal_content %}
+
+    <div class="row">
+
+    <div class="col-md-7 students">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-file-code-o" aria-hidden="true"></i> Curriculum</h3></div>
+                <div class="panel-body">
+                    <p><strong>Current student:</strong> {{ student.active|yesno:"Yes,No" }}
+                        <a href="/student/{{ student.pk }}/status/edit/?next={{ request.path }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></p>
+                    <p><strong>Course:</strong> {{ student.course.name }}</p>
+                    <p><strong>Start Date:</strong> {{ student.start_date }}</p>
+                    <p><strong>Current Project:</strong> {{ student.current_project.name }}</p>
+                    <p><strong><a href="/student/{{ student.pk }}/calendar"><i class="fa fa-calendar" aria-hidden="true"></i> Completion Calendar</a></strong></p>
+                </div>
+                    <table class="table" id="active-students">
+
+                        <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Started</th>
+                            <th>Days</th>
+                            <th>Hours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for project in projects %}
+                        <tr>
+                            <td>{{ project.project.name }}</td>
+                            <td>{{ project.date_started }}</td>
+                            <td>{{ project.derived_days }}</td>
+                            <td>{{ project.derived_hours|floatformat:0 }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    <div class="col-md-5 students">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title">Remaining Projects</h3></div>
+{#                <div class="panel-body">#}
+{#                </div>#}
+                    <table class="table" id="active-students">
+
+                        <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Start Date</th>
+                            <th>Estimated Days</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for project in remaining_projects %}
+                        <tr>
+                            <td>{{ project.project.name }}</td>
+                            <td>{{ project.date_started }}</td>
+                            <td>{{ project.project.estimated_completion_days }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            <div class="panel-body">
+                    <p>Estimated internship start date: <strong>{{ final_day }}</strong></p>
+
+            </div>
+        </div>
+            </div>
+
+    </div>
+</div>
+
+{% endblock %}
