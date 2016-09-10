@@ -5,8 +5,10 @@ from django.http import HttpResponseRedirect
 from django.utils import timezone
 
 from people.models import Student
-from .forms import RecruitForm, JobForm, CompanyForm, TaskForm, ResumeForm
+from note.forms import NoteForm
+from .forms import RecruitForm, JobForm, CompanyForm, TaskForm, ResumeForm, LinkForm
 from .models import Job, Recruit, Task
+
 # Create your views here.
 
 
@@ -231,8 +233,6 @@ class CreateTask(PermissionRequiredMixin, View):
 
     def post(self, request, recruit_id):
         recruit = get_object_or_404(Recruit, pk=recruit_id)
-        print(recruit.student)
-        print("HELLO")
 
         form = TaskForm(request.POST)
         if form.is_valid():
@@ -307,4 +307,56 @@ class DeleteTask(PermissionRequiredMixin, View):
         return HttpResponseRedirect(student.get_recruit_url())
 
 
+class CreateLink(PermissionRequiredMixin, View):
+    permission_required = 'recruit.add_task'
+    template_name = "recruit_generic_form.html"
+    title = "Create Link"
 
+    def get(self, request, recruit_id):
+        form = LinkForm()
+
+        return render(request,
+                      self.template_name,
+                      {'form': form,
+                       'title': self.title})
+
+    def post(self, request, recruit_id):
+        recruit = get_object_or_404(Recruit, pk=recruit_id)
+
+        form = LinkForm(request.POST)
+        if form.is_valid():
+            link = form.save()
+            recruit.links.add(link)
+            recruit.save()
+            return HttpResponseRedirect(recruit.student.get_recruit_url())
+
+        else:
+            return render(request,
+                      self.template_name,
+                      {'form': form,
+                       'title': self.title})
+
+class CreateNote(PermissionRequiredMixin, View):
+    permission_required = 'recruit.add_task'
+    template_name = "recruit_generic_form.html"
+    title = "Create Note"
+
+    def post(self, request, recruit_id):
+        recruit = get_object_or_404(Recruit, pk=recruit_id)
+
+        form = NoteForm(request.POST)
+        if form.is_valid():
+            note = form.save(commit=False)
+            note.author = request.user
+            note.save()
+
+            recruit.notes.add(note)
+            recruit.save()
+
+            return HttpResponseRedirect(recruit.student.get_recruit_url())
+
+        else:
+            return render(request,
+                      self.template_name,
+                      {'form': form,
+                       'title': self.title})

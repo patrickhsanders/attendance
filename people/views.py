@@ -402,11 +402,16 @@ class StudentDetailViewRecruit(PermissionRequiredMixin, View):
         tasks = student.recruit.tasks.order_by('date_to_finish_by') if student.recruit is not None else None
         jobs = student.recruit.jobs.order_by('start_date') if student.recruit is not None else None
         resumes = student.recruit.resume.order_by('-date') if student.recruit is not None else None
+        notes = student.recruit.notes.order_by('-last_modified', 'date_added') if student.recruit is not None else None
+
+        note_form = NoteForm()
 
         return render(request, self.template_name, {'student': student,
                                                     'tasks': tasks,
                                                     'jobs': jobs,
                                                     'resumes': resumes,
+                                                    'notes': notes,
+                                                    'note_form': note_form,
                                                     'navigation':'recruit'})
 
 

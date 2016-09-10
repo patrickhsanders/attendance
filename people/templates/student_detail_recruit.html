@@ -28,24 +28,7 @@
             {% if student.recruit != None %}
             <div class="row">
                 <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">
-                                <i class="fa fa-link" aria-hidden="true"></i> Links
-                                <span class="pull-right">
-                                    <a href="{{ student.recruit.get_add_task_url }}">
-                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                    </a>
-                                </span>
-                            </h3>
-                        </div>
-                        <div class="panel-body">
 
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">
@@ -66,6 +49,80 @@
                             {% endfor %}
                         </table>
                     </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <i class="fa fa-link" aria-hidden="true"></i> Links
+                                <span class="pull-right">
+                                    <a href="{{ student.recruit.get_add_link_url }}">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <table class="table">
+                            {%  for link in student.recruit.links.all %}
+                                <tr><td><a href="{{ link.url }}">
+                                    {% if link.type == 'github' %}
+                                        <i class="fa fa-github" aria-hidden="true"></i> {{ link.get_type_display }}
+                                    {% elif link.type == 'linkedin' %}
+                                        <i class="fa fa-linkedin" aria-hidden="true"></i> {{ link.get_type_display }}
+                                    {% elif link.type == 'blog' %}
+                                        <i class="fa fa-rss" aria-hidden="true"></i> {{ link.get_type_display }}
+                                    {% elif link.type == 'website' %}
+                                        <i class="fa fa-link" aria-hidden="true"></i> {{ link.get_type_display }}
+                                    {% elif link.type == 'twitter' %}
+                                        <i class="fa fa-twitter" aria-hidden="true"></i> {{ link.get_type_display }}
+                                    {% elif link.type == 'app' %}
+                                        <i class="fa fa-mobile" aria-hidden="true"></i> {{ link.get_type_display }}
+                                    {% else %}
+                                        <i class="fa fa-link" aria-hidden="true"></i> {{ link.get_type_display }} - {{ link.other }}
+                                    {% endif %}
+
+                                </a></td></tr>
+                            {% empty %}
+
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <i class="fa fa-sticky-note-o" aria-hidden="true"></i> Notes
+                            </h3>
+                        </div>
+
+                        <table class="table">
+                            {% for note in notes.all %}
+                                <tr>
+                                    <td><p>{{ note.author }} <span class="pull-right"><small>
+                                        {{ note.last_modified }}
+                                        </small>
+                                        <a href="/note/{{ note.pk }}/edit/?next={{ request.path }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                        <a href="/note/{{ note.pk }}/delete/?next={{ request.path }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        </span>
+                                    </p><p>
+                                    {{ note.text }}</td></p>
+                                </tr>
+                            {% empty %}
+                                <tr><td>No Notes</td></tr>
+                            {% endfor %}
+                            <tr>
+                                <td>
+                                    <form action="{{ student.recruit.get_add_note_url }}" method="post">
+                                        {% csrf_token %}
+                                        {{ note_form.as_p }}
+                                         <button>Add note</button>
+                                     </form>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
                 </div>
             </div>
             {% endif %}
@@ -74,6 +131,7 @@
 
         {% if student.recruit != None %}
         <div class="col-md-6">
+
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title"><i class="fa fa-tasks" aria-hidden="true"></i> Tasks
@@ -112,7 +170,7 @@
                         </td>
                     </tr>
                     {% empty %}
-                        <tr><td>No tasks</td></tr>
+                        <tr><td>No tasks <a href="{{ student.recruit.get_add_task_url }}">Add</a></td></tr>
                     {% endfor %}
                 </table>
             </div>
@@ -150,7 +208,7 @@
                         </td>
                     </tr>
                     {% empty %}
-                        <tr><td>No jobs</td></tr>
+                        <tr><td>No jobs <a href="{{ student.recruit.get_add_job_url }}">Add</a></td></tr>
                     {% endfor %}
                 </table>
 

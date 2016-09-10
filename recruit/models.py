@@ -42,6 +42,8 @@ class Link(models.Model):
                   ('linkedin', "LinkedIn"),
                   ('website', "Personal Website"),
                   ('twitter', "Twitter"),
+                  ('blog', "Blog"),
+                  ('app', "App Store Link"),
                   ('other', "Other"))
 
     type = models.CharField(max_length=15, choices=LINK_TYPES)
@@ -112,4 +114,14 @@ class Recruit(models.Model):
     def get_add_resume_url(self):
         return reverse(
             'add_resume',
+            kwargs={'recruit_id': self.pk})
+
+    def get_add_link_url(self):
+        return reverse(
+            'add_link',
+            kwargs={'recruit_id': self.pk})
+
+    def get_add_note_url(self):
+        return reverse(
+            'add_note_to_recruit',
             kwargs={'recruit_id': self.pk})

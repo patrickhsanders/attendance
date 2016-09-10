@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from .views import CreateJob, EditJob, JobsList, DeleteJob
 from .views import CreateTask, EditTask, TaskList, CompleteTask, DeleteTask
 from .views import CreateResume
+from .views import CreateLink
+from .views import CreateNote
 
 
 urlpatterns = [
@@ -19,5 +21,9 @@ urlpatterns = [
   url(r'^task/(?P<task_id>[\w\-]+)/delete', login_required(DeleteTask.as_view()), name="delete_task"),
 
   url(r'^(?P<recruit_id>[\w\-]+)/resume/create', login_required(CreateResume.as_view()), name="add_resume"),
+
+  url(r'^(?P<recruit_id>[\w\-]+)/link/create', login_required(CreateLink.as_view()), name="add_link"),
+
+  url(r'^(?P<recruit_id>[\w\-]+)/note/create', login_required(CreateNote.as_view()), name="add_note_to_recruit"),
 
 ]

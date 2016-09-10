@@ -1,6 +1,6 @@
 from django import forms
 from ttt.forms import DateInput
-from .models import Recruit, Company, Job, Task, Resume
+from .models import Recruit, Company, Job, Task, Resume, Link
 
 
 class RecruitForm(forms.ModelForm):
@@ -37,3 +37,9 @@ class ResumeForm(forms.ModelForm):
     class Meta:
         model = Resume
         fields = ['file']
+
+
+class LinkForm(forms.ModelForm):
+    class Meta:
+        model = Link
+        fields = '__all__'
