@@ -102,3 +102,8 @@ class Recruit(models.Model):
         return reverse(
             'add_task',
             kwargs={'recruit_id': self.pk})
+
+    def get_add_job_url(self):
+        return reverse(
+            'add_job',
+            kwargs={'recruit_id': self.pk})

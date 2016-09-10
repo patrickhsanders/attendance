@@ -399,8 +399,12 @@ class StudentDetailViewRecruit(PermissionRequiredMixin, View):
     def get(self, request, student_id):
 
         student = get_object_or_404(Student, pk=student_id)
+        tasks = student.recruit.tasks.order_by('date_to_finish_by') if student.recruit is not None else None
+        jobs = student.recruit.jobs.order_by('start_date') if student.recruit is not None else None
 
         return render(request, self.template_name, {'student': student,
+                                                    'tasks': tasks,
+                                                    'jobs': jobs,
                                                     'navigation':'recruit'})
 
 

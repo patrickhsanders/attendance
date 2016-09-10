@@ -75,7 +75,7 @@ class CreateJob(PermissionRequiredMixin, View):
             recruit.jobs.add(job)
             recruit.save()
 
-            return HttpResponseRedirect(recruit.student.get_absolute_url())
+            return HttpResponseRedirect(recruit.student.get_recruit_url())
 
         else:
             return render(request,
@@ -113,7 +113,7 @@ class EditJob(PermissionRequiredMixin, View):
 
             # TODO change this redirect
             job.save()
-            return HttpResponseRedirect("/recruit/job")
+            return HttpResponseRedirect(job.recruit_set.first().student.get_recruit_url())
 
         else:
             return render(request,
@@ -147,7 +147,7 @@ class DeleteJob(PermissionRequiredMixin, View):
         job = get_object_or_404(Job, pk=job_id)
         job.delete()
 
-        return HttpResponseRedirect("/recruit/job")
+        return HttpResponseRedirect(job.recruit_set.first().student.get_recruit_url())
 
 
 class CreateCompany(PermissionRequiredMixin, View):
@@ -198,7 +198,7 @@ class CreateResume(PermissionRequiredMixin, View):
         if form.is_valid():
             resume = form.save()
             recruit.resume.add(resume)
-            return HttpResponseRedirect(recruit.student.get_absolute_url())
+            return HttpResponseRedirect(recruit.student.get_recruit_url())
 
         return render(request,
                       self.template_name,
@@ -304,7 +304,7 @@ class DeleteTask(PermissionRequiredMixin, View):
         student = task.recruit_set.all().first().student
         task.delete()
 
-        return HttpResponseRedirect(student.get_absolute_url())
+        return HttpResponseRedirect(student.get_recruit_url())
 
 
 

@@ -24,12 +24,52 @@
                 {% endif %}
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <i class="fa fa-link" aria-hidden="true"></i> Links
+                                <span class="pull-right">
+                                    <a href="{{ student.recruit.get_add_task_url }}">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <i class="fa fa-file-text-o" aria-hidden="true"></i> Resumes
+                                <span class="pull-right">
+                                    <a href="{{ student.recruit.get_add_task_url }}">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
 
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Tasks
+                    <h3 class="panel-title"><i class="fa fa-tasks" aria-hidden="true"></i> Tasks
                         <span class="pull-right">
                             <a href="{{ student.recruit.get_add_task_url }}">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
@@ -45,7 +85,7 @@
                         <th>Completed</th>
                         <th>Edit</th>
                     </thead>
-                    {% for task in student.recruit.tasks.all %}
+                    {% for task in tasks.all %}
                     <tr>
                         <td>
                         {% if task.task == "other" %}
@@ -68,7 +108,47 @@
                         <tr><td>No tasks</td></tr>
                     {% endfor %}
                 </table>
-        </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-briefcase" aria-hidden="true"></i> Jobs
+                        <span class="pull-right">
+                            <a href="{{ student.recruit.get_add_job_url }}">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </a>
+                        </span>
+                    </h3>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <th>Title</th>
+                        <th>Salary</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Company</th>
+                        <th>Edit</th>
+                    </thead>
+                    {% for job in jobs.all %}
+                    <tr>
+                        <td>{{ job.title }}</td>
+                        <td>${{ job.salary }}</td>
+                        <td>{{ job.start_date }}</td>
+                        <td>{{ job.end_date }}</td>
+                        <td><a href="{{ job.company.website }}">{{ job.company.name }}</a></td>
+                        <td>
+                            <a href="{{ job.get_absolute_url }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <a href="{{ job.get_delete_url }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                        <tr><td>No jobs</td></tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+
     </div>
 </div>
 
