@@ -92,3 +92,13 @@ class Recruit(models.Model):
     links = models.ManyToManyField(Link, blank=True)
     resume = models.ManyToManyField(Resume, blank=True)
     tasks = models.ManyToManyField(Task, blank=True)
+
+    def get_edit_url(self):
+        return reverse(
+            'recruit_edit',
+            kwargs={'student_id': self.student.pk})
+
+    def get_add_task_url(self):
+        return reverse(
+            'add_task',
+            kwargs={'recruit_id': self.pk})

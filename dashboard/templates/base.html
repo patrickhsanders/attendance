@@ -8,7 +8,6 @@
 {#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">#}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-2.2.3.min.js" charset="utf-8"></script>
     <link rel="stylesheet" href="{% static 'static/base_style.css' %}">
@@ -32,7 +31,7 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right" >
-                <li><a><span id="welcome-text">Welcome, {{ current_user.first_name }}&nbsp;</span></a></li>
+{#                <li><a><span id="welcome-text">Welcome, {{ current_user.first_name }}&nbsp;</span></a></li>#}
                 <li><a href="/admin/logout/">Logout</a></li>
             </ul>
         </div>

@@ -17,8 +17,7 @@ class CreateEditRecruit(PermissionRequiredMixin, View):
 
     def get(self, request, student_id):
         student = get_object_or_404(Student, pk=student_id)
-
-        recruit_form = RecruitForm(instance=student) if student.recruit is not None else RecruitForm()
+        recruit_form = RecruitForm(instance=student.recruit) if student.recruit != None else RecruitForm()
 
         return render(request,
                       self.template_name,
@@ -28,15 +27,16 @@ class CreateEditRecruit(PermissionRequiredMixin, View):
     def post(self, request, student_id):
         student = get_object_or_404(Student, pk=student_id)
 
-        recruit_form = RecruitForm(request.POST, instance=student) \
-                        if student.recruit is not None \
-                        else RecruitForm(request.POST)
+        if student.recruit != None:
+            recruit_form = RecruitForm(request.POST, instance=student.recruit)
+        else:
+            recruit_form = RecruitForm(request.POST)
 
         if recruit_form.is_valid():
             recruit = recruit_form.save()
             student.recruit = recruit
             student.save()
-            return HttpResponseRedirect(student.get_absolute_url())
+            return HttpResponseRedirect(student.get_recruit_url())
 
         else:
             return render(request,
@@ -231,12 +231,15 @@ class CreateTask(PermissionRequiredMixin, View):
 
     def post(self, request, recruit_id):
         recruit = get_object_or_404(Recruit, pk=recruit_id)
+        print(recruit.student)
+        print("HELLO")
+
         form = TaskForm(request.POST)
         if form.is_valid():
             task = form.save()
             recruit.tasks.add(task)
             recruit.save()
-            return HttpResponseRedirect('/recruit/job')
+            return HttpResponseRedirect(recruit.student.get_recruit_url())
 
         else:
             return render(request,
@@ -266,7 +269,7 @@ class EditTask(PermissionRequiredMixin, View):
 
         if form.is_valid():
             task = form.save()
-            return HttpResponseRedirect('/recruit/task')
+            return HttpResponseRedirect(task.recruit_set.first().student.get_recruit_url())
 
         else:
             return render(request,
@@ -283,7 +286,7 @@ class CompleteTask(PermissionRequiredMixin, View):
         task.completed = True
         task.completed_date = timezone.now()
         task.save()
-        return HttpResponseRedirect('/recruit/task')
+        return HttpResponseRedirect(task.recruit_set.first().student.get_recruit_url())
 
 
 class DeleteTask(PermissionRequiredMixin, View):
