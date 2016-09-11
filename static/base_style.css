@@ -1,0 +1,44 @@
+
+.header {
+    background-color: #636466;
+}
+
+.header h1 {
+    color: #f5dd5d;
+    margin-top: .25em;
+    margin-bottom: .25em;
+}
+
+.navbar {
+    /*margin-bottom: 0;*/
+}
+
+.navbar-brand {
+    margin-top: -7px;
+}
+
+.navbar-default .navbar-nav li a #welcome-text {
+    color: #3991CF;
+}
+
+.content {
+}
+
+.students {
+
+}
+
+#filters {
+/*    background-color: #F7941E;*/
+/*    color: #F7941E;*/
+}
+
+#id_job_search_status, #id_text {
+    display: block;
+}
+
+.heading-marginless {
+    margin-top: 0px;
+    margin-bottom: 20px;
+    display: inline-block;
+}
