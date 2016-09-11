@@ -43,3 +43,6 @@ class StudentQueryset(QuerySet):
 
     def want_help_searching_for_work(self):
         return self.filter(recruit__wants_help_looking_for_work=True)
+
+    def no_recruit_or_dont_want_help_searching(self):
+        return self.filter(Q(recruit__wants_help_looking_for_work=False) | Q(recruit__isnull=True))

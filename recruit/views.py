@@ -25,6 +25,18 @@ class RecruitDashboard(View):
                        'tasks': tasks_should_be_completed,
                        'tasks_due_soon': tasks_to_be_completed_soon})
 
+
+class ListWithoutRecruit(View):
+    template_name = 'recruit_list_students.html'
+
+    def get(self, request):
+        students = Student.people.no_recruit_or_dont_want_help_searching()
+
+        return render(request,
+                      self.template_name,
+                      {'students': students})
+
+
 class CreateEditRecruit(PermissionRequiredMixin, View):
     permission_required = 'recruit.add_recruit'
     template_name = "recruit_generic_form.html"

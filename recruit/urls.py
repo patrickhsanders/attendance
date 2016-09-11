@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
-from .views import RecruitDashboard
+from .views import RecruitDashboard, ListWithoutRecruit
 from .views import CreateJob, EditJob, JobsList, DeleteJob
 from .views import CreateTask, EditTask, TaskList, CompleteTask, DeleteTask
 from .views import CreateResume
@@ -12,6 +12,7 @@ from .views import CreateNote
 urlpatterns = [
 
   url(r'^$', login_required(RecruitDashboard.as_view()), name="recruit_dashboard"),
+  url(r'^no-recruit/$', login_required(ListWithoutRecruit.as_view()), name="recruit_students_no_recruit"),
 
   url(r'^(?P<recruit_id>[\w\-]+)/job/create', login_required(CreateJob.as_view()), name="add_job"),
   url(r'^job/(?P<job_id>[\w\-]+)/edit', login_required(EditJob.as_view()), name="edit_job"),
