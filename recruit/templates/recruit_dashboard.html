@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid content">
+    <div class="row">
+
+        <div class="col-md-4 attendance_list">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-users" aria-hidden="true"></i> Students Looking For Work
+
+                    </h3>
+                </div>
+
+                <table class="table">
+                    {% for student in students %}
+                        <tr><td><a href="{{ student.get_recruit_url }}">{{ student.first_name }} {{ student.last_name }}</a></td></tr>
+                    {% empty %}
+
+                    {% endfor %}
+                </table>
+                <div class="panel-body">
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="col-md-8 students" id="panel_for_daily_attendance">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-tasks" aria-hidden="true"></i> Tasks That Should Be Complete</h3>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <th>Name</th>
+                        <th>Task</th>
+                        <th>Due Date</th>
+                        <th>Completed</th>
+                        <th>Completed Date</th>
+                        <th>Edit</th>
+                    </thead>
+                    {% for task in tasks %}
+                    <tr>
+                        <td><a href="{{ task.recruit_set.all.first.student.get_recruit_url }}">
+                            {{ task.recruit_set.all.first.student.first_name }}
+                            {{ task.recruit_set.all.first.student.last_name }}</a>
+                        </td>
+
+                        <td>
+                        {% if task.task == "other" %}
+                            {{ task.other }}
+                        {% else %}
+                            {{ task.get_task_display }}
+                        {% endif %}
+                        </td>
+
+                        <td>{{ task.date_to_finish_by }}</td>
+                        <td>{{ task.completed|yesno:"Yes,No" }}</td>
+                        <td>{% if task.completed == True %}{{ task.completed_date }}{% endif %}</td>
+                        <td>
+                            <a href="{{ task.get_absolute_url }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            {%  if task.completed == False %}
+                                <a href="{{ task.get_complete_url }}"><i class="fa fa-check" aria-hidden="true"></i></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                        <tr><td>No tasks</td></tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-tasks" aria-hidden="true"></i> Tasks That Should Be Completed Soon</h3>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <th>Name</th>
+                        <th>Task</th>
+                        <th>Due Date</th>
+                        <th>Completed</th>
+                        <th>Completed Date</th>
+                        <th>Edit</th>
+                    </thead>
+                    {% for task in tasks_due_soon %}
+                    <tr>
+                        <td><a href="{{ task.recruit_set.all.first.student.get_recruit_url }}">
+                            {{ task.recruit_set.all.first.student.first_name }}
+                            {{ task.recruit_set.all.first.student.last_name }}</a>
+                        </td>
+
+                        <td>
+                        {% if task.task == "other" %}
+                            {{ task.other }}
+                        {% else %}
+                            {{ task.get_task_display }}
+                        {% endif %}
+                        </td>
+
+                        <td>{{ task.date_to_finish_by }}</td>
+                        <td>{{ task.completed|yesno:"Yes,No" }}</td>
+                        <td>{% if task.completed == True %}{{ task.completed_date }}{% endif %}</td>
+                        <td>
+                            <a href="{{ task.get_absolute_url }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            {%  if task.completed == False %}
+                                <a href="{{ task.get_complete_url }}"><i class="fa fa-check" aria-hidden="true"></i></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                        <tr><td>No tasks</td></tr>
+                    {% endfor %}
+                </table>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

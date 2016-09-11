@@ -11,6 +11,19 @@ from .models import Job, Recruit, Task
 
 # Create your views here.
 
+class RecruitDashboard(View):
+    template_name = 'recruit_dashboard.html'
+
+    def get(self, request):
+        students = Student.people.want_help_searching_for_work()
+        tasks_should_be_completed = Task.objects.filter(completed=False, date_to_finish_by__lte=timezone.now()).order_by('date_to_finish_by')
+        tasks_to_be_completed_soon = Task.objects.filter(completed=False, date_to_finish_by__gt=timezone.now()).order_by('date_to_finish_by')[:10]
+
+        return render(request,
+                      self.template_name,
+                      {'students': students,
+                       'tasks': tasks_should_be_completed,
+                       'tasks_due_soon': tasks_to_be_completed_soon})
 
 class CreateEditRecruit(PermissionRequiredMixin, View):
     permission_required = 'recruit.add_recruit'

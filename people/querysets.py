@@ -40,3 +40,6 @@ class StudentQueryset(QuerySet):
             Q(current_project__weight__gt=140, current_project__weight__lte=199) |
             Q(current_project__weight__gt=230)
         )
+
+    def want_help_searching_for_work(self):
+        return self.filter(recruit__wants_help_looking_for_work=True)
