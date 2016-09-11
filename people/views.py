@@ -92,33 +92,6 @@ class StudentEmailList(PermissionRequiredMixin, View):
             {'student_list': students, 'current_user_email': current_user_email})
 
 
-class StudentTestEmailList(PermissionRequiredMixin, View):
-    permission_required = 'people.add_student'
-
-    template_name = 'student_test_email_list.html'
-
-    def get(self, request):
-
-        students = Student.people.active().exclude(current_project=None)
-
-        students_for_test = []
-
-        for student in students:
-            test_after_project_with_weight = student.course.test_after_project.weight
-            if student.current_project.weight > test_after_project_with_weight:
-                students_for_test.append(student)
-
-        current_user = request.user
-        current_user_email = current_user.email
-
-        instructors = User.objects.filter(groups__name="Instructors").exclude(username__iexact=current_user.username)
-
-        return render(
-            request,
-            self.template_name,
-            {'student_list': students_for_test, 'current_user_email': current_user_email, 'instructors': instructors})
-
-
 class StudentListPortlet(PermissionRequiredMixin, ListView):
     template_name = "student_list_portlet.html"
     permission_required = 'people.add_student'

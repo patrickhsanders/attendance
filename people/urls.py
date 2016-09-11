@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
-from .views import StudentCheckin, StudentList, StudentEmailList, StudentTestEmailList, StudentListPortlet, StudentListStartingSoonPortlet, StudentsCurrentlySignedInPortlet
+from .views import StudentCheckin, StudentList, StudentEmailList, StudentListPortlet, StudentListStartingSoonPortlet, StudentsCurrentlySignedInPortlet
 from .views import ContactInfoEditView, EmergencyContactEditView
 from .views import EditStudentJobStatus, StudentJobStatusList, DeleteStudentJobStatus, AddNoteToStudent, CreateStudent, StudentContract
 from .views import StudentDetailViewGeneral, StudentDetailViewAttendance, StudentDetailViewCurriculum, StudentDetailViewFinance, StudentDetailViewRecruit
@@ -21,7 +21,6 @@ urlpatterns = [
 
     # Email list display
     url(r'^list/email/$', login_required(StudentEmailList.as_view())),
-    url(r'^list/email/test/$', login_required(StudentTestEmailList.as_view())),
 
     # Student checkin/checkout
     # TODO Should be moved to attendance module

@@ -8,7 +8,5 @@ class Course(models.Model):
 
     course_fee = models.FloatField(blank=True)
 
-    test_after_project = models.ForeignKey('projects.Project', related_name="display_test_after", blank=True, null=True)
-
     def __str__(self):
         return self.name
