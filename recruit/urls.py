@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required
 from .views import RecruitDashboard, ListWithoutRecruit
 from .views import CreateJob, EditJob, JobsList, DeleteJob
 from .views import CreateTask, EditTask, TaskList, CompleteTask, DeleteTask
-from .views import CreateResume
-from .views import CreateLink
+from .views import CreateResume, DeleteResume
+from .views import CreateLink, DeleteLink
 from .views import CreateNote
 
 
@@ -25,9 +25,11 @@ urlpatterns = [
   url(r'^task/(?P<task_id>[\w\-]+)/complete', login_required(CompleteTask.as_view()), name="complete_task"),
   url(r'^task/(?P<task_id>[\w\-]+)/delete', login_required(DeleteTask.as_view()), name="delete_task"),
 
+  url(r'^resume/(?P<resume_id>[\w\-]+)/delete$', login_required(DeleteResume.as_view()), name="delete_resume"),
   url(r'^(?P<recruit_id>[\w\-]+)/resume/create', login_required(CreateResume.as_view()), name="add_resume"),
 
-  url(r'^(?P<recruit_id>[\w\-]+)/link/create', login_required(CreateLink.as_view()), name="add_link"),
+  url(r'^link/(?P<link_id>[\w\-]+)/delete$', login_required(DeleteLink.as_view()), name="delete_link"),
+  url(r'^(?P<recruit_id>[\w\-]+)/link/create$', login_required(CreateLink.as_view()), name="add_link"),
 
   url(r'^(?P<recruit_id>[\w\-]+)/note/create', login_required(CreateNote.as_view()), name="add_note_to_recruit"),
 

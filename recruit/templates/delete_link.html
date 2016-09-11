@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid content text-center">
+<h2></h2>
+<div class="row text-left">
+  <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h3>Delete
+
+                {{ student.first_name }} {{ student.last_name }}'s <u>{{ link.get_type_display }}
+            </u>
+        </h3>
+
+      <form action="" method="post">
+        {% csrf_token %}
+        <p>This action cannot be undone.</p>
+
+        <button type="submit" class="alert alert-danger">
+          Delete Link</button>
+      </form></div>
+    <div class="col-md-4"></div>
+</div>
+</div>
+<p> </p>
+{% endblock %}

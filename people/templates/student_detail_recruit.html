@@ -43,7 +43,13 @@
 
                         <table class="table">
                             {% for resume in resumes.all %}
-                                <tr><td><a href="{{ MEDIA_URL }}{{ resume.file }}"><i class="fa fa-file-o" aria-hidden="true"></i> {{ resume.date }}</a></td></tr>
+                                <tr><td><a href="{{ MEDIA_URL }}{{ resume.file }}"><i class="fa fa-file-o" aria-hidden="true"></i> {{ resume.date }}</a>
+
+                                <span class="pull-right">
+                                        <a href="{{ resume.get_delete_url }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                </span>
+
+                                </td></tr>
                             {% empty %}
                                 <tr><td>No Resumes <a href="{{ student.recruit.get_add_resume_url }}">Add</a></td></tr>
                             {% endfor %}
@@ -80,7 +86,12 @@
                                         <i class="fa fa-link" aria-hidden="true"></i> {{ link.get_type_display }} - {{ link.other }}
                                     {% endif %}
 
-                                </a></td></tr>
+                                </a>
+                                    <span class="pull-right">
+                                        <a href="{{ link.get_delete_url }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    </span>
+
+                                </td></tr>
                             {% empty %}
                                 <tr><td>No Links <a href="{{ student.recruit.get_add_link_url }}">Add</a></td></tr>
                             {% endfor %}
@@ -200,7 +211,7 @@
                         <td>{{ job.title }}</td>
                         <td>${{ job.salary }}</td>
                         <td>{{ job.start_date }}</td>
-                        <td>{{ job.end_date }}</td>
+                        <td>{% if job.end_date != None %}{{ job.end_date }}{% endif %}</td>
                         <td><a href="{{ job.company.website }}">{{ job.company.name }}</a></td>
                         <td>
                             <a href="{{ job.get_absolute_url }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>

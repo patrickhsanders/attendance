@@ -35,6 +35,11 @@ class Resume(models.Model):
     date = models.DateField(auto_now_add=True)
     file = models.FileField(upload_to='resumes')
 
+    def get_delete_url(self):
+        return reverse(
+            'delete_resume',
+            kwargs={'resume_id': self.pk})
+
 
 class Link(models.Model):
 
@@ -49,6 +54,11 @@ class Link(models.Model):
     type = models.CharField(max_length=15, choices=LINK_TYPES)
     other = models.CharField(max_length=31, blank=True)
     url = models.URLField(max_length=200)
+
+    def get_delete_url(self):
+        return reverse(
+            'delete_link',
+            kwargs={'link_id': self.pk})
 
 
 class Task(models.Model):

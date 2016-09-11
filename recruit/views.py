@@ -7,7 +7,7 @@ from django.utils import timezone
 from people.models import Student
 from note.forms import NoteForm
 from .forms import RecruitForm, JobForm, CompanyForm, TaskForm, ResumeForm, LinkForm
-from .models import Job, Recruit, Task
+from .models import Job, Recruit, Task, Link, Resume
 
 # Create your views here.
 
@@ -233,6 +233,28 @@ class CreateResume(PermissionRequiredMixin, View):
                        'title': self.title})
 
 
+class DeleteResume(PermissionRequiredMixin, View):
+    permission_required = 'recruit.add_task'
+    template_name = "delete_resume.html"
+
+    def get(self, request, resume_id):
+        resume = get_object_or_404(Resume, pk=resume_id)
+        student = resume.recruit_set.first().student
+
+        return render(request,
+                      self.template_name,
+                      {'student': student,
+                       'resume': resume})
+
+    def post(self, request, resume_id):
+        resume = get_object_or_404(Resume, pk=resume_id)
+        student = resume.recruit_set.first().student
+
+        resume.delete()
+
+        return HttpResponseRedirect(student.get_recruit_url())
+
+
 class TaskList(View):
     template_name = "task_list.html"
 
@@ -360,6 +382,31 @@ class CreateLink(PermissionRequiredMixin, View):
                       self.template_name,
                       {'form': form,
                        'title': self.title})
+
+
+class DeleteLink(PermissionRequiredMixin, View):
+    permission_required = 'recruit.add_task'
+    template_name = "delete_link.html"
+    title = "Delete Link"
+
+    def get(self, request, link_id):
+        link = get_object_or_404(Link, pk=link_id)
+        student = link.recruit_set.first().student
+        print(student)
+
+        return render(request,
+                      self.template_name,
+                      {'student': student,
+                       'link': link})
+
+    def post(self, request, link_id):
+        link = get_object_or_404(Link, pk=link_id)
+        student = link.recruit_set.first().student
+
+        link.delete()
+
+        return HttpResponseRedirect(student.get_recruit_url())
+
 
 class CreateNote(PermissionRequiredMixin, View):
     permission_required = 'recruit.add_task'
