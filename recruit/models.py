@@ -96,6 +96,12 @@ class Recruit(models.Model):
     resume = models.ManyToManyField(Resume, blank=True)
     tasks = models.ManyToManyField(Task, blank=True)
 
+    def __str__(self):
+        if self.student == None:
+            return "Disconnected recruit object"
+        else:
+            return "not disconnected" + self.student.first_name + " " + str(self.notes.count()) + " notes"
+
     def get_edit_url(self):
         return reverse(
             'recruit_edit',

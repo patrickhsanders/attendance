@@ -99,14 +99,14 @@
                         <table class="table">
                             {% for note in notes.all %}
                                 <tr>
-                                    <td><p>{{ note.author }} <span class="pull-right"><small>
+                                    <td><strong>{{ note.author }}</strong> <span class="pull-right"><small>
                                         {{ note.last_modified }}
                                         </small>
                                         <a href="/note/{{ note.pk }}/edit/?next={{ request.path }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                         <a href="/note/{{ note.pk }}/delete/?next={{ request.path }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                         </span>
-                                    </p><p>
-                                    {{ note.text }}</td></p>
+                                    <br />
+                                    {{ note.text }}</td>
                                 </tr>
                             {% empty %}
                                 <tr><td>No Notes</td></tr>
