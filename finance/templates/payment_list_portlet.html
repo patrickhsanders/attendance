@@ -24,7 +24,11 @@
                         {% for payment in payments_this_month %}
                         <tr>
                             <td> {{ payment.date }} </td>
-                            <td><a href="{{ payment.tuition.first.student.get_finance_url }}">{{ payment.tuition.first.student.first_name }} {{ payment.tuition.first.student.last_name }}</a></td>
+                            <td>
+                                <a href="{{ payment.tuition.first.student.get_finance_url }}">
+                                    {{ payment.tuition.first.student.first_name }} {{ payment.tuition.first.student.last_name }}
+                                </a>
+                            </td>
                             <td> ${{ payment.amount|floatformat:2 }} </td>
                             <td> {{ payment.get_type_display }} </td>
                             <td> {{ payment.completed|yesno:"Completed,Pending" }} </td>
