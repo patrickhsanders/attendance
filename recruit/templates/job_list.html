@@ -32,7 +32,7 @@
                         <td>{{ job.title }}</td>
                         <td>${{ job.salary }}</td>
                         <td>{{ job.start_date }}</td>
-                        <td>{{ job.end_date }}</td>
+                        <td>{% if job.end_date %}{{ job.end_date }}{% endif %}</td>
                         <td>{{ job.company.name }}</td>
                         <td>
                             <a href="{{ job.get_absolute_url }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
@@ -49,13 +49,29 @@
 
         <div class="col-md-4">
 
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading" id="filters">
-{#                    <h3 class="panel-title"><i class="fa fa-check-square" aria-hidden="true"></i> Total Pending</h3>#}
+                    <h3 class="panel-title"><i class="fa fa-filter" aria-hidden="true"></i> Filter</h3>
                 </div>
-                <div class="panel-body">
-{#                    <h2>${{ total_pending|floatformat:2 }}</h2>#}
+
+                <table class="table">
+                    <tr><td><a href="?employ=true">Currently Employ TTT Grad</a></td></tr>
+                </table>
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading" id="filters">
+                    <h3 class="panel-title"><i class="fa fa-filter" aria-hidden="true"></i> Filter by Company</h3>
                 </div>
+
+                <table class="table">
+                    {% for company in companies %}
+                        <tr><td><a href="?company={{ company.pk }}">{{ company.name }}</a></td></tr>
+                    {% empty %}
+                        <tr><td>No companies to filter by</td></tr>
+                    {% endfor %}
+                </table>
+
             </div>
         </div>
     </div>

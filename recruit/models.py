@@ -2,6 +2,7 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from note.models import Note
+from .querysets import JobQueryset
 
 
 class Company(models.Model):
@@ -19,6 +20,8 @@ class Job(models.Model):
     start_date = models.DateField(blank=True)
     end_date = models.DateField(blank=True, null=True)
     company = models.ForeignKey(Company, blank=True, null=True)
+
+    objects = JobQueryset.as_manager()
 
     def get_absolute_url(self):
         return reverse(

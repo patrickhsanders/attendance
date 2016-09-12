@@ -7,7 +7,7 @@ from django.utils import timezone
 from people.models import Student
 from note.forms import NoteForm
 from .forms import RecruitForm, JobForm, CompanyForm, TaskForm, ResumeForm, LinkForm
-from .models import Job, Recruit, Task, Link, Resume
+from .models import Job, Recruit, Task, Link, Resume, Company
 
 # Create your views here.
 
@@ -154,10 +154,19 @@ class JobsList(View):
     template_name = "job_list.html"
 
     def get(self, request):
-        jobs = Job.objects.all()
+        companies = Company.objects.all().order_by('name')
+
+        if request.GET.get('company') is not None:
+            jobs = Job.objects.for_company(request.GET.get('company'))
+        elif request.GET.get('employ'):
+            jobs = Job.objects.currently_employed()
+        else:
+            jobs = Job.objects.all()
+
         return render(request,
                       self.template_name,
-                      {'jobs': jobs})
+                      {'jobs': jobs,
+                       'companies': companies})
 
 
 class DeleteJob(PermissionRequiredMixin, View):
