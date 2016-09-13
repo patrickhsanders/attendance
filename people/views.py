@@ -5,7 +5,6 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View, ListView
 from django.db.models import Q
-from django.contrib.auth.models import User
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.utils import timezone
 
@@ -17,8 +16,6 @@ from projects.models import StudentProject
 from projects.models import Project
 
 from finance.forms import StudentTuitionForm
-
-from course.models import Course
 from note.forms import NoteForm
 from attendance.models import Register, ExcusedAbsence
 
@@ -32,7 +29,6 @@ from .serializers import ActiveStudentSerializer
 
 class StudentList(PermissionRequiredMixin, View):
     permission_required = 'people.add_student'
-
     template_name = 'blog/post_list.html'
 
     def get(self, request):
@@ -41,13 +37,9 @@ class StudentList(PermissionRequiredMixin, View):
             'student_list.html',
             {'student_list': Student.people.active()})
 
-    def test_func(self):
-        return self.request.user
-
 
 class StudentCheckin(PermissionRequiredMixin, View):
     permission_required = 'attendance.add_register'
-
     template_name = 'student_checkin_list.html'
 
     def get(self, request, success):
@@ -77,7 +69,6 @@ class StudentsCurrentlySignedInPortlet(PermissionRequiredMixin, View):
 
 class StudentEmailList(PermissionRequiredMixin, View):
     permission_required = 'people.add_student'
-
     template_name = 'student_email_list.html'
 
     def get(self, request):
@@ -142,19 +133,15 @@ class EditStudentJobStatus(PermissionRequiredMixin, View):
     template_name = 'student_job_status_edit.html'
 
     def get(self, request, student_id):
-
-        form = None
-
         try:
             student = Student.objects.get(pk=student_id)
             form = StudentJobStatusNoteForm(initial={'job_search_status': student.job_search_status})
         except ObjectDoesNotExist:
-            pass
+            form = None
 
         return render(request, self.template_name, {'form': form})
 
     def post(self, request, student_id):
-
         bound_form = StudentJobStatusNoteForm(request.POST)
 
         if bound_form.is_valid():
@@ -196,7 +183,7 @@ class DeleteStudentJobStatus(PermissionRequiredMixin, View):
         return HttpResponseRedirect('/student/list/job-status/')
 
 
-class AttendanceDisplay():
+class AttendanceDisplay:
     def __init__(self, day, status):
         self.day = day
         self.status = status
@@ -670,6 +657,7 @@ class StudentTuition(PermissionRequiredMixin, View):
         else:
             return render(request, self.template_name, {'student': student, 'form': bound_tuition_form, 'note': bound_note_form})
 
+
 def get_completion_calendar(student):
     finished_projects = StudentProject.objects.filter(student=student)
 
@@ -712,6 +700,7 @@ class CompletionCalendar(PermissionRequiredMixin, View):
         return render(request, self.template_name, {'student': student,
                                                     'remaining_projects': projects,
                                                     'final_day': day})
+
 
 class ChangeStudentStatus(PermissionRequiredMixin, View):
     permission_required = 'people.add_student'

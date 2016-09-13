@@ -45,7 +45,6 @@ urlpatterns = [
         name="checkin"),
 
     # Student detail view
-
     url(r'^(?P<student_id>[\w\-]+)/attendance/$',
         login_required(StudentDetailViewAttendance.as_view()),
         name="student_detail_view_attendance"),
