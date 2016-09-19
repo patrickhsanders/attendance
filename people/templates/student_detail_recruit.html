@@ -17,7 +17,7 @@
                 </h3></div>
 
                 <div class="panel-body">
-                {% if student.recruit %}
+                {% if student.recruit != None %}
                     <p><strong>Wants help looking for a job:</strong> {{ student.recruit.wants_help_looking_for_work|yesno:"Yes,No" }}</p>
                 {% else %}
                     <p>No recruit information. <a href="{{ student.get_recruit_edit_url }}">Add</a>

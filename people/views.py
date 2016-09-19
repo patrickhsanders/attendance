@@ -680,6 +680,7 @@ def get_completion_calendar(student):
     ''' IMPORTANT! do not call save method on these objects, they are ephemeral!'''
     for project in remaining_projects:
         student_project = StudentProject()
+        student_project.student = student
         student_project.project = project
         student_project.date_started = day
         projects.append(student_project)

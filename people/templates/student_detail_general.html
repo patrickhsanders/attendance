@@ -20,6 +20,8 @@
                         <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ student.email }}">
                             {{ student.email }}
                         </a>
+                    <br>
+                    <strong>Change Status: </strong> {{ student.active|yesno:"Active,Inactive" }} <a href="/student/{{ student.pk }}/status/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     </p>
                 {% if student.directory_information != None %}
                     <p><strong>Phone:</strong>

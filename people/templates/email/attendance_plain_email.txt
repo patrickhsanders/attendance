@@ -1,0 +1,9 @@
+{{ greeting }} {{ first_name }} {{ last_name }}
+
+We just wanted to keep you up to date on a few things this week.
+
+You have {{ remaining_projects_count }} project{{ remaining_projects_count|pluralize }} left.
+
+They are:
+{% for project in remaining_projects %} - {{ project.project.name }}
+{% endfor %}
