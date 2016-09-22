@@ -1,3 +1,6 @@
+{% load humanize %}
+{% load tz %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,13 +21,20 @@
             <h1> {{ greeting }} {{ first_name }}!</h1>
             <p>We just wanted to keep you up to date on a few things this week.</p>
 
+            {% if days_present == 0 %}
+            <p>You didn't come to TurnToTech at all this week, {{ days_message }}</p>
+            {% else %}
             <p>You were at TurnToTech {{ days_present }} day{{ days_present|pluralize }} this week, {{ days_message }}</p>
+            {% endif %}
+            <p>You started studying at TurnToTech {{ student.start_date|timesince }} ago</p>
 
-            <p>You have <strong>{{ remaining_projects_count }}</strong> project{{ remaining_projects_count|pluralize }} left.
+            <p>You're currently working on <em>{{ current_project.name }}</em>. You have <strong>{{ remaining_projects_count|apnumber }}</strong> project{{ remaining_projects_count|pluralize }} left.
                 They are:
             <ul>{% for project in remaining_projects %}
                 <li>{{ project.project.name }}</li>{% endfor %}</ul>
             </p>
+
+            <p>{{ signoff }},<br />TurnToTech</p>
         </td>
     </tr>
 

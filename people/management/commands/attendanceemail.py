@@ -27,7 +27,13 @@ class Command(BaseCommand):
                         'excellent!',
                         'keep up the good work!']
 
-    NEGATIVE_MESSAGE = ['hopefully we\ll see you more next week.',]
+    NEGATIVE_MESSAGE = ['hopefully we\'ll see you more next week.',]
+
+    SIGNOFFS = ['Stay classy',
+                '01100010 01111001 01100101',
+                'adbb',
+                '😄',
+                'Hope to see you soon']
 
 
     help = "Send attendance email on Fridays"
@@ -85,8 +91,11 @@ class Command(BaseCommand):
 
                 days_message = random.choice(self.POSITIVE_MESSAGE) if days_present >= 3 else random.choice(self.NEGATIVE_MESSAGE)
 
-                context = {'first_name': student.first_name,
+                context = {'student': student,
+                           'first_name': student.first_name,
                            'greeting': random.choice(self.HELLO_OPTIONS),
+                           'signoff': random.choice(self.SIGNOFFS),
+                           'current_project': student.current_project,
                            'remaining_projects': projects,
                            'remaining_projects_count': remaining_projects_count,
                            'days_message': days_message,
