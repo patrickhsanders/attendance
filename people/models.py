@@ -13,6 +13,7 @@ from course.models import Course
 from finance.models import StudentTuition
 from note.models import Note
 from recruit.models import Recruit
+from notifications.models import NotificationPreferences
 
 from .querysets import StudentQueryset
 
@@ -142,6 +143,8 @@ class Student(models.Model):
     other_work_experience = models.TextField(null=True, blank=True)
 
     contract_on_file = models.BooleanField(default=False)
+
+    email_preferences = models.OneToOneField(NotificationPreferences, blank=True, null=True)
 
     class Meta:
         ordering = ('first_name',)
