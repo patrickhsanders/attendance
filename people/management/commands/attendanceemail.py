@@ -1,6 +1,9 @@
 import random
+import pytz
+
 from datetime import timedelta
 
+from django.utils import timezone
 from django.core.management.base import BaseCommand, CommandError
 from django.core.mail import EmailMultiAlternatives, send_mass_mail, get_connection
 from django.template.loader import get_template
@@ -8,10 +11,9 @@ from django.template import Context
 
 from people.models import Student
 from attendance.models import DailyAttendance, Register
-from django.utils import timezone
-import pytz
 
 from people.views import get_completion_calendar
+from notifications.utils import get_or_create_notification_preferences_for_student
 
 
 class Command(BaseCommand):
@@ -34,6 +36,8 @@ class Command(BaseCommand):
                 'adbb',
                 '😄',
                 'Hope to see you soon']
+
+    REACH_OUT = ['']
 
 
     help = "Send attendance email on Fridays"
@@ -71,9 +75,18 @@ class Command(BaseCommand):
             self.get_monday()
 
             attendances_last_five_days = DailyAttendance.objects.filter(date__gte=self.get_monday()).order_by('date')
-            # print(attendances_last_five_days)
 
             for student in students:
+
+                student_email_preferences = get_or_create_notification_preferences_for_student(student)
+                if student_email_preferences.disable_all_communication or not student_email_preferences.receive_weekly_review:
+                    self.stdout.write(self.style.ERROR("Skipping " +
+                                                       student.first_name +
+                                                       " " +
+                                                       student.last_name +
+                                                       " because they have opted out of receiving this email."))
+                    continue
+
                 days_present = 0
                 days_absent = 0
 
