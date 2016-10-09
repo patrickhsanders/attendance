@@ -9,4 +9,4 @@ def get_or_create_notification_preferences_for_student(student):
         student.email_preferences = preferences
         student.save()
 
-    return student
+    return student.email_preferences
