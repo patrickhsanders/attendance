@@ -14,6 +14,9 @@ from attendance.models import DailyAttendance, Register
 
 from people.views import get_completion_calendar
 from notifications.utils import get_or_create_notification_preferences_for_student
+from notifications.models import NotificationLog
+
+from ...constants import WEEKLY_ATTENDANCE_SUBJECT
 
 
 class Command(BaseCommand):
@@ -104,6 +107,8 @@ class Command(BaseCommand):
 
                 days_message = random.choice(self.POSITIVE_MESSAGE) if days_present >= 3 else random.choice(self.NEGATIVE_MESSAGE)
 
+                recipient = student.email if not options['debug'] else 'patrickhsanders@gmail.com'
+
                 context = {'student': student,
                            'first_name': student.first_name,
                            'greeting': random.choice(self.HELLO_OPTIONS),
@@ -113,19 +118,26 @@ class Command(BaseCommand):
                            'remaining_projects_count': remaining_projects_count,
                            'days_message': days_message,
                            'days_present': days_present,
-                           'days_absent': days_absent }
+                           'days_absent': days_absent,
+                           'recipient': recipient}
 
                 text_content = plaintext_email.render(context)
                 html_content = html_email.render(context)
 
                 email = EmailMultiAlternatives(
-                    'Weekly Summary',
+                    WEEKLY_ATTENDANCE_SUBJECT,
                     text_content,
                     'TurnToTech <nyc@turntotech.io>',
-                    ['patrickhsanders@gmail.com'],
+                    [recipient],
                 )
                 email.attach_alternative(html_content, "text/html")
                 emails.append(email)
+
+                # Create log of email notification
+                NotificationLog.objects.create(recipient=recipient,
+                                               sender='weekly_attendance_saturday',
+                                               subject=WEEKLY_ATTENDANCE_SUBJECT,
+                                               content=text_content + "\n\n\n" + html_content)
 
             connection = get_connection()
             connection.send_messages(emails)
