@@ -107,7 +107,9 @@ class Command(BaseCommand):
 
                 days_message = random.choice(self.POSITIVE_MESSAGE) if days_present >= 3 else random.choice(self.NEGATIVE_MESSAGE)
 
-                recipient = student.email if not options['debug'] else 'patrickhsanders@gmail.com'
+                # recipient = student.email if not options['debug'] else 'patrickhsanders@gmail.com'
+                # recipient = 'patrickhsanders@gmail.com'
+                recipient = Student.objects.get(email='patrickhsanders@gmail.com')
 
                 context = {'student': student,
                            'first_name': student.first_name,
@@ -119,7 +121,7 @@ class Command(BaseCommand):
                            'days_message': days_message,
                            'days_present': days_present,
                            'days_absent': days_absent,
-                           'recipient': recipient}
+                           'recipient': recipient }
 
                 text_content = plaintext_email.render(context)
                 html_content = html_email.render(context)
@@ -131,13 +133,16 @@ class Command(BaseCommand):
                     [recipient],
                 )
                 email.attach_alternative(html_content, "text/html")
-                emails.append(email)
 
                 # Create log of email notification
                 NotificationLog.objects.create(recipient=recipient,
                                                sender='weekly_attendance_saturday',
                                                subject=WEEKLY_ATTENDANCE_SUBJECT,
-                                               content=text_content + "\n\n\n" + html_content)
+                                               content=text_content + "\n\n\n" + html_content,
+                                               fake=False if not options['debug'] else True)
+
+                if not options['debug']:
+                    emails.append(email)
 
             connection = get_connection()
             connection.send_messages(emails)
