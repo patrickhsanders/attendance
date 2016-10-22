@@ -20,6 +20,15 @@ class StudentQueryset(QuerySet):
     def parttime(self):
         return self._order_by_first_name().filter(course__full_time=False)
 
+    def ios_or_android(self):
+        ios_course = Course.objects.get(name__iexact='iOS Fulltime')
+        android_course = Course.objects.get(name__iexact='Android Fulltime')
+        return self.filter(
+            Q(course=ios_course) |
+            Q(course=android_course)
+        )
+
+
     def ios(self):
         ios_course = Course.objects.get(name__iexact='iOS Fulltime')
         return self._order_by_first_name().filter(course=ios_course)
