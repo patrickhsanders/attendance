@@ -18,6 +18,7 @@ from people import urls as people_urls
 from note import urls as note_urls
 from finance import urls as finance_urls
 from recruit import urls as recruit_urls
+from notifications import urls as notification_urls
 
 # REST Framework router setup.
 router = routers.DefaultRouter()
@@ -46,4 +47,6 @@ urlpatterns = [
 
     url(r'^dashboard/$', login_required(GenericDashboard.as_view())),
     url(r'^dashboard/attendance/$', login_required(AttendanceDashboard.as_view())),
+
+    url(r'^notifications/', include(notification_urls)),
 ]

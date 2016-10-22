@@ -22,24 +22,26 @@
             <p>We just wanted to keep you up to date on a few things this week.</p>
 
             {% if days_present == 0 %}
-            <p>You didn't come to TurnToTech at all this week, {{ days_message }}</p>
+                <p>You didn't come to TurnToTech at all this week, {{ days_message }}.</p>
             {% else %}
-            <p>You were at TurnToTech {{ days_present }} day{{ days_present|pluralize }} this week, {{ days_message }}</p>
+                <p>You were at TurnToTech {{ days_present }} day{{ days_present|pluralize }} this week, {{ days_message }}.</p>
             {% endif %}
             <p>You started studying at TurnToTech {{ student.start_date|timesince }} ago</p>
 
-            <p>You're currently working on <em>{{ current_project.name }}</em>. You have <strong>{{ remaining_projects_count|apnumber }}</strong> project{{ remaining_projects_count|pluralize }} left.
+            <p>You're currently working on <em>{{ current_project }}</em>.
+                {% if remaining_projects_count != None %}
+                You have <strong>{{ remaining_projects_count|apnumber }}</strong> project{{ remaining_projects_count|pluralize }} left.
                 They are:
-            <ul>{% for project in remaining_projects %}
+                <ul>{% for project in remaining_projects %}
                 <li>{{ project.project.name }}</li>{% endfor %}</ul>
+                {% endif %}
             </p>
 
             <p>{{ signoff }},<br />TurnToTech</p>
         </td>
     </tr>
-
+    <tr><td>Don't want this email? <a href="https://attendance.flag.st{{ unsubscribe_link }}">Unsubscribe</a></td></tr>
 </table>
-
 
 </body>
 </html>

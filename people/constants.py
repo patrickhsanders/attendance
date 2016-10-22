@@ -1,0 +1,1 @@
+WEEKLY_ATTENDANCE_SUBJECT = 'Weekly Summary'

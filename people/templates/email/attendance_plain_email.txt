@@ -1,9 +1,19 @@
-{{ greeting }} {{ first_name }} {{ last_name }}
-
+{% load humanize %}{% load tz %}{{ greeting }} {{ first_name }} {{ last_name }},
 We just wanted to keep you up to date on a few things this week.
+{% if days_present == 0 %}
+You didn't come to TurnToTech at all this week, {{ days_message|safe }}.
+{% else %}
+You were at TurnToTech {{ days_present }} day{{ days_present|pluralize }} this week, {{ days_message|safe }}.
+{% endif %}
+You started studying at TurnToTech {{ student.start_date|timesince }} ago.
 
-You have {{ remaining_projects_count }} project{{ remaining_projects_count|pluralize }} left.
+You're currently working on {{ current_project }}.{% if remaining_projects_count != None %}
+You have {{ remaining_projects_count|apnumber }} project{{ remaining_projects_count|pluralize }} left. They are:
+{% for project in remaining_projects %}
+- {{ project.project.name }}{% endfor %}
+{% endif %}
 
-They are:
-{% for project in remaining_projects %} - {{ project.project.name }}
-{% endfor %}
+{{ signoff|safe }},
+TurnToTech
+
+Don't want this email? Unsubscribe here: https://attendance.flag.st{{ unsubscribe_link }}
