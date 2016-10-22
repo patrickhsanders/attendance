@@ -1,7 +1,5 @@
 from django.db import models
 from django.utils import timezone
-
-# from people.models import Student
 # Create your models here.
 
 
@@ -13,10 +11,8 @@ class NotificationPreferences(models.Model):
 
 class UnsubscribeToken(models.Model):
 
-    ninety_days_from_now = timezone.now() + timezone.timedelta(days=90)
-
+    student = models.ForeignKey('people.Student', null=True)
     token = models.CharField(max_length=31)
-    expiration_date = models.DateField()
 
 
 class NotificationLog(models.Model):
@@ -29,5 +25,5 @@ class NotificationLog(models.Model):
     fake = models.BooleanField(default=False)
 
     def __str__(self):
-        recipients = ', '.join(self.recipient)
-        output = "{} to {} from {} on {}".format(self.subject, recipients, self.sender, self.date)
+        output = "{} to {} {} from {} on {}".format(self.subject, self.recipient.first_name, self.recipient.last_name, self.sender, self.date)
+        return output
